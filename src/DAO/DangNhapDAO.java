@@ -4,10 +4,13 @@
  */
 package DAO;
 
+import Model.TaiKhoan;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author ADMIN
  */
 public class DangNhapDAO {
-    
+
 }

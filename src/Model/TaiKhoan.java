@@ -9,5 +9,8 @@ package Model;
  * @author ADMIN
  */
 public class TaiKhoan {
+
+    public TaiKhoan() {
+    }
     
 }
