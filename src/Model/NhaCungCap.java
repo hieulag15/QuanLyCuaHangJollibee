@@ -23,6 +23,12 @@ public class NhaCungCap {
         this.diaChi = diaChi;
         this.dienThoai = dienThoai;
     }
+    
+    public NhaCungCap(String tenNCC, String diaChi, String dienThoai) {
+        this.tenNCC = tenNCC;
+        this.diaChi = diaChi;
+        this.dienThoai = dienThoai;
+    }
 
     public int getMaNCC() {
         return maNCC;
