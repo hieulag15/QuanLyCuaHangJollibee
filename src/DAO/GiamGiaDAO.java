@@ -40,19 +40,7 @@ public class GiamGiaDAO {
     
     
     
-    public boolean deletePhieuNhap(int maPhieuNhap) {
-        boolean result = false;
-        String sql = "DELETE FROM PhieuNhap WHERE MaPN = ?";
-        
-        try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
-            ps.setInt(1, maPhieuNhap);
-            result = ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
+    
       public boolean deleteGiamGia(int maGiam) {
         boolean result = false;
         String sql = "DELETE FROM giamgia WHERE MaGiam = ?";
