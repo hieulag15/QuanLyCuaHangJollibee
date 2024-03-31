@@ -1,14 +1,22 @@
 package GUI;
 
+import BUS.LoaiBUS;
 import Custom.MyDialog;
 import Custom.MyTable;
+import Model.LoaiSP;
 import java.util.ArrayList;
-import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 public class DlgQuanLyLoai extends javax.swing.JDialog {
 
     DefaultTableModel dtmLoai;
+    LoaiBUS loaiBUS = new LoaiBUS();
+    
+    public DlgQuanLyLoai() {
+        initComponents();
+        loadData();
+    }
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -146,20 +154,67 @@ public class DlgQuanLyLoai extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void loadData() {
+        dtmLoai = (DefaultTableModel) tblLoai.getModel();
+        dtmLoai.setRowCount(0);
+        ArrayList<LoaiSP> dsLoai = loaiBUS.getDanhSachLoai();
+        if (dsLoai != null) {
+            for (LoaiSP loai : dsLoai) {
+                dtmLoai.addRow(new Object[]{loai.getMaLoai(), loai.getTenLoai()});
+            }
+        }
+    }
     private void tblLoaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLoaiMouseClicked
-        
+        int row = tblLoai.getSelectedRow();
+        if (row != -1) {
+            String maLoai = tblLoai.getValueAt(row, 0).toString();
+            String tenLoai = tblLoai.getValueAt(row, 1).toString();
+            txtMaLoai.setText(maLoai);
+            txtTenLoai.setText(tenLoai);
+        }
     }//GEN-LAST:event_tblLoaiMouseClicked
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-
+        String tenLoai = txtTenLoai.getText().trim().toString();
+        if(tenLoai.equals("")){
+            new MyDialog("Vui lòng nhập tên loại!", MyDialog.ERROR_DIALOG);
+            txtTenLoai.requestFocus();
+            return;
+        }
+        if (loaiBUS.addLoai(txtTenLoai.getText().trim().toString())) {
+            loadData();
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-
+        String ma = txtMaLoai.getText().trim();
+        if(ma.equals("")){
+            new MyDialog("Vui lòng chọn loại sản phẩm!", MyDialog.ERROR_DIALOG);
+            return;
+        }
+        MyDialog dlg = new MyDialog("Bạn có chắc chắn muốn xoá?", MyDialog.WARNING_DIALOG);
+        if (dlg.OK_OPTION == dlg.getAction()) {
+            if (loaiBUS.deleteLoai(Integer.parseInt(ma))) {
+                loadData();
+            }
+        }    
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-
+        String ma = txtMaLoai.getText().trim().toString();
+        String tenLoai = txtTenLoai.getText().trim().toString();
+        if(ma.equals("")){
+            new MyDialog("Vui lòng chọn loại sản phẩm!", MyDialog.ERROR_DIALOG);
+            return;
+        }
+        if(tenLoai.equals("")){
+            new MyDialog("Vui lòng nhập tên loại!", MyDialog.ERROR_DIALOG);
+            txtTenLoai.requestFocus();
+            return;
+        }
+        if (loaiBUS.updateLoai(Integer.parseInt(ma), tenLoai)) {
+            loadData();
+        }
     }//GEN-LAST:event_btnSuaActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
