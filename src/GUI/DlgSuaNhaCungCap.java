@@ -1,30 +1,6 @@
 package GUI;
 
-import BUS.NhaCungCapBUS;
-import Custom.MyDialog;
-import Model.NhaCungCap;
-
 public class DlgSuaNhaCungCap extends javax.swing.JDialog {
-
-    boolean success = false;
-    
-    public DlgSuaNhaCungCap(NhaCungCap nhaCungCap) {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        this.setModal(true);
-        this.setResizable(false);
-    }
-
-    public void loadData(NhaCungCap nhaCungCap) {
-        txtMaNCC.setText(String.valueOf(nhaCungCap.getMaNCC()));
-        txtTenNCC.setText(nhaCungCap.getTenNCC());
-        txtDiaChiNCC.setText(nhaCungCap.getDiaChi());
-        txtDienThoaiNCC.setText(nhaCungCap.getDienThoai());
-    }
-    
-    public boolean getCheckSuaNCC(){
-        return success;
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -161,32 +137,7 @@ public class DlgSuaNhaCungCap extends javax.swing.JDialog {
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        NhaCungCapBUS nhaCungCapBUS = new NhaCungCapBUS();
 
-        String tenNCC = txtTenNCC.getText().trim();
-        String diachi = txtDiaChiNCC.getText();
-        String sdt = txtDienThoaiNCC.getText();
-        
-        if(tenNCC.equals("")){
-            new MyDialog("Vui lòng nhập tên nhà cung cấp!", MyDialog.ERROR_DIALOG);
-            txtTenNCC.requestFocus();
-            return;
-        }
-        if(diachi.equals("")){
-            new MyDialog("Vui lòng nhập địa chỉ!", MyDialog.ERROR_DIALOG);
-            txtDiaChiNCC.requestFocus();
-            return;
-        }
-        if(sdt.equals("")){
-            new MyDialog("Vui lòng nhập số điệnt thoại!", MyDialog.ERROR_DIALOG);
-            txtDienThoaiNCC.requestFocus();
-            return;
-        }
-        
-        success = nhaCungCapBUS.suaNhaCungCap(txtMaNCC.getText(),tenNCC, diachi, sdt);
-        if (success) {
-            this.dispose();
-        }
     }//GEN-LAST:event_btnLuuActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

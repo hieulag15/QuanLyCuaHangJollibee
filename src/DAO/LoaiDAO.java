@@ -31,12 +31,12 @@ public class LoaiDAO {
         return null;
     }
 
-    public boolean addLoai(String tenLoai) {
+    public boolean addLoai(LoaiSP loai) {
         try {
             
             String sql = "insert into loai(TenLoai) values (?)";
             PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
-            ps.setString(1, tenLoai);
+            ps.setString(1, loai.getTenLoai());
             int x = ps.executeUpdate();
             return x > 0 ? true : false;
         } catch (SQLException ex) {

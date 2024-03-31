@@ -24,8 +24,8 @@ public class LoaiBUS {
         return loaiDAO.getDanhSachLoai();
     }
 
-    public boolean addLoai(String tenLoai) {
-        return loaiDAO.addLoai(tenLoai);
+    public boolean addLoai(LoaiSP loai) {
+        return loaiDAO.addLoai(loai);
     }
 
     public boolean deleteLoai(int maLoai) {
