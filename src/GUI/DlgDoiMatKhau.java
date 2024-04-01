@@ -1,5 +1,7 @@
 package GUI;
 
+import BUS.TaiKhoanBUS;
+
 public class DlgDoiMatKhau extends javax.swing.JDialog {
 
     public DlgDoiMatKhau() {
@@ -139,7 +141,11 @@ public class DlgDoiMatKhau extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
-
+        TaiKhoanBUS tkBUS = new TaiKhoanBUS();
+        boolean flag = tkBUS.doiMatKhau(txtMatKhauCu.getText(), txtMatKhauMoi.getText(), txtNhapLaiMatKhau.getText());
+        if (flag) {
+            btnHuy.doClick();
+        }
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
