@@ -4,9 +4,8 @@
  */
 package GUI;
 
-import java.awt.Dimension;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import Custom.PanelUtils;
+import javax.swing.BorderFactory;
 
 /**
  *
@@ -21,10 +20,10 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
     
     public MainQuanLyGUI() {
         initComponents();
-        this.setSize(1280, 900);
-        addControls();
+        
     }
 
+    PnQuanLyBanHang banhang;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,6 +33,8 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dlgQuanLyLoai1 = new GUI.DlgQuanLyLoai();
+        dlgDoiMatKhau1 = new GUI.DlgDoiMatKhau();
         pnlMenuLeft = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnKhuyenMai = new javax.swing.JLabel();
@@ -51,7 +52,18 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
         btnDong = new javax.swing.JLabel();
         btnThuNho = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        javax.swing.GroupLayout dlgQuanLyLoai1Layout = new javax.swing.GroupLayout(dlgQuanLyLoai1.getContentPane());
+        dlgQuanLyLoai1.getContentPane().setLayout(dlgQuanLyLoai1Layout);
+        dlgQuanLyLoai1Layout.setHorizontalGroup(
+            dlgQuanLyLoai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        dlgQuanLyLoai1Layout.setVerticalGroup(
+            dlgQuanLyLoai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setSize(new java.awt.Dimension(0, 0));
 
         pnlMenuLeft.setBackground(new java.awt.Color(228, 22, 61));
@@ -71,6 +83,11 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
         btnBanHang.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnBanHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/grocery-store.png"))); // NOI18N
         btnBanHang.setText("   Bán hàng      ");
+        btnBanHang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBanHangMouseClicked(evt);
+            }
+        });
 
         btnThongKe.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnThongKe.setForeground(new java.awt.Color(255, 255, 255));
@@ -133,7 +150,7 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
                 .addComponent(btnKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnNhapHang, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnThongKe, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,17 +158,7 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
         );
 
         pnMain.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout pnMainLayout = new javax.swing.GroupLayout(pnMain);
-        pnMain.setLayout(pnMainLayout);
-        pnMainLayout.setHorizontalGroup(
-            pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        pnMainLayout.setVerticalGroup(
-            pnMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
+        pnMain.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(228, 22, 61));
 
@@ -162,6 +169,11 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
         btnCaiDat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/gear.png"))); // NOI18N
 
         btnDong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/close.png"))); // NOI18N
+        btnDong.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDongMouseClicked(evt);
+            }
+        });
 
         btnThuNho.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/minus.png"))); // NOI18N
 
@@ -172,33 +184,34 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnCaiDat)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 457, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(320, 320, 320)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 511, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(270, 270, 270)
                 .addComponent(btnThuNho)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDong)
-                .addContainerGap())
+                .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addComponent(btnCaiDat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnThuNho)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnDong, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnDong)
-                                .addComponent(jLabel4))
-                            .addComponent(jLabel2)))
-                    .addComponent(btnCaiDat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(btnThuNho)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel4)
+                                    .addGap(32, 32, 32))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel2)
+                                    .addGap(2, 2, 2))))))
                 .addContainerGap())
         );
 
@@ -218,7 +231,7 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnlMenuLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlMenuLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -226,13 +239,19 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnDongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDongMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_btnDongMouseClicked
+
+    private void btnBanHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBanHangMouseClicked
+
+        banhang = new PnQuanLyBanHang();
+        PanelUtils.addPanelToPanel(pnMain, banhang);
+    }//GEN-LAST:event_btnBanHangMouseClicked
+
     /**
      * @param args the command line arguments
      */
-    
-    private void addControls(){
-        ImageIcon icon = new ImageIcon(getClass().getResource("/image/avatar.jpg"));
-    }
     
     
     
@@ -279,6 +298,8 @@ public class MainQuanLyGUI extends javax.swing.JFrame {
     private javax.swing.JLabel btnSanPham;
     private javax.swing.JLabel btnThongKe;
     private javax.swing.JLabel btnThuNho;
+    private GUI.DlgDoiMatKhau dlgDoiMatKhau1;
+    private GUI.DlgQuanLyLoai dlgQuanLyLoai1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
