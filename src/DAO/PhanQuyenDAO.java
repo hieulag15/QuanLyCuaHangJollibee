@@ -13,10 +13,13 @@ import Model.PhanQuyen;
  * @author ADMIN
  */
 public class PhanQuyenDAO {
+    
+    MyConnect myConnect = new MyConnect();
+    
     public ArrayList<PhanQuyen> getListQuyen() {
         try {
             String sql = "SELECT * FROM PhanQuyen";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             ArrayList<PhanQuyen> dsPhanQuyen = new ArrayList<>();
             while (rs.next()) {
@@ -38,7 +41,7 @@ public class PhanQuyenDAO {
     public PhanQuyen getQuyen(String quyen) {
         try {
             String sql = "SELECT * FROM PhanQuyen WHERE quyen=?";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setString(1, quyen);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -59,7 +62,7 @@ public class PhanQuyenDAO {
     public boolean updateQuyen(PhanQuyen phanQuyen) {
         try {
             String sql = "UPDATE phanquyen SET NhapHang=?,QLSanPham=?,QLNhanVien=?,QLKhachHang=?,ThongKe=? WHERE Quyen=?";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, phanQuyen.getNhapHang());
             ps.setInt(2, phanQuyen.getQlSanPham());
             ps.setInt(3, phanQuyen.getQlNhanVien());
@@ -75,7 +78,7 @@ public class PhanQuyenDAO {
     public boolean addQuyen(PhanQuyen phanQuyen) {
         try {
             String sql = "INSERT INTO phanquyen VALUES (?,?,?,?,?,?)";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setString(1, phanQuyen.getQuyen());
             ps.setInt(2, phanQuyen.getNhapHang());
             ps.setInt(3, phanQuyen.getQlSanPham());
@@ -91,7 +94,7 @@ public class PhanQuyenDAO {
     public boolean deleteQuyen(String phanQuyen) {
         try {
             String sql1 = "UPDATE TaiKhoan SET Quyen='Default' WHERE Quyen=?";
-            PreparedStatement ps1 = MyConnect.conn.prepareStatement(sql1);
+            PreparedStatement ps1 = myConnect.conn.prepareStatement(sql1);
             ps1.setString(1, phanQuyen);
             ps1.executeUpdate();
             

@@ -13,11 +13,14 @@ import java.sql.*;
  * @author ADMIN
  */
 public class NhaCungCapDAO {
+    
+    MyConnect myConnect = new MyConnect();
+    
     public ArrayList<NhaCungCap> getListNhaCungCap() {
         try {
             ArrayList<NhaCungCap> dsNhaCungCap = new ArrayList<>();
             String sql = "SELECT * FROM nhacungcap";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 NhaCungCap ncc = new NhaCungCap();
@@ -37,7 +40,7 @@ public class NhaCungCapDAO {
         NhaCungCap ncc = null;
         try {
             String sql = "SELECT * FROM nhacungcap WHERE MaNCC=?"; 
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, maNCC);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -57,7 +60,7 @@ public class NhaCungCapDAO {
         boolean result = false;
         try {
             String sql = "INSERT INTO nhacungcap VALUES(?,?,?)";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setString(1, ncc.getTenNCC());
             ps.setString(2, ncc.getDiaChi());
             ps.setString(3, ncc.getDienThoai());
@@ -72,7 +75,7 @@ public class NhaCungCapDAO {
         boolean result = false;
         try {
             String sql = "UPDATE nhacungcap SET TenNCC=?, DiaChi=?, DienThoai=? WHERE MaNCC=?";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setString(1, ncc.getTenNCC());
             ps.setString(2, ncc.getDiaChi());
             ps.setString(3, ncc.getDienThoai());
@@ -89,7 +92,7 @@ public class NhaCungCapDAO {
         boolean result = false;
         try {
             String sql = "DELETE FROM nhacungcap WHERE MaNCC=?";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, maNCC);
             result = ps.executeUpdate() > 0;
         } catch (SQLException ex) {

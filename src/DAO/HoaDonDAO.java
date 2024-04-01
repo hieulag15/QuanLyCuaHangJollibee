@@ -13,11 +13,14 @@ import Model.HoaDon;
  * @author ADMIN
  */
 public class HoaDonDAO {
+    
+    MyConnect myConnect = new MyConnect();
+    
     public ArrayList<HoaDon> getListHoaDon() {
         ArrayList<HoaDon> dsHoaDon = new ArrayList<>();
         try {
             String sql = "SELECT * FROM hoadon";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 HoaDon hd = new HoaDon();
@@ -40,7 +43,7 @@ public class HoaDonDAO {
         try {
             
             String sql1 = "UPDATE KhachHang SET TongChiTieu = TongChiTieu + ? WHERE MaKH=?";
-            PreparedStatement ps1 = MyConnect.conn.prepareStatement(sql1);
+            PreparedStatement ps1 = myConnect.conn.prepareStatement(sql1);
             ps1.setInt(1, hd.getTongTien());
             ps1.setInt(2, hd.getMaKH());
             ps1.executeUpdate();
@@ -63,7 +66,7 @@ public class HoaDonDAO {
     public int getMaHoaDonMoiNhat() {
         try {
             String sql = "SELECT MAX(maHD) FROM hoadon";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             if (rs.next())
                 return rs.getInt(1);
@@ -76,7 +79,7 @@ public class HoaDonDAO {
     public ArrayList<HoaDon> getListHoaDon(Date dateStart, Date dateEnd) {
         try {
             String sql = "SELECT * FROM hoadon WHERE NgayLap BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)";
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             pre.setDate(1, dateStart);
             pre.setDate(2, dateEnd);
             ResultSet rs = pre.executeQuery();
