@@ -13,7 +13,7 @@ import Model.PhanQuyen;
  * @author manhq
  */
 public class PhanQuyenBUS {
-    
+    public static PhanQuyen quyenTK = null;
     private PhanQuyenDAO phanQuyenDAO;
     public PhanQuyenBUS(){
         phanQuyenDAO = new PhanQuyenDAO();
@@ -23,8 +23,8 @@ public class PhanQuyenBUS {
         return phanQuyenDAO.getListQuyen();
     }
 
-    public PhanQuyen getQuyen(String quyen) {
-        return phanQuyenDAO.getQuyen(quyen);
+    public void getQuyen(String quyen) {
+        quyenTK =  phanQuyenDAO.getQuyen(quyen);
     }
 
     public boolean updateQuyen(PhanQuyen phanQuyen) {

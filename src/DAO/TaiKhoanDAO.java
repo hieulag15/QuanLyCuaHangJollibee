@@ -1,5 +1,6 @@
 package DAO;
 
+import BUS.DangNhapBUS;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,5 +75,18 @@ public class TaiKhoanDAO {
             e.printStackTrace();
         }
         return result;
+    }
+    
+    public boolean doiMatKhau(String mkCu, String mkMoi) {
+        try {
+            String sql = "UPDATE TaiKhoan SET MatKhau=? WHERE MaNV=? AND MatKhau=?";
+            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            pre.setString(1, mkMoi);
+            pre.setInt(2, DangNhapBUS.taiKhoanLogin.getMaNhanVien());
+            pre.setString(3, mkCu);
+            return pre.executeUpdate() > 0;
+        } catch (Exception e) {
+        }
+        return false;
     }
 }
