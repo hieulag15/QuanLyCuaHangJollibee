@@ -17,12 +17,12 @@ import java.util.logging.Logger;
  * @author ADMIN
  */
 public class NhanVienDAO {
-    
+    MyConnect myConnect = new MyConnect();
     public ArrayList<NhanVien> getDanhSachNhanVien() {
         String sql = "SELECT * FROM NhanVien";
         ArrayList<NhanVien> dsnv = new ArrayList<>();
         try {
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while(rs.next()) {
                 NhanVien nv = new NhanVien();
@@ -45,7 +45,7 @@ public class NhanVienDAO {
         String sql = "SELECT * FROM NhanVien where MaNV = ?";
         NhanVien nv = new NhanVien();
         try {
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while(rs.next()) {
                 nv.setMaNV(rs.getInt(1));
@@ -64,7 +64,7 @@ public class NhanVienDAO {
         boolean result = false;
         String sql = "INSERT INTO NhanVien(Ho, Ten, GioiTinh, ChucVu) VALUES(?, ?, ?, ?)";
         try {
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             pre.setString(1, nv.getHo());
             pre.setString(2, nv.getTen());
             pre.setString(3, nv.getGioiTinh());
@@ -81,7 +81,7 @@ public class NhanVienDAO {
         boolean result = false;
         String sql = "UPDATE nhanvien SET Ho=?, Ten=?, GioiTinh=?, ChucVu=? WHERE MaNV=?";
         try {
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             pre.setString(1, nv.getHo());
             pre.setString(2, nv.getTen());
             pre.setString(3, nv.getGioiTinh());
@@ -100,7 +100,7 @@ public class NhanVienDAO {
         String sql = "DELETE From NhanVien Where maNV=?";
         
         try {
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             pre.setInt(1, maNV);
             
             result = pre.executeUpdate() > 0;
