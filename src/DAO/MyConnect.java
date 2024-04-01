@@ -19,7 +19,7 @@ public class MyConnect {
     public static Connection conn = null;
     
     public MyConnect() {
-        //docFileText();
+       //docFileText();
 
 //        String strConnect = "jdbc:mysql://" + severName + "/" + dbName + "?useUnicode=true&characterEncoding=utf-8";
         String strConnect = "jdbc:mysql://localhost:3306/quanlypizza";
@@ -33,7 +33,5 @@ public class MyConnect {
             new MyDialog("Không kết nối được tới CSDL!", MyDialog.ERROR_DIALOG);
             System.exit(0);
         }
-
     }
-
 }

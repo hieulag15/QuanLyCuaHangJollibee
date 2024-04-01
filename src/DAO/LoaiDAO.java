@@ -13,10 +13,11 @@ import java.util.ArrayList;
  * @author ADMIN
  */
 public class LoaiDAO {
+    MyConnect myConnect = new MyConnect();
      public ArrayList<LoaiSP> getDanhSachLoai() {
         try {
             String sql = "SELECT * FROM Loai";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             ArrayList<LoaiSP> dsLoai = new ArrayList<>();
             while (rs.next()) {
