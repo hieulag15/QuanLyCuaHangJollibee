@@ -14,7 +14,7 @@ import javax.swing.*;
 public class MainQuanLy extends JFrame {
 
     public MainQuanLy() {
-        this.setTitle("Phần mềm quản lý cửa hàng pizza");
+        this.setTitle("Phần mềm quản lý cửa hàng Jollibee");
         this.setSize(1280, 900);
         Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/icon-app.png");
         this.setIconImage(icon);
@@ -32,16 +32,16 @@ public class MainQuanLy extends JFrame {
     JLabel btnDoiMatKhau;
     JPanel pnTitle, pnMenuLeft, pnCard, pnBanHang, pnKhuyenMai, pnNhapHang, pnSanPham, pnNhanVien, pnKhachHang, pnThongKe;
     PnQuanLyBanHangGUI banHangPanel;
-//    PnQuanLyKhuyenMaiGUI khuyenMaiPanel;
+    PnQuanLyKhuyenMaiGUI khuyenMaiPanel;
 //    PnQuanLyNhapHangGUI nhapHangPanel;
 //    PnQuanLySanPhamGUI sanPhamPanel;
 //    PnQuanLyNhanVienGUI nhanVienPanel;
 //    PnQuanLyKhachHangGUI khachHangPanel;
 
     JLabel btnClose, btnMinimize, lblBanHang, lblKhuyenMai, lblNhapHang, lblSanPham, lblNhanVien, lblKhachHang, lblThongKe;
-    final Color clLeftItem = new Color(63, 74, 89);
+    final Color clLeftItem = new Color(228,22,61);
     final Color clLeftItemHover = new Color(72, 88, 107);
-    final Color clLeftItemSelected = new Color(51, 202, 187);
+    final Color clLeftItemSelected = new Color(242, 153, 74);
     ArrayList<JLabel> listMenuLeft;
     CardLayout cardMenuLeftGroup = new CardLayout();
 
@@ -62,6 +62,7 @@ public class MainQuanLy extends JFrame {
         pnTitle = new JPanel(null);
         pnTitle.setPreferredSize(new Dimension(width, 46));
         pnTitle.setBackground(new Color(242, 153, 74));
+//        pnTitle.setBackground(new Color(242, 153, 74));
 
         btnDoiMatKhau = new JLabel(new ImageIcon("image/ManagerUI/icons8_gear_46px.png"));
         btnDoiMatKhau.setToolTipText("Đổi mật khẩu");
@@ -94,7 +95,7 @@ public class MainQuanLy extends JFrame {
         pnMenuLeft.setBackground(clLeftItem);
         pnMenuLeft.setLayout(new BoxLayout(pnMenuLeft, BoxLayout.Y_AXIS));
 
-        JLabel lblAvatar = new JLabel(new ImageIcon("image/ManagerUI/avatar.png"), JLabel.CENTER);
+        JLabel lblAvatar = new JLabel(new ImageIcon("image/ManagerUI/jollibee.jpg"), JLabel.CENTER);
         lblAvatar.setPreferredSize(new Dimension(250, 210));
         pnMenuLeft.add(lblAvatar);
 

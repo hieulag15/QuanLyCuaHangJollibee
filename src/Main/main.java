@@ -1,24 +1,18 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Main;
 
-import GUI.MainQuanLyGUI;
+import DAO.MyConnect;
+import GUI.DangNhapGUI;
 
-/**
- *
- * @author Nun-PC
- */
 public class main {
+
     public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainQuanLyGUI().setVisible(true);
-            }
-        });
+//        new MyConnect();
+//
+//        changLNF("Nimbus");
+        DangNhapGUI login = new DangNhapGUI();
+        login.showWindow();
     }
-    
+
     public static void changLNF(String nameLNF) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
