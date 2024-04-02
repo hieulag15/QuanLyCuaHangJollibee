@@ -129,4 +129,16 @@ public class TaiKhoanDAO {
         }
         return false;
     }
+
+    public boolean kiemTraTrungTenDangNhap(String tenDangNhap) {
+        try {
+            String sql = "SELECT * FROM TaiKhoan WHERE TenDangNhap = '" + tenDangNhap + "'";
+            Statement st = MyConnect.conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

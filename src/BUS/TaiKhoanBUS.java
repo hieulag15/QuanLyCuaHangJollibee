@@ -12,7 +12,20 @@ public class TaiKhoanBUS {
         return taiKhoanDAO.getAllTaiKhoan();
     }
     public boolean addTaiKhoan(TaiKhoan tk) {
-        return taiKhoanDAO.addTaiKhoan(tk);
+        if (kiemTraTrungTenDangNhap(tk.getTenDangNhap())) {
+            MyDialog dlg = new MyDialog("Tên đăng nhập bị trùng! Có thể tài khoản bị khoá, thực hiện mở khoá?", MyDialog.WARNING_DIALOG);
+            if (dlg.getAction() == MyDialog.OK_OPTION) {
+                return false;
+            }
+            return false;
+        }
+        boolean flag = taiKhoanDAO.addTaiKhoan(tk);
+        if (flag) {
+            new MyDialog("Cấp tài khoản thành công! Mật khẩu là " + tk.getTenDangNhap(), MyDialog.SUCCESS_DIALOG);
+        } else {
+            new MyDialog("Cấp tài khoản thất bại! Tài khoản đã tồn tại", MyDialog.ERROR_DIALOG);
+        }
+        return flag;
     }
     public boolean updateTaiKhoan(TaiKhoan tk) {
         return taiKhoanDAO.updateTaiKhoan(tk);
@@ -53,4 +66,9 @@ public class TaiKhoanBUS {
             new MyDialog("Đặt lại thất bại!", MyDialog.ERROR_DIALOG);
         }
     }
+    
+    public boolean kiemTraTrungTenDangNhap(String tenDangNhap) {
+        return taiKhoanDAO.kiemTraTrungTenDangNhap(tenDangNhap);
+    }
+    
 }

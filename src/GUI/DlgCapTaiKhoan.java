@@ -1,7 +1,32 @@
 package GUI;
 
+import BUS.PhanQuyenBUS;
+import BUS.TaiKhoanBUS;
+import Custom.MyDialog;
+import Model.PhanQuyen;
+import Model.TaiKhoan;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
+
 public class DlgCapTaiKhoan extends javax.swing.JDialog {
 
+    private String maNV;
+
+    public DlgCapTaiKhoan(String maNV) {
+        this.maNV = maNV;
+        initComponents();
+        this.setTitle("Cấp tài khoản");
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        this.setModal(true);
+        Image icon = Toolkit.getDefaultToolkit().getImage("image/jollibee.png");
+        this.setIconImage(icon);
+
+        txtMaNV.setText(maNV);
+        loadDataCmbQuyen();
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -127,16 +152,33 @@ public class DlgCapTaiKhoan extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-//    private TaiKhoanBUS taiKhoanBUS = new TaiKhoanBUS();
-//    private PhanQuyenBUS phanQuyenBUS = new PhanQuyenBUS();
+    private TaiKhoanBUS taiKhoanBUS = new TaiKhoanBUS();
+    private PhanQuyenBUS phanQuyenBUS = new PhanQuyenBUS();
+
 
     private void btnTaoTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoTaiKhoanActionPerformed
-
+        int maNV = Integer.parseInt(txtMaNV.getText());
+        TaiKhoan tk = new TaiKhoan(maNV,
+                txtTenDangNhap.getText(), "",
+                (String) cmbQuyen.getSelectedItem());
+        if (tk.getTenDangNhap().trim().equals("")) {
+            new MyDialog("Không được để trống Tên đăng nhập!", MyDialog.ERROR_DIALOG);
+        } else {
+            taiKhoanBUS.addTaiKhoan(tk);
+        }
     }//GEN-LAST:event_btnTaoTaiKhoanActionPerformed
 
     private void txtTenDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenDangNhapActionPerformed
         btnTaoTaiKhoan.doClick();
     }//GEN-LAST:event_txtTenDangNhapActionPerformed
+
+    private void loadDataCmbQuyen() {
+        cmbQuyen.removeAllItems();
+        ArrayList<PhanQuyen> dsq = phanQuyenBUS.getListQuyen();
+        for (PhanQuyen pq : dsq) {
+            cmbQuyen.addItem(pq.getQuyen());
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
