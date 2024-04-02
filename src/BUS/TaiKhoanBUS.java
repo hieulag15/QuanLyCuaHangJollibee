@@ -33,4 +33,24 @@ public class TaiKhoanBUS {
         }
         return flag;
     }
+
+    public String getQuyenByMaNV(String manv) {
+        int maNV = Integer.parseInt(manv);
+        return taiKhoanDAO.getQuyenTheoMa(maNV);
+    }
+    
+    public String getTenDangNhapByMaNV(String manv) {
+        int maNV = Integer.parseInt(manv);
+        return taiKhoanDAO.getTenDangNhapTheoMa(maNV);
+    }
+    
+    public void datLaiMatKhau(String ma, String tenDangNhap) {
+        int maNV = Integer.parseInt(ma);
+        boolean flag = taiKhoanDAO.datLaiMatKhau(maNV, tenDangNhap);
+        if (flag) {
+            new MyDialog("Đặt lại thành công! Mật khẩu mới là: " + tenDangNhap, MyDialog.SUCCESS_DIALOG);
+        } else {
+            new MyDialog("Đặt lại thất bại!", MyDialog.ERROR_DIALOG);
+        }
+    }
 }

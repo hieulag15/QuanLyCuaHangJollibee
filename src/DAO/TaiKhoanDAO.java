@@ -7,8 +7,10 @@ import java.util.List;
 import java.sql.ResultSet;
 import Model.TaiKhoan;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class TaiKhoanDAO {
+
     public List<TaiKhoan> getAllTaiKhoan() {
         List<TaiKhoan> list = new ArrayList<>();
         String sql = "SELECT * FROM TaiKhoan";
@@ -76,7 +78,7 @@ public class TaiKhoanDAO {
         }
         return result;
     }
-    
+
     public boolean doiMatKhau(String mkCu, String mkMoi) {
         try {
             String sql = "UPDATE TaiKhoan SET MatKhau=? WHERE MaNV=? AND MatKhau=?";
@@ -84,6 +86,44 @@ public class TaiKhoanDAO {
             pre.setString(1, mkMoi);
             pre.setInt(2, DangNhapBUS.taiKhoanLogin.getMaNhanVien());
             pre.setString(3, mkCu);
+            return pre.executeUpdate() > 0;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    public String getQuyenTheoMa(int maNV) {
+        try {
+            String sql = "SELECT Quyen FROM TaiKhoan WHERE MaNV=" + maNV;
+            Statement st = MyConnect.conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+        }
+        return "";
+    }
+
+    public String getTenDangNhapTheoMa(int maNV) {
+        try {
+            String sql = "SELECT TenDangNhap FROM TaiKhoan WHERE MaNV=" + maNV;
+            Statement st = MyConnect.conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if (rs.next()) {
+                return rs.getString(1);
+            }
+        } catch (Exception e) {
+        }
+        return "";
+    }
+
+    public boolean datLaiMatKhau(int maNV, String tenDangNhap) {
+        try {
+            String sql = "UPDATE TaiKhoan SET MatKhau=? WHERE MaNV=?";
+            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            pre.setString(1, tenDangNhap);
+            pre.setInt(2, maNV);
             return pre.executeUpdate() > 0;
         } catch (Exception e) {
         }

@@ -1,7 +1,59 @@
 package GUI;
 
+import BUS.PhanQuyenBUS;
+import BUS.TaiKhoanBUS;
+import Custom.MyDialog;
+import Model.PhanQuyen;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+
 public class DlgQuyen_MatKhau extends javax.swing.JDialog {
 
+    private String maNv;
+
+    public DlgQuyen_MatKhau(String maNv) {
+        this.maNv = maNv;
+        initComponents();
+        this.setTitle("Chỉnh sửa tài khoản");
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setLocationRelativeTo(null);
+        Image icon = Toolkit.getDefaultToolkit().getImage("image/jollibee.png");
+        this.setIconImage(icon);
+
+        loadData();
+    }
+
+    private PhanQuyenBUS pqBUS = new PhanQuyenBUS();
+    private TaiKhoanBUS tkBUS = new TaiKhoanBUS();
+
+    private void loadData() {
+        txtMatKhau_MaNV.setText(maNv);
+        txtQuyen_MaNV.setText(maNv);
+
+        String tenDangNHap = tkBUS.getTenDangNhapByMaNV(maNv);
+        if (tenDangNHap.equals("")) {
+            new MyDialog("Nhân viên này chưa có tài khoản!", MyDialog.ERROR_DIALOG);
+            btnCapMatKhau.setEnabled(false);
+            btnLuuQuyen.setEnabled(false);
+        } else {
+            txtMatKhau_TenDangNhap.setText(tenDangNHap);
+        }
+
+        cmbQuyen.removeAllItems();
+        ArrayList<PhanQuyen> dsq = pqBUS.getListQuyen();
+        for (PhanQuyen pq : dsq) {
+            cmbQuyen.addItem(pq.getQuyen());
+        }
+
+        String quyen = tkBUS.getQuyenByMaNV(maNv);
+        for (int i = 0; i < cmbQuyen.getItemCount(); i++) {
+            if (cmbQuyen.getItemAt(i).equals(quyen)) {
+                cmbQuyen.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -180,7 +232,7 @@ public class DlgQuyen_MatKhau extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCapMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapMatKhauActionPerformed
-  
+        tkBUS.datLaiMatKhau(maNv, txtMatKhau_TenDangNhap.getText());
     }//GEN-LAST:event_btnCapMatKhauActionPerformed
 
     private void btnLuuQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuQuyenActionPerformed
