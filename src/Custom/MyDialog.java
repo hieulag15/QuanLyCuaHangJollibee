@@ -4,7 +4,7 @@
  */
 package Custom;
 
-import quanlycuahangjollibee.QuanLyCuaHangJollibee;
+import Main.main;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -39,7 +39,7 @@ public class MyDialog extends JDialog{
     public final static int WARNING_DIALOG = 4;
 
     public MyDialog(String content, int type) {
-        QuanLyCuaHangJollibee.changLNF("Windows");
+        main.changLNF("Windows");
         this.content = content;
         this.type = type;
         addControls();

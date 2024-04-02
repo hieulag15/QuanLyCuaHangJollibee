@@ -6,6 +6,9 @@ import java.util.List;
 public class SanPhamBUS {
     private SanPhamDAO sanPhamDAO;
 
+    public SanPhamBUS() {
+    }
+
     public SanPhamBUS(SanPhamDAO sanPhamDAO) {
         this.sanPhamDAO = sanPhamDAO;
     }
