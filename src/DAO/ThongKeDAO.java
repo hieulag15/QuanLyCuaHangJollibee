@@ -8,11 +8,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ThongKeDAO {
+    MyConnect myConnect = new MyConnect();
     public List<ThongKe> getAllThongKe() {
         List<ThongKe> list = new ArrayList<>();
         String sql = "SELECT * FROM ThongKe";
         try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int soLuongSP = rs.getInt("SoLuongSP");

@@ -36,7 +36,7 @@ public class MainQuanLy extends JFrame {
 //    PnQuanLyNhapHangGUI nhapHangPanel;
 //    PnQuanLySanPhamGUI sanPhamPanel;
 //    PnQuanLyNhanVienGUI nhanVienPanel;
-//    PnQuanLyKhachHangGUI khachHangPanel;
+    PnQuanLyKhachHangGUI khachHangPanel;
 
     JLabel btnClose, btnMinimize, lblBanHang, lblKhuyenMai, lblNhapHang, lblSanPham, lblNhanVien, lblKhachHang, lblThongKe;
     final Color clLeftItem = new Color(228,22,61);
@@ -62,7 +62,6 @@ public class MainQuanLy extends JFrame {
         pnTitle = new JPanel(null);
         pnTitle.setPreferredSize(new Dimension(width, 46));
         pnTitle.setBackground(new Color(242, 153, 74));
-//        pnTitle.setBackground(new Color(242, 153, 74));
 
         btnDoiMatKhau = new JLabel(new ImageIcon("image/ManagerUI/icons8_gear_46px.png"));
         btnDoiMatKhau.setToolTipText("Đổi mật khẩu");
@@ -70,8 +69,11 @@ public class MainQuanLy extends JFrame {
         btnDoiMatKhau.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         pnTitle.add(btnDoiMatKhau);
 
-        JLabel lblTitleText = new JLabel(new ImageIcon("image/ManagerUI/title-text.png"));
+        JLabel lblTitleText = new JLabel("Phần mềm quản lý cửa hàng Jollibee");
         lblTitleText.setBounds(width / 2 - 428 / 2, 3, 428, 38);
+        lblTitleText.setHorizontalAlignment(JLabel.CENTER); // Đặt căn chỉnh cho label ở giữa
+        lblTitleText.setForeground(Color.WHITE); // Đặt màu chữ là trắng
+        lblTitleText.setFont(new Font("Arial", Font.BOLD, 24));
         pnTitle.add(lblTitleText);
 
         btnMinimize = new JLabel(new ImageIcon("image/ManagerUI/btn-minimize.png"));

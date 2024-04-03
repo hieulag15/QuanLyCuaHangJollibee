@@ -15,11 +15,12 @@ import java.util.ArrayList;
  * @author ADMIN
  */
 public class GiamGiaDAO {
-    public List<GiamGia> getAllGiamGia() {
+    MyConnect myConnect = new MyConnect();
+    public List<GiamGia> getAllGiamGia() {     
         List<GiamGia> list = new ArrayList<>();
         String sql = "SELECT * FROM giamgia";
         try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int maGiam = rs.getInt("MaGiam");
@@ -45,7 +46,7 @@ public class GiamGiaDAO {
         boolean result = false;
         String sql = "DELETE FROM giamgia WHERE MaGiam = ?";
         try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, maGiam);
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {

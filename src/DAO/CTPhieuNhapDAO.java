@@ -12,12 +12,12 @@ import Model.CTPhieuNhap;
  * @author ADMIN
  */
 public class CTPhieuNhapDAO {
-    
+    MyConnect myConnect = new MyConnect();
     public ArrayList<CTPhieuNhap> getListChiTietPhieuNhap() {
     ArrayList<CTPhieuNhap> dsChiTietPhieuNhap = new ArrayList<>();
     try {
         String sql = "SELECT * FROM ctphieunhap";
-        PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+        PreparedStatement ps = myConnect.conn.prepareStatement(sql);
        
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -39,7 +39,7 @@ public class CTPhieuNhapDAO {
         boolean result = false;
         String sql = "INSERT INTO ctphieunhap (MaPN, MaSP, SoLuong, DonGia, ThanhTien) VALUES (?, ?, ?, ?, ?)";
         try {
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             pre.setInt(1, ctpn.getMaPN());
             pre.setInt(2, ctpn.getMaSP());
             pre.setInt(3, ctpn.getSoLuong());
@@ -56,7 +56,7 @@ public class CTPhieuNhapDAO {
         boolean result = false;
         String sql = "DELETE FROM ctphieunhap WHERE MaPN = ?";
         try {
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             pre.setInt(1, MaPN);
             result = pre.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -68,7 +68,7 @@ public class CTPhieuNhapDAO {
     boolean result = false;
     String sql = "UPDATE phieunhap SET MaSP=?, SoLuong=?, DonGia=?, ThanhTien=? WHERE MaPN=?";
     try {
-        PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+        PreparedStatement pre = myConnect.conn.prepareStatement(sql);
         pre.setInt(1, pn.getMaSP());
         pre.setInt(2,pn.getSoLuong());
         pre.setInt(3, pn.getDonGia());
@@ -85,7 +85,7 @@ public class CTPhieuNhapDAO {
     String sql = "SELECT * FROM ctphieunhap WHERE MaPN = ? ";
     CTPhieuNhap ctpn = new CTPhieuNhap();
     try {
-        PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+        PreparedStatement pre = myConnect.conn.prepareStatement(sql);
         pre.setInt(1, maPN);
         ResultSet rs = pre.executeQuery();
         if (rs.next()) {

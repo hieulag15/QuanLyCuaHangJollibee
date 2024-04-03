@@ -7,11 +7,12 @@ import Model.PhieuNhap;
 
 
 public class PhieuNhapDAO {
+    MyConnect myConnect = new MyConnect();
     public List<PhieuNhap> getAllPhieuNhap() {
         List<PhieuNhap> list = new ArrayList<>();
         String sql = "SELECT * FROM PhieuNhap";
         try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int maPN = rs.getInt("MaPN");
@@ -33,7 +34,7 @@ public class PhieuNhapDAO {
         boolean result = false;
         String sql = "INSERT INTO PhieuNhap (MaPN, MaSP, SoLuong, DonGia, ThanhTien) VALUES (?, ?, ?, ?, ?)";
         try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, pn.getMaPN());
             ps.setInt(2, pn.getMaSP());
             ps.setInt(3, pn.getSoLuong());
@@ -52,7 +53,7 @@ public class PhieuNhapDAO {
         String sql = "UPDATE PhieuNhap SET MaSP = ?, SoLuong = ?, DonGia = ?, ThanhTien = ? WHERE MaPN = ?";
         
         try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, phieuNhap.getMaSP());
             ps.setInt(2, phieuNhap.getSoLuong());
             ps.setInt(3, phieuNhap.getDonGia());
@@ -69,7 +70,7 @@ public class PhieuNhapDAO {
         String sql = "DELETE FROM PhieuNhap WHERE MaPN = ?";
         
         try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, maPhieuNhap);
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {

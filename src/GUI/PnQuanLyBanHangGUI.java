@@ -914,7 +914,34 @@ public class PnQuanLyBanHangGUI extends JPanel {
     DecimalFormat dcf = new DecimalFormat("###,###");
 
     private void loadDataTableSanPhamBan() {
-        
+        dtmSanPhamBan.setRowCount(0);
+        ArrayList<SanPham> dssp = null;
+
+        if (cmbLoaiSPBanHang.getItemCount() > 0) {
+            String loai = cmbLoaiSPBanHang.getSelectedItem() + "";
+            String loaiArr[] = loai.split("-");
+            String loaiSP = loaiArr[0].trim();
+
+            if (loaiSP.equals("0")) {
+                dssp = spBUS.getListSanPham();
+            } 
+//              else {
+//                dssp = spBUS.getSanPhamTheoLoai(loaiSP);
+//            }
+        } else {
+            dssp = spBUS.getListSanPham();
+        }
+
+        for (SanPham sp : dssp) {
+            Vector vec = new Vector();
+            vec.add(sp.getMaSP());
+            vec.add(sp.getTenSP());
+            vec.add(dcf.format(sp.getDonGia()));
+            vec.add(dcf.format(sp.getSoLuong()));
+            vec.add(sp.getDonViTinh());
+            vec.add(sp.getHinhAnh());
+            dtmSanPhamBan.addRow(vec);
+        }
     }
 
     private void xuLyClickTblBanHang() {

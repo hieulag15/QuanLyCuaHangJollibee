@@ -49,7 +49,7 @@ public class HoaDonDAO {
             ps1.executeUpdate();
             
             String sql = "INSERT INTO hoadon(MaKH, MaNV, NgayLap, TongTien, GhiChu) VALUES(?, ?, ?, ?, ?)";
-            PreparedStatement ps2 = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps2 = myConnect.conn.prepareStatement(sql);
             ps2.setInt(1, hd.getMaKH());
             ps2.setInt(2, hd.getMaNV());
             ps2.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));

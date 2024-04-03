@@ -2,28 +2,35 @@ package BUS;
 import DAO.SanPhamDAO;
 import Model.SanPham;
 import java.awt.image.SampleModel;
+import java.util.ArrayList;
 import java.util.List;
 public class SanPhamBUS {
-    private SanPhamDAO sanPhamDAO;
+    
+    private ArrayList<SanPham> listSanPham = null;
+    private SanPhamDAO sanphamDAO = new SanPhamDAO();
 
     public SanPhamBUS() {
-    }
-
-    public SanPhamBUS(SanPhamDAO sanPhamDAO) {
-        this.sanPhamDAO = sanPhamDAO;
+        
     }
     
-    public List<SanPham> getListSanPham() {
-        return sanPhamDAO.getAllSanPham();
+    public void docListSanPham() {
+        listSanPham = sanphamDAO.getAllSanPham();
+    }
+    
+    public ArrayList<SanPham> getListSanPham() {
+        if (listSanPham == null) {
+            docListSanPham();
+        }
+        return listSanPham;
     }
     
     public boolean addSanPham(SanPham sp) {
-        return sanPhamDAO.addSanPham(sp);
+        return true;
     }
     public boolean updateSanPham(SanPham sp) {
-        return sanPhamDAO.updateSanPham(sp);
+        return true;
     }
     public boolean deleteSanPham(int masp) {
-        return sanPhamDAO.deleteSanPham(masp);
+        return true;
     }
 }

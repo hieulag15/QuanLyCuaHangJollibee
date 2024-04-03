@@ -14,11 +14,12 @@ import java.sql.*;
  */
 public class CTHoaDonDAO {
     
+    MyConnect myConnect = new MyConnect();
     public ArrayList<CTHoaDon> getListChiTietHoaDon() {
         ArrayList<CTHoaDon> dsChiTietHoaDon = new ArrayList<>();
         try {
             String sql = "SELECT * FROM cthoadon";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -40,7 +41,7 @@ public class CTHoaDonDAO {
         boolean result = false;
         try {
             String sql = "INSERT INTO cthoadon(MaHD, MaSP, SoLuong, DonGia, ThanhTien) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, cthd.getMaHD());
             ps.setInt(2, cthd.getMaSP());
             ps.setInt(3, cthd.getSoLuong());
@@ -57,7 +58,7 @@ public class CTHoaDonDAO {
         boolean result = false;
         String sql = "DELETE FROM cthoadon WHERE MaHD = ?";
         try {
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             pre.setInt(1, MaHD);
             result = pre.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -70,7 +71,7 @@ public class CTHoaDonDAO {
         boolean result = false;
         String sql = "UPDATE cthoadon SET MaSP=?, SoLuong=?, DonGia=?, ThanhTien=? WHERE MaHD=?";
         try {
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             pre.setInt(1, cthd.getMaSP());
             pre.setInt(2, cthd.getSoLuong());
             pre.setInt(3, cthd.getDonGia());
@@ -87,7 +88,7 @@ public class CTHoaDonDAO {
     String sql = "SELECT * FROM cthoadon WHERE MaHD = ?";
     CTHoaDon cthd = new CTHoaDon();
     try {
-        PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
+        PreparedStatement pre = myConnect.conn.prepareStatement(sql);
         pre.setInt(1, maHD);
         ResultSet rs = pre.executeQuery();
         if (rs.next()) {

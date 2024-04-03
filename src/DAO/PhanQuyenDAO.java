@@ -99,7 +99,7 @@ public class PhanQuyenDAO {
             ps1.executeUpdate();
             
             String sql2 = "DELETE FROM PhanQuyen WHERE Quyen=?";
-            PreparedStatement ps2 = MyConnect.conn.prepareStatement(sql2);
+            PreparedStatement ps2 = myConnect.conn.prepareStatement(sql2);
             ps2.setString(1, phanQuyen);
             return ps2.executeUpdate() > 0;
         } catch (Exception e) {

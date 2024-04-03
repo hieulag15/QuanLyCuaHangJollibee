@@ -3,36 +3,44 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 import Model.SanPham;
-public class SanPhamDAO {
-    public List<SanPham> getAllSanPham() {
-        List<SanPham> list = new ArrayList<>();
-        String sql = "SELECT * FROM SanPham";
-        try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int maSP = rs.getInt("MaSP");
-                String tenSP = rs.getString("TenSP");
-                int maLoai = rs.getInt("MaLoai");
-                int soLuong = rs.getInt("SoLuong");
-                String donViTinh = rs.getString("DonViTinh");
-                String hinhAnh = rs.getString("HinhAnh");
-                int donGia = rs.getInt("DonGia");
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
-                SanPham sanPham = new SanPham(maSP, tenSP, maLoai, soLuong, donViTinh, hinhAnh, donGia);
-                list.add(sanPham);
+public class SanPhamDAO {
+    MyConnect myConnect = new MyConnect();
+    public ArrayList<SanPham> getAllSanPham() {
+        try {
+            String sql = "SELECT * FROM SanPham";
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            ArrayList<SanPham> dssp = new ArrayList<>();
+            while (rs.next()) {
+                SanPham sp = new SanPham();
+
+                sp.setMaSP(rs.getInt(1));
+                sp.setTenSP(rs.getString(2));
+                sp.setMaLoai(rs.getInt(3));
+                sp.setSoLuong(rs.getInt(4));
+                sp.setDonViTinh(rs.getString(5));
+                sp.setHinhAnh(rs.getString(6));
+                sp.setDonGia(rs.getInt(7));
+
+                dssp.add(sp);
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            return dssp;
+        } catch (SQLException e) {
         }
-        return list;
+
+        return null;
     }
 
     public boolean addSanPham(SanPham sp) {
         boolean result = false;
         String sql = "INSERT INTO SanPham (MaSP, TenSP, MaLoai, SoLuong, DonViTinh, HinhAnh, DonGia) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, sp.getMaSP());
             ps.setString(2, sp.getTenSP());
             ps.setInt(3, sp.getMaLoai());
@@ -52,7 +60,7 @@ public class SanPhamDAO {
         boolean result = false;
         String sql = "UPDATE SanPham SET TenSP = ?, MaLoai = ?, SoLuong = ?, DonViTinh = ?, HinhAnh = ?, DonGia = ? WHERE MaSP = ?";
         try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setString(1, sp.getTenSP());
             ps.setInt(2, sp.getMaLoai());
             ps.setInt(3, sp.getSoLuong());
@@ -72,7 +80,7 @@ public class SanPhamDAO {
         boolean result = false;
         String sql = "DELETE FROM SanPham WHERE MaSP = ?";
         try {
-            PreparedStatement ps = MyConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, maSP);
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {
