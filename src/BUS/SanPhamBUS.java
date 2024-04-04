@@ -10,7 +10,7 @@ public class SanPhamBUS {
     private SanPhamDAO sanphamDAO = new SanPhamDAO();
 
     public SanPhamBUS() {
-        
+        docListSanPham();
     }
     
     public void docListSanPham() {

@@ -1,9 +1,7 @@
 package GUI;
 
-import static Main.main.changLNF;
-
-//import QuanLyPizza.BUS.PhanQuyenBUS;
-//import QuanLyPizza.DTO.PhanQuyen;
+import BUS.PhanQuyenBUS;
+import Model.PhanQuyen;
 
 
 import java.awt.*;
@@ -32,15 +30,17 @@ public class MainQuanLy extends JFrame {
     JLabel btnDoiMatKhau;
     JPanel pnTitle, pnMenuLeft, pnCard, pnBanHang, pnKhuyenMai, pnNhapHang, pnSanPham, pnNhanVien, pnKhachHang, pnThongKe;
     PnQuanLyBanHangGUI banHangPanel;
+    PnQuanLyBanHang banHangPn;
     PnQuanLyKhuyenMaiGUI khuyenMaiPanel;
-//    PnQuanLyNhapHangGUI nhapHangPanel;
-//    PnQuanLySanPhamGUI sanPhamPanel;
-//    PnQuanLyNhanVienGUI nhanVienPanel;
+    PnQuanLyNhapHangGUI nhapHangPanel;
+    PnQuanLySanPhamGUI sanPhamPanel;
+    PnQuanLyNhanVienGUI nhanVienPanel;
     PnQuanLyKhachHangGUI khachHangPanel;
+//    PnQuanLyThongKeGUI thongKePanel;
 
     JLabel btnClose, btnMinimize, lblBanHang, lblKhuyenMai, lblNhapHang, lblSanPham, lblNhanVien, lblKhachHang, lblThongKe;
     final Color clLeftItem = new Color(228,22,61);
-    final Color clLeftItemHover = new Color(72, 88, 107);
+    final Color clLeftItemHover = new Color(237, 111, 102);
     final Color clLeftItemSelected = new Color(242, 153, 74);
     ArrayList<JLabel> listMenuLeft;
     CardLayout cardMenuLeftGroup = new CardLayout();
@@ -71,8 +71,8 @@ public class MainQuanLy extends JFrame {
 
         JLabel lblTitleText = new JLabel("Phần mềm quản lý cửa hàng Jollibee");
         lblTitleText.setBounds(width / 2 - 428 / 2, 3, 428, 38);
-        lblTitleText.setHorizontalAlignment(JLabel.CENTER); // Đặt căn chỉnh cho label ở giữa
-        lblTitleText.setForeground(Color.WHITE); // Đặt màu chữ là trắng
+        lblTitleText.setHorizontalAlignment(JLabel.CENTER);
+        lblTitleText.setForeground(Color.WHITE);
         lblTitleText.setFont(new Font("Arial", Font.BOLD, 24));
         pnTitle.add(lblTitleText);
 
@@ -158,15 +158,52 @@ public class MainQuanLy extends JFrame {
 
         //==========ADD PANEL BÁN HÀNG + KHUYẾN MÃI (Ko phân quyền)==========
         banHangPanel = new PnQuanLyBanHangGUI();
+        banHangPn = new PnQuanLyBanHang();
         pnBanHang.setLayout(new BorderLayout());
-        pnBanHang.add(banHangPanel, BorderLayout.CENTER);
+        pnBanHang.add(banHangPn, BorderLayout.CENTER);
 
-//        khuyenMaiPanel = new PnQuanLyKhuyenMaiGUI();
-//        pnKhuyenMai.setLayout(new BorderLayout());
-//        pnKhuyenMai.add(khuyenMaiPanel, BorderLayout.CENTER);
+        khuyenMaiPanel = new PnQuanLyKhuyenMaiGUI();
+        pnKhuyenMai.setLayout(new BorderLayout());
+        pnKhuyenMai.add(khuyenMaiPanel, BorderLayout.CENTER);
 
         //======XỬ LÝ PHÂN QUYỀN=======
-     
+        PhanQuyen quyen = PhanQuyenBUS.quyenTK;
+
+        if (quyen.getNhapHang() == 1) {
+            nhapHangPanel = new PnQuanLyNhapHangGUI();
+            pnNhapHang.setLayout(new BorderLayout());
+            pnNhapHang.add(nhapHangPanel, BorderLayout.CENTER);
+            lblNhapHang.setVisible(true);
+        }
+
+        if (quyen.getQlSanPham() == 1) {
+            sanPhamPanel = new PnQuanLySanPhamGUI();
+            pnSanPham.setLayout(new BorderLayout());
+            pnSanPham.add(sanPhamPanel, BorderLayout.CENTER);
+            lblSanPham.setVisible(true);
+        }
+
+        if (quyen.getQlNhanVien() == 1) {
+            nhanVienPanel = new PnQuanLyNhanVienGUI();
+            pnNhanVien.setLayout(new BorderLayout());
+            pnNhanVien.add(nhanVienPanel, BorderLayout.CENTER);
+            lblNhanVien.setVisible(true);
+        }
+
+        if (quyen.getQlKhachHang() == 1) {
+            khachHangPanel = new PnQuanLyKhachHangGUI();
+            pnKhachHang.setLayout(new BorderLayout());
+            pnKhachHang.add(khachHangPanel, BorderLayout.CENTER);
+            lblKhachHang.setVisible(true);
+        }
+
+//        if (quyen.getThongKe() == 1) {
+//            thongKePanel = new PnQuanLyThongKeGUI();
+//            pnThongKe.setLayout(new BorderLayout());
+//            pnThongKe.add(thongKePanel, BorderLayout.CENTER);
+//            lblThongKe.setVisible(true);
+//        }
+        pnMain.add(pnCard);
         /*
         ============================================================
                                 CARD PANEL           
@@ -335,39 +372,6 @@ public class MainQuanLy extends JFrame {
         banHangPanel.xuLyThoat();
         Main.main.changLNF("Nimbus");
         System.exit(0);
-    }
-    
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainQuanLy.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainQuanLy.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainQuanLy.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainQuanLy.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainQuanLy().setVisible(true);
-            }
-        });
     }
 
 }

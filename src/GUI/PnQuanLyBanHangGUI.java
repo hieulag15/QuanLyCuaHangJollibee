@@ -157,7 +157,7 @@ public class PnQuanLyBanHangGUI extends JPanel {
         //<editor-fold defaultstate="collapsed" desc="Bảng giỏ hàng">
         pnTableGioHang.setLayout(new BorderLayout());
 
-        JLabel lblTitleGioHang = new JLabel("Giỏ hàng");
+        JLabel lblTitleGioHang = new JLabel("Sản phẩm khách mua");
         lblTitleGioHang.setFont(new Font("Arial", Font.BOLD, 28));
         pnTableGioHang.add(lblTitleGioHang, BorderLayout.NORTH);
 
@@ -188,6 +188,7 @@ public class PnQuanLyBanHangGUI extends JPanel {
 
         //====================Thông tin bán hàng====================
         JPanel pnThongTinBanHang = new TransparentPanel();
+        pnThongTinBanHang.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         //<editor-fold defaultstate="collapsed" desc="Thông tin bán hàng (textfield, button thêm)">
         pnThongTinBanHang.setLayout(new BoxLayout(pnThongTinBanHang, BoxLayout.Y_AXIS));
 
@@ -890,7 +891,15 @@ public class PnQuanLyBanHangGUI extends JPanel {
     }
 
     private void loadDataComboboxLoaiBanSP() {
-        
+        cmbLoaiSPBanHang.removeAllItems();
+        cmbLoaiSPBanHang.addItem("0 - Chọn loại");
+        ArrayList<LoaiSP> dsl = loaiBUS.getDanhSachLoai();
+
+        for (LoaiSP loai : dsl) {
+            if (!loai.getTenLoai().equalsIgnoreCase("Nguyên liệu")) {
+                cmbLoaiSPBanHang.addItem(loai.getMaLoai() + " - " + loai.getTenLoai());
+            }
+        }
     }
 
     private void loadDataComboboxNhanVienBan() {
@@ -925,7 +934,7 @@ public class PnQuanLyBanHangGUI extends JPanel {
             if (loaiSP.equals("0")) {
                 dssp = spBUS.getListSanPham();
             } 
-//              else {
+//            else {
 //                dssp = spBUS.getSanPhamTheoLoai(loaiSP);
 //            }
         } else {
@@ -1078,5 +1087,37 @@ public class PnQuanLyBanHangGUI extends JPanel {
 
     private void xuLyTimTheoKhoangGia() {
        
+    }
+    
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(MainQuanLyGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(MainQuanLyGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(MainQuanLyGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(MainQuanLyGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new PnQuanLyBanHangGUI().setVisible(true);
+            }
+        });
     }
 }
