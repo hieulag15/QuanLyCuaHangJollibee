@@ -30,7 +30,6 @@ public class MainQuanLyGUI extends JFrame {
     JLabel btnDoiMatKhau;
     JPanel pnTitle, pnMenuLeft, pnCard, pnBanHang, pnKhuyenMai, pnNhapHang, pnSanPham, pnNhanVien, pnKhachHang, pnThongKe;
     PnQuanLyBanHangGUI banHangPanel;
-    PnQuanLyBanHang banHangPn;
     PnQuanLyKhuyenMaiGUI khuyenMaiPanel;
     PnQuanLyNhapHangGUI nhapHangPanel;
     PnQuanLySanPhamGUI sanPhamPanel;
@@ -92,7 +91,7 @@ public class MainQuanLyGUI extends JFrame {
                                 SIDE BAR MENU
         ============================================================
          */
-        pnMenuLeft = new JPanel();
+        pnMenuLeft = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
         pnMenuLeft.setPreferredSize(new Dimension(250, height - pnTitle.getHeight()));
         pnMenuLeft.setBackground(clLeftItem);
         pnMenuLeft.setLayout(new BoxLayout(pnMenuLeft, BoxLayout.Y_AXIS));
@@ -104,7 +103,17 @@ public class MainQuanLyGUI extends JFrame {
         lblBanHang = new JLabel(new ImageIcon("image/ManagerUI/lblBanHang.png"));
         lblKhuyenMai = new JLabel(new ImageIcon("image/ManagerUI/lblKhuyenMai.png"));
         lblNhapHang = new JLabel(new ImageIcon("image/ManagerUI/lblNhapHang.png"));
-        lblSanPham = new JLabel(new ImageIcon("image/ManagerUI/lblSanPham.png"));
+        
+        lblSanPham = new JLabel();
+//        lblSanPham.setPreferredSize(new java.awt.Dimension(500, 65));
+//        lblSanPham.setFont(new java.awt.Font("Cambria Math", 0, 18)); // NOI18N
+//        lblSanPham.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+//        lblSanPham.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        lblSanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/sanpham.png"))); // NOI18N
+//        lblSanPham.setText("   Sản phẩm");
+//        lblSanPham.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+//        lblSanPham.setForeground(new java.awt.Color(255, 255, 255));
+//        lblSanPham.setVerifyInputWhenFocusTarget(false);
         lblNhanVien = new JLabel(new ImageIcon("image/ManagerUI/lblNhanVien.png"));
         lblKhachHang = new JLabel(new ImageIcon("image/ManagerUI/lblKhachHang.png"));
         lblThongKe = new JLabel(new ImageIcon("image/ManagerUI/lblThongKe.png"));
@@ -158,9 +167,8 @@ public class MainQuanLyGUI extends JFrame {
 
         //==========ADD PANEL BÁN HÀNG + KHUYẾN MÃI (Ko phân quyền)==========
         banHangPanel = new PnQuanLyBanHangGUI();
-        banHangPn = new PnQuanLyBanHang();
         pnBanHang.setLayout(new BorderLayout());
-        pnBanHang.add(banHangPn, BorderLayout.CENTER);
+        pnBanHang.add(banHangPanel, BorderLayout.CENTER);
 
         khuyenMaiPanel = new PnQuanLyKhuyenMaiGUI();
         pnKhuyenMai.setLayout(new BorderLayout());
