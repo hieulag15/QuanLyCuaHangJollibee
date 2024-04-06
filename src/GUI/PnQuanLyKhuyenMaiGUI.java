@@ -5,6 +5,8 @@
 package GUI;
 
 import Custom.Utils;
+import java.awt.Color;
+import javax.swing.border.SoftBevelBorder;
 
 /**
  *
@@ -95,8 +97,16 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         btnThem.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add.png"))); // NOI18N
         btnThem.setText(" Thêm  ");
-        btnThem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnThem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 255, 255), new java.awt.Color(255, 255, 255), null, null));
         btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnThemMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnThemMouseExited(evt);
+            }
+        });
 
         btnSua.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnSua.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -104,6 +114,14 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         btnSua.setText("   Sửa   ");
         btnSua.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSua.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnSua.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSuaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSuaMouseExited(evt);
+            }
+        });
 
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnXoa.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -111,6 +129,14 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         btnXoa.setText("   Xóa   ");
         btnXoa.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnXoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnXoaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnXoaMouseExited(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -201,6 +227,30 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
 
         btnSua.getAccessibleContext().setAccessibleName(" Xóa  ");
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnThemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseEntered
+        btnThem.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(228,22,61)));
+    }//GEN-LAST:event_btnThemMouseEntered
+
+    private void btnThemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseExited
+        btnThem.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+    }//GEN-LAST:event_btnThemMouseExited
+
+    private void btnSuaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseEntered
+        btnSua.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(228,22,61)));
+    }//GEN-LAST:event_btnSuaMouseEntered
+
+    private void btnSuaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseExited
+        btnSua.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+    }//GEN-LAST:event_btnSuaMouseExited
+
+    private void btnXoaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseEntered
+        btnXoa.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(228,22,61)));
+    }//GEN-LAST:event_btnXoaMouseEntered
+
+    private void btnXoaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseExited
+        btnXoa.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+    }//GEN-LAST:event_btnXoaMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

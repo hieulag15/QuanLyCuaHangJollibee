@@ -103,17 +103,7 @@ public class MainQuanLyGUI extends JFrame {
         lblBanHang = new JLabel(new ImageIcon("image/ManagerUI/lblBanHang.png"));
         lblKhuyenMai = new JLabel(new ImageIcon("image/ManagerUI/lblKhuyenMai.png"));
         lblNhapHang = new JLabel(new ImageIcon("image/ManagerUI/lblNhapHang.png"));
-        
-        lblSanPham = new JLabel();
-//        lblSanPham.setPreferredSize(new java.awt.Dimension(500, 65));
-//        lblSanPham.setFont(new java.awt.Font("Cambria Math", 0, 18)); // NOI18N
-//        lblSanPham.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-//        lblSanPham.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        lblSanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/sanpham.png"))); // NOI18N
-//        lblSanPham.setText("   Sản phẩm");
-//        lblSanPham.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-//        lblSanPham.setForeground(new java.awt.Color(255, 255, 255));
-//        lblSanPham.setVerifyInputWhenFocusTarget(false);
+        lblSanPham = new JLabel(new ImageIcon("image/ManagerUI/lblSanPham.png"));
         lblNhanVien = new JLabel(new ImageIcon("image/ManagerUI/lblNhanVien.png"));
         lblKhachHang = new JLabel(new ImageIcon("image/ManagerUI/lblKhachHang.png"));
         lblThongKe = new JLabel(new ImageIcon("image/ManagerUI/lblThongKe.png"));
