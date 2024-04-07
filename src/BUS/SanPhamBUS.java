@@ -16,6 +16,7 @@ public class SanPhamBUS {
     }
     public SanPham getSanPham(int maSP){
         return sanphamDAO.getSanPham(maSP);
+        
     }
     public boolean addSanPham(SanPham sp) {
         return sanphamDAO.addSanPham(sp);
