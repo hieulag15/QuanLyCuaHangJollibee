@@ -8,7 +8,6 @@ public class SanPhamBUS {
     private SanPhamDAO sanphamDAO = new SanPhamDAO();
 
     public SanPhamBUS() {
-        docListSanPham();
     }
     
     public ArrayList<SanPham> getListSanPham() {
