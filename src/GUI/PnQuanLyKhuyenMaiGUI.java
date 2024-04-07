@@ -6,6 +6,7 @@ package GUI;
 
 import Custom.Utils;
 import java.awt.Color;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
 
 /**
@@ -97,7 +98,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         btnThem.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add.png"))); // NOI18N
         btnThem.setText(" Thêm  ");
-        btnThem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 255, 255), new java.awt.Color(255, 255, 255), null, null));
+        btnThem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -177,7 +178,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
                                         .addComponent(txtDieuKien))
                                     .addComponent(dateNgayBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
-                .addGap(215, 215, 215))
+                .addGap(251, 251, 251))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -229,7 +230,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseEntered
-        btnThem.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(228,22,61)));
+        btnThem.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
     }//GEN-LAST:event_btnThemMouseEntered
 
     private void btnThemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseExited
@@ -237,7 +238,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnThemMouseExited
 
     private void btnSuaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseEntered
-        btnSua.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(228,22,61)));
+        btnSua.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
     }//GEN-LAST:event_btnSuaMouseEntered
 
     private void btnSuaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseExited
@@ -245,7 +246,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSuaMouseExited
 
     private void btnXoaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseEntered
-        btnXoa.setBorder(javax.swing.BorderFactory.createLineBorder(new Color(228,22,61)));
+        btnXoa.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
     }//GEN-LAST:event_btnXoaMouseEntered
 
     private void btnXoaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseExited
