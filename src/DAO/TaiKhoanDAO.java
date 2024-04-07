@@ -31,6 +31,24 @@ public class TaiKhoanDAO {
         }
         return list;
     }
+    public TaiKhoan getTaiKhoan(int maNhanVien){
+        TaiKhoan tk = new TaiKhoan();
+        String sql = "SELECT * FROM TaiKhoan WHERE MaNhanVien = "+ maNhanVien;
+        try {
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            int maNhanvien = rs.getInt("MaNhanVien");
+            String tenDangNhap = rs.getString("TenDangNhap");
+            String matKhau = rs.getString("MatKhau");
+            String quyen = rs.getString("Quyen");
+
+            tk = new TaiKhoan(maNhanvien, tenDangNhap, matKhau, quyen);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return tk;
+    }
 
     public boolean addTaiKhoan(TaiKhoan tk) {
         boolean result = false;
@@ -140,5 +158,24 @@ public class TaiKhoanDAO {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public TaiKhoan getTaiKhoan(String manv){
+        TaiKhoan tk = new TaiKhoan();
+        try {
+            String sql = "SELECT * FROM TaiKhoan WHERE MaNV = '" + manv + "'";
+            Statement st = myConnect.conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            int maNhanVien = rs.getInt("MaNhanVien");
+                String tenDangNhap = rs.getString("TenDangNhap");
+                String matKhau = rs.getString("MatKhau");
+                String quyen = rs.getString("Quyen");
+
+                tk = new TaiKhoan(maNhanVien, tenDangNhap, matKhau, quyen);
+                return tk;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tk;
     }
 }

@@ -35,6 +35,25 @@ public class SanPhamDAO {
 
         return null;
     }
+    public SanPham getSanPham(int maSP){
+        try {
+            String sql = "SELECT * FROM SanPham WHERE MaSP = "+maSP;
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            SanPham sp = new SanPham();
+            sp.setMaSP(rs.getInt(1));
+            sp.setTenSP(rs.getString(2));
+            sp.setMaLoai(rs.getInt(3));
+            sp.setSoLuong(rs.getInt(4));
+            sp.setDonViTinh(rs.getString(5));
+            sp.setHinhAnh(rs.getString(6));
+            sp.setDonGia(rs.getInt(7));
+            return sp;
+        } catch (SQLException e) {
+        }
+
+        return null;
+    }
 
     public boolean addSanPham(SanPham sp) {
         boolean result = false;

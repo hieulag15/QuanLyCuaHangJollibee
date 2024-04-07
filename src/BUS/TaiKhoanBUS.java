@@ -11,6 +11,9 @@ public class TaiKhoanBUS {
     public List<TaiKhoan> getListTaiKhoan() {
         return taiKhoanDAO.getAllTaiKhoan();
     }
+    public TaiKhoan getTaiKhoan(int maNhanVien){
+        return taiKhoanDAO.getTaiKhoan(maNhanVien);
+    }
     public boolean addTaiKhoan(TaiKhoan tk) {
         if (kiemTraTrungTenDangNhap(tk.getTenDangNhap())) {
             MyDialog dlg = new MyDialog("Tên đăng nhập bị trùng! Có thể tài khoản bị khoá, thực hiện mở khoá?", MyDialog.WARNING_DIALOG);
@@ -71,4 +74,7 @@ public class TaiKhoanBUS {
         return taiKhoanDAO.kiemTraTrungTenDangNhap(tenDangNhap);
     }
     
+    public TaiKhoan getTaiKhoan (String manv){
+        return taiKhoanDAO.getTaiKhoan(manv);
+    }
 }

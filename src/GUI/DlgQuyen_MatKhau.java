@@ -7,6 +7,8 @@ import Model.PhanQuyen;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import Model.TaiKhoan;
+import javax.swing.JOptionPane;
 
 public class DlgQuyen_MatKhau extends javax.swing.JDialog {
 
@@ -236,7 +238,16 @@ public class DlgQuyen_MatKhau extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCapMatKhauActionPerformed
 
     private void btnLuuQuyenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuQuyenActionPerformed
-       
+       TaiKhoan tk = new TaiKhoan();
+       String manv = txtQuyen_MaNV.getText().toString();
+       if (manv.equals("")){
+           JOptionPane.showConfirmDialog(null, "Mã nhân viên không được để trống");
+       }else{
+            tk = tkBUS.getTaiKhoan(manv);
+            String quyen = cmbQuyen.getSelectedItem().toString();
+            tk.setQuyen(quyen);
+            tkBUS.updateTaiKhoan(tk);
+       }
     }//GEN-LAST:event_btnLuuQuyenActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

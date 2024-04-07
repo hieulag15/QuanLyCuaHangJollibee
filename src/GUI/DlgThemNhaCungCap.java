@@ -1,5 +1,7 @@
 package GUI;
-
+import BUS.NhaCungCapBUS;
+import java.text.ParseException;
+import javax.swing.JOptionPane;
 public class DlgThemNhaCungCap extends javax.swing.JDialog {
 
     public DlgThemNhaCungCap() {
@@ -135,7 +137,20 @@ public class DlgThemNhaCungCap extends javax.swing.JDialog {
 
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-
+        String tenncc = txtTenNCC.getText().toString();
+        String diachi = txtDiaChi.getText().toString();
+        String sodt = txtDienThoai.getText().toString();
+        try {
+            int sdt = Integer.parseInt(sodt);
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null,"Số điện thoại không hợp lệ");
+        }
+        if (tenncc.equals("")||diachi.equals("")|| sodt.equals("")){
+            JOptionPane.showConfirmDialog(null,"Điền đầy đủ thông tin");
+        }else{
+            NhaCungCapBUS nccbus = new NhaCungCapBUS();
+            nccbus.themNhaCungCap(tenncc, diachi, sodt);
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void txtTenNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNCCActionPerformed

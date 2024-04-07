@@ -1,7 +1,8 @@
 package GUI;
 
 import Custom.MyDialog;
-
+import Model.HoaDon;
+import BUS.CTHoaDonBUS;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.print.PrinterException;
@@ -37,11 +38,11 @@ public class XuatHoaDonGUI extends JDialog {
         this.dsGioHang = dsGioHang;
         this.nhanVien = (String) nhanVien;
         DecimalFormat dcf = new DecimalFormat("###,###");
-        txtTongTien.setText(dcf.format(tongTien));
+        txtTongTien.setText(dcf.format(tongTien)); 
     }
 
     private void customEvents() {
-        txtTenKhach.getDocument().addDocumentListener(new DocumentListener() {
+        txtMaKhach.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
                 checkKhachMa();
             }
@@ -71,7 +72,7 @@ public class XuatHoaDonGUI extends JDialog {
     }
 
     private void checkKhachMa() {
-        if (!txtTenKhach.getText().equals("") && !txtMaGiam.getText().equals("")) {
+        if (!txtMaKhach.getText().equals("") && !txtMaGiam.getText().equals("")) {
             btnThanhToan.setEnabled(true);
         } else {
             btnThanhToan.setEnabled(false);
@@ -92,7 +93,7 @@ public class XuatHoaDonGUI extends JDialog {
         btnInHoaDon = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtHoaDon = new javax.swing.JEditorPane();
-        txtTenKhach = new javax.swing.JTextField();
+        txtMaKhach = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtMaGiam = new javax.swing.JTextField();
@@ -134,8 +135,8 @@ public class XuatHoaDonGUI extends JDialog {
         txtHoaDon.setEditable(false);
         jScrollPane1.setViewportView(txtHoaDon);
 
-        txtTenKhach.setEditable(false);
-        txtTenKhach.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtMaKhach.setEditable(false);
+        txtMaKhach.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Khách hàng");
@@ -186,7 +187,7 @@ public class XuatHoaDonGUI extends JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                    .addComponent(txtTenKhach)
+                    .addComponent(txtMaKhach)
                     .addComponent(txtMaGiam))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,7 +203,7 @@ public class XuatHoaDonGUI extends JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtTenKhach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtMaKhach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnTimKhach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -263,7 +264,7 @@ public class XuatHoaDonGUI extends JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JEditorPane txtHoaDon;
     private javax.swing.JTextField txtMaGiam;
-    private javax.swing.JTextField txtTenKhach;
+    private javax.swing.JTextField txtMaKhach;
     private javax.swing.JTextField txtTongTien;
     // End of variables declaration//GEN-END:variables
 }

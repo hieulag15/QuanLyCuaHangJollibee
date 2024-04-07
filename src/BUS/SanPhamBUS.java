@@ -5,32 +5,25 @@ import java.awt.image.SampleModel;
 import java.util.ArrayList;
 import java.util.List;
 public class SanPhamBUS {
-    
-    private ArrayList<SanPham> listSanPham = null;
     private SanPhamDAO sanphamDAO = new SanPhamDAO();
 
     public SanPhamBUS() {
         
     }
     
-    public void docListSanPham() {
-        listSanPham = sanphamDAO.getAllSanPham();
-    }
-    
     public ArrayList<SanPham> getListSanPham() {
-        if (listSanPham == null) {
-            docListSanPham();
-        }
-        return listSanPham;
+        return sanphamDAO.getAllSanPham();
     }
-    
+    public SanPham getSanPham(int maSP){
+        return sanphamDAO.getSanPham(maSP);
+    }
     public boolean addSanPham(SanPham sp) {
-        return true;
+        return sanphamDAO.addSanPham(sp);
     }
     public boolean updateSanPham(SanPham sp) {
-        return true;
+        return sanphamDAO.updateSanPham(sp);
     }
     public boolean deleteSanPham(int masp) {
-        return true;
+        return sanphamDAO.deleteSanPham(masp);
     }
 }

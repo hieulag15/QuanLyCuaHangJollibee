@@ -1,11 +1,13 @@
 package Model;
+
+import java.util.Date;
+
 public class PhieuNhap {
     private int maPN;
-    private int maSP;
-    private int soLuong;
-    private int donGia;
-    private int thanhTien;
-   
+    private int maNCC;
+    private int maNV;
+    private Date ngayLap;
+    private int tongTien;
 
     public int getMaPN() {
         return maPN;
@@ -15,48 +17,47 @@ public class PhieuNhap {
         this.maPN = maPN;
     }
 
-    public int getMaSP() {
-        return maSP;
+    public int getMaNCC() {
+        return maNCC;
     }
 
-    public void setMaSP(int maSP) {
-        this.maSP = maSP;
+    public void setMaNCC(int maNCC) {
+        this.maNCC = maNCC;
     }
 
-    public int getSoLuong() {
-        return soLuong;
+    public int getMaNV() {
+        return maNV;
     }
 
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+    public void setMaNV(int maNV) {
+        this.maNV = maNV;
     }
 
-    public int getDonGia() {
-        return donGia;
+    public Date getNgayLap() {
+        return ngayLap;
     }
 
-    public void setDonGia(int donGia) {
-        this.donGia = donGia;
+    public void setNgayLap(Date ngayLap) {
+        this.ngayLap = ngayLap;
     }
 
-    public int getThanhTien() {
-        return thanhTien;
+    public int getTongTien() {
+        return tongTien;
     }
 
-    public void setThanhTien(int thanhTien) {
-        this.thanhTien = thanhTien;
+    public void setTongTien(int tongTien) {
+        this.tongTien = tongTien;
     }
 
     public PhieuNhap() {
     }
 
-    public PhieuNhap(int maPN, int maSP, int soLuong, int donGia, int thanhTien) {
+    public PhieuNhap(int maPN, int maNCC, int maNV, Date ngayLap, int tongTien) {
         this.maPN = maPN;
-        this.maSP = maSP;
-        this.soLuong = soLuong;
-        this.donGia = donGia;
-        this.thanhTien = thanhTien;
+        this.maNCC = maNCC;
+        this.maNV = maNV;
+        this.ngayLap = ngayLap;
+        this.tongTien = tongTien;
     }
-
     
 }
