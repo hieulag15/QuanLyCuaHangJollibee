@@ -22,10 +22,9 @@ public class SanPhamDAO {
                 sp.setMaSP(rs.getInt(1));
                 sp.setTenSP(rs.getString(2));
                 sp.setMaLoai(rs.getInt(3));
-                sp.setSoLuong(rs.getInt(4));
-                sp.setDonViTinh(rs.getString(5));
-                sp.setHinhAnh(rs.getString(6));
-                sp.setDonGia(rs.getInt(7));
+                sp.setDonViTinh(rs.getString(4));
+                sp.setHinhAnh(rs.getString(5));
+                sp.setDonGia(rs.getInt(6));
 
                 dssp.add(sp);
             }
@@ -37,18 +36,20 @@ public class SanPhamDAO {
     }
     public SanPham getSanPham(int maSP){
         try {
-            String sql = "SELECT * FROM SanPham WHERE MaSP = "+maSP;
+            String sql = "SELECT * FROM SanPham WHERE MaSP = ?";
             PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            pre.setInt(1, maSP);
             ResultSet rs = pre.executeQuery();
-            SanPham sp = new SanPham();
-            sp.setMaSP(rs.getInt(1));
-            sp.setTenSP(rs.getString(2));
-            sp.setMaLoai(rs.getInt(3));
-            sp.setSoLuong(rs.getInt(4));
-            sp.setDonViTinh(rs.getString(5));
-            sp.setHinhAnh(rs.getString(6));
-            sp.setDonGia(rs.getInt(7));
-            return sp;
+            if (rs.next()) {
+                SanPham sp = new SanPham();
+                sp.setMaSP(rs.getInt(1));
+                sp.setTenSP(rs.getString(2));
+                sp.setMaLoai(rs.getInt(3));
+                sp.setDonViTinh(rs.getString(4));
+                sp.setHinhAnh(rs.getString(5));
+                sp.setDonGia(rs.getInt(6));
+                return sp;
+            }
         } catch (SQLException e) {
         }
 
@@ -57,16 +58,15 @@ public class SanPhamDAO {
 
     public boolean addSanPham(SanPham sp) {
         boolean result = false;
-        String sql = "INSERT INTO SanPham (MaSP, TenSP, MaLoai, SoLuong, DonViTinh, HinhAnh, DonGia) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO SanPham (MaSP, TenSP, MaLoai, DonViTinh, HinhAnh, DonGia) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setInt(1, sp.getMaSP());
             ps.setString(2, sp.getTenSP());
             ps.setInt(3, sp.getMaLoai());
-            ps.setInt(4, sp.getSoLuong());
-            ps.setString(5, sp.getDonViTinh());
-            ps.setString(6, sp.getHinhAnh());
-            ps.setInt(7, sp.getDonGia());
+            ps.setString(4, sp.getDonViTinh());
+            ps.setString(5, sp.getHinhAnh());
+            ps.setInt(6, sp.getDonGia());
 
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -77,16 +77,15 @@ public class SanPhamDAO {
 
     public boolean updateSanPham(SanPham sp) {
         boolean result = false;
-        String sql = "UPDATE SanPham SET TenSP = ?, MaLoai = ?, SoLuong = ?, DonViTinh = ?, HinhAnh = ?, DonGia = ? WHERE MaSP = ?";
+        String sql = "UPDATE SanPham SET TenSP = ?, MaLoai = ?, DonViTinh = ?, HinhAnh = ?, DonGia = ? WHERE MaSP = ?";
         try {
             PreparedStatement ps = myConnect.conn.prepareStatement(sql);
             ps.setString(1, sp.getTenSP());
             ps.setInt(2, sp.getMaLoai());
-            ps.setInt(3, sp.getSoLuong());
-            ps.setString(4, sp.getDonViTinh());
-            ps.setString(5, sp.getHinhAnh());
-            ps.setInt(6, sp.getDonGia());
-            ps.setInt(7, sp.getMaSP());
+            ps.setString(3, sp.getDonViTinh());
+            ps.setString(4, sp.getHinhAnh());
+            ps.setInt(5, sp.getDonGia());
+            ps.setInt(6, sp.getMaSP());
 
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {
