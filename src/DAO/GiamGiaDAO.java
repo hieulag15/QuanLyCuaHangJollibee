@@ -16,8 +16,8 @@ import java.util.ArrayList;
  */
 public class GiamGiaDAO {
     MyConnect myConnect = new MyConnect();
-    public List<GiamGia> getAllGiamGia() {     
-        List<GiamGia> list = new ArrayList<>();
+    public ArrayList<GiamGia> getAllGiamGia() {     
+        ArrayList<GiamGia> list = new ArrayList<>();
         String sql = "SELECT * FROM giamgia";
         try {
             PreparedStatement ps = myConnect.conn.prepareStatement(sql);

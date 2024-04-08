@@ -5,9 +5,13 @@
 package GUI;
 
 import Custom.Utils;
+import Model.GiamGia;
 import java.awt.Color;
+import java.util.ArrayList;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.table.DefaultTableModel;
+import BUS.*;
 
 /**
  *
@@ -15,16 +19,28 @@ import javax.swing.border.SoftBevelBorder;
  */
 public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
 
+    private GIamGiaBUS giamgiabus = new GIamGiaBUS();
     /**
      * Creates new form PnKhuyenMai
      */
     public PnQuanLyKhuyenMaiGUI() {
         initComponents();
         addControl();
+        loadData();
     }
     
     private void addControl(){
         Utils.customTable(tblKhuyenMai);
+    }
+    
+    private void loadData() {
+        DefaultTableModel model = (DefaultTableModel) tblKhuyenMai.getModel();
+        model.setRowCount(0);
+        
+        ArrayList<GiamGia> listkm = giamgiabus.getAllGiamGia();
+        for (GiamGia giamgia : listkm) {
+            model.addRow(new Object[]{giamgia.getMaGiam(), giamgia.getTenGiamGia(), giamgia.getPhanTramGiam(), giamgia.getDieuKien(), giamgia.getNgayBD(),giamgia.getNgayKT()});
+        }
     }
 
     /**
@@ -87,7 +103,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã khuyến mãi", "Tên chương trình", "Phần trăm giảm", "Điều kiện", "Ngày bắt đầu", "Ngày kết thúc", "Tình trạng"
+                "Mã khuyến mãi", "Tên chương trình", "Phần trăm giảm", "Điều kiện", "Ngày bắt đầu", "Ngày kết thúc"
             }
         ));
         jScrollPane1.setViewportView(tblKhuyenMai);
@@ -141,37 +157,36 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(267, 267, 267)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel8)
-                                .addComponent(jLabel9)
-                                .addComponent(jLabel6)))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(305, 305, 305)
-                            .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGap(53, 53, 53)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(56, 56, 56)
-                            .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMaKhuyenMai)
-                            .addComponent(txtPhanTramGiam, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-                            .addComponent(txtTenChuongTrinh)
-                            .addComponent(txtDieuKien)))
-                    .addGap(0, 268, Short.MAX_VALUE))
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(370, 370, 370)
-                    .addComponent(jLabel1)
-                    .addGap(251, 251, 251)))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(267, 267, 267)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel6)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(305, 305, 305)
+                        .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(53, 53, 53)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(56, 56, 56)
+                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtMaKhuyenMai)
+                        .addComponent(txtPhanTramGiam, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                        .addComponent(txtTenChuongTrinh)
+                        .addComponent(txtDieuKien)))
+                .addGap(0, 268, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(370, 370, 370)
+                .addComponent(jLabel1)
+                .addGap(251, 251, 251))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
