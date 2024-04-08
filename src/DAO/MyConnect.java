@@ -16,13 +16,13 @@ import java.util.Properties;
  */
 public class MyConnect {
     
-    public static Connection conn = null;
+    public Connection conn = null;
     
     public MyConnect() {
        //docFileText();
 
 //        String strConnect = "jdbc:mysql://" + severName + "/" + dbName + "?useUnicode=true&characterEncoding=utf-8";
-        String strConnect = "jdbc:mysql://localhost:3306/quanlyjollibee";
+        String strConnect = "jdbc:mysql://localhost:3306/jollibee";
         Properties pro = new Properties();
         pro.put("user", "root");
         pro.put("password", "");
@@ -33,5 +33,13 @@ public class MyConnect {
             new MyDialog("Không kết nối được tới CSDL!", MyDialog.ERROR_DIALOG);
             System.exit(0);
         }
+    }
+
+    public Connection getConn() {
+        return conn;
+    }
+
+    public void setConn(Connection conn) {
+        this.conn = conn;
     }
 }
