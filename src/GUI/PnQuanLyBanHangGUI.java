@@ -12,6 +12,7 @@ import Custom.Utils;
 import Model.LoaiSP;
 import Model.SanPham;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -63,7 +64,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         TableColumnModel columnModelSP = tblSanPham.getColumnModel();
         columnModelSP.getColumn(0).setPreferredWidth(50);
         columnModelSP.getColumn(1).setPreferredWidth(282);
-        columnModelSP.getColumn(2).setPreferredWidth(180);
+        columnModelSP.getColumn(2).setPreferredWidth(190);
         columnModelSP.getColumn(3).setPreferredWidth(100);
         //set chiều cao dòng
         tblSanPham.setRowHeight(180); 
@@ -71,7 +72,6 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
         columnModelSP.getColumn(0).setCellRenderer(centerRenderer);
-        columnModelSP.getColumn(1).setCellRenderer(new MultiLineTableCellRenderer());
         columnModelSP.getColumn(2).setCellRenderer(centerRenderer);
         columnModelSP.getColumn(3).setCellRenderer(centerRenderer);
     }
@@ -103,7 +103,10 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             row[1] = sp.getTenSP();
             //Hiển thị ảnh sp
             JLabel imgJL = new JLabel();
-            imgJL.setIcon(getAnhSP(sp.getHinhAnh()));
+            ImageIcon imgIcon = getAnhSP(sp.getHinhAnh());
+            Image imgFit = imgIcon.getImage().getScaledInstance(175, 175, Image.SCALE_SMOOTH);
+            ImageIcon scaledImgIcon = new ImageIcon(imgFit);
+            imgJL.setIcon(scaledImgIcon);
             row[2] = imgJL;
             row[3] = dcf.format(sp.getDonGia());
             dtmSanPhamBan.addRow(row);
@@ -117,21 +120,6 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             return (Component) value;
         }
     }
-    
-    //class render xuống dòng
-    class MultiLineTableCellRenderer extends DefaultTableCellRenderer {
-
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        if (component instanceof JTextArea) {
-            JTextArea textArea = (JTextArea) component;
-            textArea.setLineWrap(true);
-            textArea.setWrapStyleWord(true);
-        }
-        return component;
-    }
-}
     
     public void xuLyThoat() {
 
