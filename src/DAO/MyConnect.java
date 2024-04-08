@@ -22,7 +22,7 @@ public class MyConnect {
        //docFileText();
 
 //        String strConnect = "jdbc:mysql://" + severName + "/" + dbName + "?useUnicode=true&characterEncoding=utf-8";
-        String strConnect = "jdbc:mysql://localhost:3325/quanlyjollibee";
+        String strConnect = "jdbc:mysql://localhost:3306/quanlyjollibee";
         Properties pro = new Properties();
         pro.put("user", "root");
         pro.put("password", "");
