@@ -18,7 +18,7 @@ public class DangNhapDAO {
     public TaiKhoan dangNhap(TaiKhoan tk) {
         try {
             String sql = "SELECT * FROM taikhoan WHERE TenDangNhap=? AND MatKhau=? AND TrangThai=1";
-            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
             pre.setString(1, tk.getTenDangNhap());
             pre.setString(2, tk.getMatKhau());
             ResultSet rs = pre.executeQuery();

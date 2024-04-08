@@ -13,7 +13,7 @@ public class SanPhamDAO {
     public ArrayList<SanPham> getAllSanPham() {
         try {
             String sql = "SELECT * FROM SanPham";
-            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             ArrayList<SanPham> dssp = new ArrayList<>();
             while (rs.next()) {

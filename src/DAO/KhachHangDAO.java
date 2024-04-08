@@ -21,7 +21,7 @@ public class KhachHangDAO {
         String sql = "SELECT * From khachhang WHERE TinhTrang=1";
         ArrayList<KhachHang> dskh = new ArrayList<>();
         try {
-            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while(rs.next()) {
                 KhachHang kh = new KhachHang();
