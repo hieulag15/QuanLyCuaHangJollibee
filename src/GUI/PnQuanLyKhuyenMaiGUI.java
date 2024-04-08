@@ -12,6 +12,10 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.DefaultTableModel;
 import BUS.*;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
 
 /**
  *
@@ -34,12 +38,30 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
     }
     
     private void loadData() {
-        DefaultTableModel model = (DefaultTableModel) tblKhuyenMai.getModel();
-        model.setRowCount(0);
+        DefaultTableModel dtmKhuyenMai = (DefaultTableModel) tblKhuyenMai.getModel();
         
-        ArrayList<GiamGia> listkm = giamgiabus.getAllGiamGia();
-        for (GiamGia giamgia : listkm) {
-            model.addRow(new Object[]{giamgia.getMaGiam(), giamgia.getTenGiamGia(), giamgia.getPhanTramGiam(), giamgia.getDieuKien(), giamgia.getNgayBD(),giamgia.getNgayKT()});
+        dtmKhuyenMai.setRowCount(0);
+        giamgiabus.getAllGiamGia();
+        ArrayList<GiamGia> dsg = giamgiabus.getAllGiamGia();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        DecimalFormat dcf = new DecimalFormat(">###,###");
+        for (GiamGia gg : dsg) {
+            Vector vec = new Vector();
+            vec.add(gg.getMaGiam());
+            vec.add(gg.getTenGiamGia());
+            vec.add(gg.getPhanTramGiam());
+            vec.add(dcf.format(gg.getDieuKien()));
+            vec.add(sdf.format(gg.getNgayBD()));
+            vec.add(sdf.format(gg.getNgayKT()));
+
+            Date now = new Date();
+            if (gg.getNgayBD().before(now) && gg.getNgayKT().after(now)) {
+                vec.add("Có hiệu lực");
+            } else {
+                vec.add("Không hiệu lực");
+            }
+
+            dtmKhuyenMai.addRow(vec);
         }
     }
 
@@ -103,7 +125,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã khuyến mãi", "Tên chương trình", "Phần trăm giảm", "Điều kiện", "Ngày bắt đầu", "Ngày kết thúc"
+                "Mã khuyến mãi", "Tên chương trình", "Phần trăm giảm", "Điều kiện", "Ngày bắt đầu", "Ngày kết thúc", "Tình trạng"
             }
         ));
         jScrollPane1.setViewportView(tblKhuyenMai);
