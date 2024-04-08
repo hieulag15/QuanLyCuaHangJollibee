@@ -23,8 +23,10 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -104,9 +106,8 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             //Hiển thị ảnh sp
             JLabel imgJL = new JLabel();
             ImageIcon imgIcon = getAnhSP(sp.getHinhAnh());
-            Image imgFit = imgIcon.getImage().getScaledInstance(175, 175, Image.SCALE_SMOOTH);
-            ImageIcon scaledImgIcon = new ImageIcon(imgFit);
-            imgJL.setIcon(scaledImgIcon);
+            imgIcon = new ImageIcon(imgIcon.getImage().getScaledInstance(175, 175, Image.SCALE_SMOOTH));
+            imgJL.setIcon(imgIcon);
             row[2] = imgJL;
             row[3] = dcf.format(sp.getDonGia());
             dtmSanPhamBan.addRow(row);
@@ -127,13 +128,11 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     
     private void loadDataComboboxLoaiBanSP() {
         cb_loaisp.removeAllItems();
-        cb_loaisp.addItem("0 - Chọn loại");
+        cb_loaisp.addItem("0 - Tất cả");
         ArrayList<LoaiSP> dsl = loaiBUS.getDanhSachLoai();
 
         for (LoaiSP loai : dsl) {
-            if (!loai.getTenLoai().equalsIgnoreCase("Nguyên liệu")) {
-                cb_loaisp.addItem(loai.getMaLoai() + " - " + loai.getTenLoai());
-            }
+            cb_loaisp.addItem(loai.getMaLoai() + " - " + loai.getTenLoai());
         }
     }
     
@@ -164,26 +163,45 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     private void xuLyThemVaoGioHang(){
         int row = tblSanPham.getSelectedRow();
         if (row < 0) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm để xóa để thêm.", "Thông báo", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        String strMa = txtMaSP.getText() + "";
-        String ten = txtTenSP.getText();
-        String strDonGia = txtDonGia.getText() + "";
-        //thay ',' sang '' để chuyển đơn giá từ String -> Int
-        strDonGia = strDonGia.replace(",", "");
-        int donGia = Integer.parseInt(strDonGia);
-        int soLuong = Integer.parseInt(spnSoLuong.getValue() + "");
         
+        JTextField textField = ((JSpinner.DefaultEditor) spnSoLuong.getEditor()).getTextField();
+        String strSoLuong = textField.getText() + "";
+        int soLuong;
+        
+        try {
+            soLuong = Integer.parseInt(strSoLuong);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng định dạng số lượng.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if (soLuong <= 0){
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập số lượng lớn hơn 0.", "Thông báo", JOptionPane.WARNING_MESSAGE);
+            spnSoLuong.setValue(1);
+            return;
+        }
+        
+        String strMa = txtMaSP.getText() + "";
         int ma = Integer.parseInt(strMa);
+        SanPham sp = spBUS.getSanPham(ma);
+        String ten = sp.getTenSP();
+        String donViTinh = sp.getDonViTinh();
+        int donGia = sp.getDonGia();
+        
+        
+        
         
         for (int i = 0; i < tblGioHang.getRowCount(); i++) {
             int masp = Integer.parseInt(tblGioHang.getValueAt(i, 0) + "");
             //nếu mã sp trong giỏ hàng trùng với mã sp chọn thêm vào thì tăng số lượng hiện có
             if (masp == ma) {
-                int soLuongHienTai = Integer.parseInt(tblGioHang.getValueAt(i, 3) + "");
+                int soLuongHienTai = Integer.parseInt(tblGioHang.getValueAt(i, 4) + "");
                 soLuongHienTai += soLuong;
-                tblGioHang.setValueAt(soLuongHienTai, i, 3);
-                tblGioHang.setValueAt(dcf.format(soLuongHienTai * donGia), i, 4);
+                tblGioHang.setValueAt(soLuongHienTai, i, 4);
+                tblGioHang.setValueAt(dcf.format(soLuongHienTai * donGia), i, 5);
                 lamMoi();
                 return;
             }
@@ -191,12 +209,13 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         
         //nếu không trùng thì thêm mới
         dtmGioHang = (DefaultTableModel) tblGioHang.getModel();
-        Object[] rowGioHang = new Object[5];
+        Object[] rowGioHang = new Object[6];
         rowGioHang[0] = strMa;
         rowGioHang[1] = ten;
-        rowGioHang[2] = strDonGia;
-        rowGioHang[3] = soLuong;
-        rowGioHang[4] = dcf.format(soLuong * donGia);
+        rowGioHang[2] = dcf.format(donGia);
+        rowGioHang[3] = donViTinh;
+        rowGioHang[4] = soLuong;
+        rowGioHang[5] = dcf.format(soLuong * donGia);
         lamMoi();
         dtmGioHang.addRow(rowGioHang);
     }
@@ -207,7 +226,6 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
 
         if (selectedRow != -1) {
             dtmGioHang.removeRow(selectedRow);
-            JOptionPane.showMessageDialog(this, "Xóa thành công", "Thông báo", JOptionPane.WARNING_MESSAGE);
         } else {           
             JOptionPane.showMessageDialog(this, "Vui lòng chọn một sản phẩm để xóa để xóa.", "Thông báo", JOptionPane.WARNING_MESSAGE);
         }
@@ -216,8 +234,8 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     private void lamMoi(){
         txtMaSP.setText("");
         txtTenSP.setText("");
-        txtDonGia.setText("");
-        cb_loaisp.setSelectedIndex(0);
+        txtDonGia.setText("");       
+        tblSanPham.getSelectionModel().clearSelection();
         spnSoLuong.setValue(0);
         loadAnh("default.png");
     }
@@ -337,8 +355,17 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         btnBanHang.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnBanHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/selling.png"))); // NOI18N
         btnBanHang.setText("Bán hàng");
-        btnBanHang.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnBanHang.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnBanHang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnBanHangMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnBanHangMouseExited(evt);
+            }
+        });
         btnBanHang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBanHangActionPerformed(evt);
@@ -346,8 +373,17 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         });
 
         btnHoaDon.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnHoaDon.setText("Hóa đơn");
-        btnHoaDon.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnHoaDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bill.png"))); // NOI18N
+        btnHoaDon.setText(" Hóa đơn");
+        btnHoaDon.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnHoaDonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnHoaDonMouseExited(evt);
+            }
+        });
         btnHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnHoaDonActionPerformed(evt);
@@ -367,11 +403,8 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnBanHang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnHoaDon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)))
+            .addComponent(btnBanHang, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+            .addComponent(btnHoaDon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jPanel1.setLayout(new javax.swing.OverlayLayout(jPanel1));
@@ -444,11 +477,11 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã SP", "Tên SP", "Đơn giá", "Số lượng", "Thành tiền"
+                "Mã SP", "Tên SP", "Đơn giá", "Đơn vị tính", "Số lượng", "Thành tiền"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -464,7 +497,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
 
         btnThem.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnThem.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add.png"))); // NOI18N
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add-to-cart.png"))); // NOI18N
         btnThem.setText("  Thêm  ");
         btnThem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -481,9 +514,9 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         });
 
         btnXoa.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnXoa.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/clear.png"))); // NOI18N
-        btnXoa.setText("   Xóa   ");
+        btnXoa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnXoa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/cart.png"))); // NOI18N
+        btnXoa.setText("  Xóa");
         btnXoa.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnXoa.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -499,8 +532,9 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         });
 
         btnXuat.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnXuat.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnXuat.setText(" Xuất hóa đơn  ");
+        btnXuat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnXuat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/bill.png"))); // NOI18N
+        btnXuat.setText("  Xuất");
         btnXuat.setToolTipText("");
         btnXuat.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnXuat.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -517,16 +551,14 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         btnReset.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnReset.setPreferredSize(new java.awt.Dimension(40, 40));
         btnReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResetMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnResetMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnResetMouseExited(evt);
-            }
-        });
-        btnReset.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResetActionPerformed(evt);
             }
         });
 
@@ -583,19 +615,16 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
                                     .addComponent(txtMaSP)
                                     .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                                     .addComponent(cb_loaisp, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtDonGia))))
-                        .addContainerGap(20, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBanHangLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBanHangLayout.createSequentialGroup()
-                                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnXuat)
-                                .addGap(56, 56, 56))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBanHangLayout.createSequentialGroup()
-                                .addComponent(lblAnhSP)
-                                .addGap(93, 93, 93))))))
+                                    .addComponent(txtDonGia)))))
+                    .addGroup(pnBanHangLayout.createSequentialGroup()
+                        .addGap(95, 95, 95)
+                        .addComponent(lblAnhSP))
+                    .addGroup(pnBanHangLayout.createSequentialGroup()
+                        .addGap(78, 78, 78)
+                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         pnBanHangLayout.setVerticalGroup(
             pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -949,8 +978,8 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -995,11 +1024,6 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         btnReset.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
     }//GEN-LAST:event_btnResetMouseExited
 
-    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
-        loadDataComboboxLoaiBanSP();
-        cb_loaisp.setSelectedIndex(0);
-    }//GEN-LAST:event_btnResetActionPerformed
-
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
         xuLyClickTblSanPham();
     }//GEN-LAST:event_tblSanPhamMouseClicked
@@ -1027,6 +1051,30 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     private void tblGioHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioHangMouseClicked
         xuLyClickTblGioHang();
     }//GEN-LAST:event_tblGioHangMouseClicked
+
+    private void btnBanHangMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBanHangMouseEntered
+        btnBanHang.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+    }//GEN-LAST:event_btnBanHangMouseEntered
+
+    private void btnBanHangMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBanHangMouseExited
+        btnBanHang.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+    }//GEN-LAST:event_btnBanHangMouseExited
+
+    private void btnHoaDonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHoaDonMouseEntered
+        btnHoaDon.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+    }//GEN-LAST:event_btnHoaDonMouseEntered
+
+    private void btnHoaDonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnHoaDonMouseExited
+        btnHoaDon.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+    }//GEN-LAST:event_btnHoaDonMouseExited
+
+    private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
+
+        lamMoi();
+        //Xóa sạch giỏ hàng
+        DefaultTableModel model = (DefaultTableModel) tblGioHang.getModel();
+        model.setRowCount(0);
+    }//GEN-LAST:event_btnResetMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
