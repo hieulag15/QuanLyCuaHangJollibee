@@ -111,7 +111,8 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             row[2] = imgJL;
             row[3] = dcf.format(sp.getDonGia());
             dtmSanPhamBan.addRow(row);
-        }     
+        }   
+        lamMoi();
     }
      
     // class render hiển thị ảnh
@@ -145,7 +146,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             spnSoLuong.setValue(1);
             txtMaSP.setText(strMa);
             txtTenSP.setText(sp.getTenSP());
-            txtDonGia.setText(String.valueOf(sp.getDonGia()));
+            txtDonGia.setText(String.valueOf(dcf.format(sp.getDonGia())));
             loadAnh(sp.getHinhAnh());
         }
     }
@@ -1042,6 +1043,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
 
     private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
         xuLyXoaSPGioHang();
+        lamMoi();
     }//GEN-LAST:event_btnXoaMouseClicked
 
     private void cb_loaispItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_loaispItemStateChanged
