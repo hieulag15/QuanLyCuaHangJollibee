@@ -18,10 +18,7 @@ public class KhachHangBUS {
     private KhachHangDAO khachHangDAO = new KhachHangDAO();
     
     public ArrayList<KhachHang> getListKhachHang() {
-        if (dskh == null) {
-            this.dskh = khachHangDAO.getDanhSachKhachHang();
-        }
-        return dskh;
+        return khachHangDAO.getDanhSachKhachHang();
     }
     
     public boolean themKhachHang(String ho, String ten, String gioiTinh) {
@@ -65,6 +62,7 @@ public class KhachHangBUS {
             return false;
         }
         KhachHang kh = new KhachHang();
+        kh.setMaKH(Integer.parseInt(ma));
         kh.setHo(ho);
         kh.setTen(ten);
         kh.setGioiTinh(gioiTinh);

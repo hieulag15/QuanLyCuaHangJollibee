@@ -1,6 +1,7 @@
 package GUI;
 
 import BUS.KhachHangBUS;
+import Custom.MyDialog;
 
 public class DlgThemKhachHang extends javax.swing.JDialog {
 
@@ -46,7 +47,7 @@ public class DlgThemKhachHang extends javax.swing.JDialog {
         jLabel3.setText("Giới tính");
 
         cmbGioiTinh.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cmbGioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbGioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
 
         btnThem.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         btnThem.setText("Thêm");
@@ -123,7 +124,7 @@ public class DlgThemKhachHang extends javax.swing.JDialog {
         checkThemKhach = flag;
         if (flag) {
             this.dispose();
-        }
+        } 
     }//GEN-LAST:event_btnThemActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

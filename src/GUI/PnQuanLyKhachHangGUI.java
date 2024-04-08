@@ -4,10 +4,14 @@
  */
 package GUI;
 
+import BUS.*;
+import Custom.MyDialog;
 import Custom.Utils;
-import java.awt.Color;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.table.DefaultTableModel;
+import Model.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,16 +19,28 @@ import javax.swing.border.SoftBevelBorder;
  */
 public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
 
+    private KhachHangBUS khachHangBUS = new KhachHangBUS();
+
     /**
      * Creates new form PnQuanLyKhachHang
      */
     public PnQuanLyKhachHangGUI() {
         initComponents();
         addControls();
+        loadData();
     }
-    
-    private void addControls(){
+
+    private void addControls() {
         Utils.customTable(tblKhachHang);
+    }
+
+    private void loadData() {
+        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
+        model.setRowCount(0);
+        ArrayList<KhachHang> lsKhachHang = khachHangBUS.getListKhachHang();
+        for (KhachHang khachHang : lsKhachHang) {
+            model.addRow(new Object[]{khachHang.getMaKH(), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), khachHang.getTongChiTieu()});
+        }
     }
 
     /**
@@ -51,11 +67,11 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         cbGioiTinh = new javax.swing.JComboBox<>();
         txtTongChiTieu = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtStart = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         txtTuKhoa = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtEnd = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         btnTimKiem = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -70,6 +86,9 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         btnThem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnThemMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnThemMouseEntered(evt);
             }
@@ -85,6 +104,9 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         btnSua.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSua.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnSua.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSuaMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSuaMouseEntered(evt);
             }
@@ -100,6 +122,9 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         btnXoa.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnXoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXoaMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnXoaMouseEntered(evt);
             }
@@ -127,18 +152,20 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         jLabel9.setText("Tổng chi tiêu");
 
         txtMaKhachHang.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtMaKhachHang.setEnabled(false);
 
         txtHoDem.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         cbGioiTinh.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        cbGioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbGioiTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nam", "Nữ" }));
 
         txtTongChiTieu.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtTongChiTieu.setEnabled(false);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel4.setText("Từ khóa tìm");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtStart.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel6.setText("Chi tiêu từ");
@@ -148,7 +175,7 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel7.setText("đến");
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtEnd.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setText("Tìm kiếm");
@@ -160,6 +187,9 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         btnTimKiem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnTimKiem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnTimKiem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTimKiemMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnTimKiemMouseEntered(evt);
             }
@@ -176,6 +206,11 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
                 "Mã khách hàng", "Họ đệm", "Tên", "Giới tính", "Tổng chi tiêu"
             }
         ));
+        tblKhachHang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblKhachHangMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblKhachHang);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -214,11 +249,11 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                                             .addComponent(btnTimKiem, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(txtStart, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addGap(18, 18, 18)
                                                                 .addComponent(jLabel7)))
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                        .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(jLabel10)
@@ -268,8 +303,8 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(txtTongChiTieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -315,6 +350,89 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         btnTimKiem.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
     }//GEN-LAST:event_btnTimKiemMouseExited
 
+    private void btnThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseClicked
+        // TODO add your handling code here:
+        DlgThemKhachHang dlgThemKhachHang = new DlgThemKhachHang();
+        dlgThemKhachHang.setVisible(true);
+        if (dlgThemKhachHang.checkThemKhach) {
+            loadData();
+        }
+    }//GEN-LAST:event_btnThemMouseClicked
+
+    private void btnSuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseClicked
+        // TODO add your handling code here:
+        khachHangBUS.suaKhachHang(txtMaKhachHang.getText(),
+                txtHoDem.getText().trim().toString(),
+                txtTen.getText().trim().toString(),
+                cbGioiTinh.getSelectedItem().toString());
+        loadData();
+    }//GEN-LAST:event_btnSuaMouseClicked
+
+    private void tblKhachHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblKhachHangMouseClicked
+        // TODO add your handling code here:
+        int index = tblKhachHang.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
+        if (index != -1) {
+
+            txtMaKhachHang.setText(model.getValueAt(index, 0).toString());
+            txtHoDem.setText(model.getValueAt(index, 1).toString());
+            txtTen.setText(model.getValueAt(index, 2).toString());
+            cbGioiTinh.setSelectedItem(model.getValueAt(index, 3).toString());
+            txtTongChiTieu.setText(model.getValueAt(index, 4).toString());
+
+        }
+    }//GEN-LAST:event_tblKhachHangMouseClicked
+
+    private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
+        // TODO add your handling code here:
+        khachHangBUS.xoaKhachHang(txtMaKhachHang.getText());
+        loadData();
+    }//GEN-LAST:event_btnXoaMouseClicked
+
+    private void btnTimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimKiemMouseClicked
+        // TODO add your handling code here:
+
+        boolean rs = true;
+        int numStart = 0, numEnd = 0;
+        
+        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
+        model.setRowCount(0);
+        ArrayList<KhachHang> lsKhachHang = khachHangBUS.getListKhachHang();
+
+        String start = txtStart.getText().trim();
+        String end = txtEnd.getText().trim();
+        String tuKhoa = txtTuKhoa.getText().trim().toLowerCase();
+
+        try {
+            numStart = start.equals("")?0:Integer.valueOf(start);
+            numEnd = end.equals("")?Integer.MAX_VALUE:Integer.valueOf(end);
+            if (numEnd < numStart || numEnd < 0 || numStart < 0) {
+                rs = false;
+            }
+
+        } catch (Exception ex) {
+            rs = false;
+        } finally {
+            if (rs) {
+                for (KhachHang khachHang : lsKhachHang) {
+                    String maKH = String.valueOf(khachHang.getMaKH());
+                    String ho = khachHang.getHo().toLowerCase();
+                    String ten = khachHang.getTen().toLowerCase();
+                    String gioitinh = khachHang.getGioiTinh().toLowerCase();
+                    int tongChiTieu = khachHang.getTongChiTieu();
+                    if ((maKH.contains(tuKhoa) || ho.contains(tuKhoa) || ten.contains(tuKhoa) || gioitinh.contains(tuKhoa)) && (tongChiTieu >= numStart && tongChiTieu <= numEnd)) {
+                        model.addRow(new Object[]{khachHang.getMaKH(), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), khachHang.getTongChiTieu()});
+                    }
+                }
+            } else {
+                new MyDialog("Thông tin kiếm không hợp lệ!!!", MyDialog.ERROR);
+                loadData();
+            }
+        }
+
+
+    }//GEN-LAST:event_btnTimKiemMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnSua;
@@ -333,11 +451,11 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTable tblKhachHang;
+    private javax.swing.JTextField txtEnd;
     private javax.swing.JTextField txtHoDem;
     private javax.swing.JTextField txtMaKhachHang;
+    private javax.swing.JTextField txtStart;
     private javax.swing.JTextField txtTen;
     private javax.swing.JTextField txtTongChiTieu;
     private javax.swing.JTextField txtTuKhoa;

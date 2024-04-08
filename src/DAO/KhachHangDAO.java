@@ -5,11 +5,11 @@
 package DAO;
 
 import Model.KhachHang;
-import Model.NhanVien;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class KhachHangDAO {
     MyConnect myConnect = new MyConnect();
     public ArrayList<KhachHang> getDanhSachKhachHang() {
-        String sql = "SELECT * From KhachHang";
+        String sql = "SELECT * From khachhang WHERE TinhTrang=1";
         ArrayList<KhachHang> dskh = new ArrayList<>();
         try {
             PreparedStatement pre = myConnect.conn.prepareStatement(sql);
