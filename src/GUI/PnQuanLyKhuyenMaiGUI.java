@@ -63,6 +63,17 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
             dateBD.setDate(ngayBD);
             dateKT.setDate(ngayKT);
         }};
+    private void xuLyThemKhuyenMai() {
+        boolean flag = giamgiabus.themMaGiam(txtTenChuongTrinh.getText(), txtPhanTramGiam.getText(), txtDieuKien.getText(), dateBD.getDate(), dateKT.getDate());
+        if (flag)
+            loadData();
+    }
+
+    private void xuLySuaKhuyenMai() {
+        boolean flag = giamgiabus.suaMaGiam(txtMaKhuyenMai.getText(), txtTenChuongTrinh.getText(), txtPhanTramGiam.getText(), txtDieuKien.getText(), dateBD.getDate(), dateKT.getDate());
+        if (flag)
+            loadData();
+    }
     
     private void loadData() {
         DefaultTableModel dtmKhuyenMai = (DefaultTableModel) tblKhuyenMai.getModel();
@@ -173,6 +184,9 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         btnThem.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnThem.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnThem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnThemMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnThemMouseEntered(evt);
             }
@@ -188,6 +202,9 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         btnSua.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSua.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnSua.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSuaMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSuaMouseEntered(evt);
             }
@@ -322,6 +339,15 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
                 // TODO add your handling code here:
                 xuLyClickTblKhuyenMai();
     }//GEN-LAST:event_tblKhuyenMaiMouseClicked
+
+    private void btnThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseClicked
+        // TODO add your handling code here:
+        xuLyThemKhuyenMai();
+    }//GEN-LAST:event_btnThemMouseClicked
+
+    private void btnSuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseClicked
+        xuLySuaKhuyenMai();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSuaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
