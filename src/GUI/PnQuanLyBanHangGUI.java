@@ -11,6 +11,7 @@ import BUS.SanPhamBUS;
 import Custom.Utils;
 import Model.LoaiSP;
 import Model.SanPham;
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -19,9 +20,15 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -46,11 +53,27 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         load();
     }
     
-    private void addControl(){
+    private void addControl(){       
         Utils.customTable(tblGioHang);
         Utils.customTable(tblSanPham);
         Utils.customTable(tblHoaDon);
         Utils.customTable(tblChiTietHoaDon);
+               
+        //chỉnh sửa chiều rộng của các cột
+        TableColumnModel columnModelSP = tblSanPham.getColumnModel();
+        columnModelSP.getColumn(0).setPreferredWidth(50);
+        columnModelSP.getColumn(1).setPreferredWidth(282);
+        columnModelSP.getColumn(2).setPreferredWidth(180);
+        columnModelSP.getColumn(3).setPreferredWidth(100);
+        //set chiều cao dòng
+        tblSanPham.setRowHeight(180); 
+        //chỉnh nội dung nằm giữa
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+        columnModelSP.getColumn(0).setCellRenderer(centerRenderer);
+        columnModelSP.getColumn(1).setCellRenderer(new MultiLineTableCellRenderer());
+        columnModelSP.getColumn(2).setCellRenderer(centerRenderer);
+        columnModelSP.getColumn(3).setCellRenderer(centerRenderer);
     }
     
     private void load(){       
@@ -61,7 +84,8 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     DecimalFormat dcf = new DecimalFormat("###,###");
     
      private void loadDataTableSanPhamBan() {
-        dtmSanPhamBan = (DefaultTableModel) tblSanPham.getModel();
+        tblSanPham.getColumn("Hình ảnh").setCellRenderer(new myTableCellRender());
+        dtmSanPhamBan = (DefaultTableModel) tblSanPham.getModel();       
         dtmSanPhamBan.setRowCount(0);
         ArrayList<SanPham> dssp = null;
         
@@ -77,11 +101,37 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             Object[] row = new Object[4];
             row[0] = sp.getMaSP();
             row[1] = sp.getTenSP();
-            row[2] = dcf.format(sp.getDonGia());
-            row[3] = sp.getDonViTinh();
+            //Hiển thị ảnh sp
+            JLabel imgJL = new JLabel();
+            imgJL.setIcon(getAnhSP(sp.getHinhAnh()));
+            row[2] = imgJL;
+            row[3] = dcf.format(sp.getDonGia());
             dtmSanPhamBan.addRow(row);
+        }     
+    }
+     
+    // class render hiển thị ảnh
+    class myTableCellRender implements TableCellRenderer{
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            //throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            return (Component) value;
         }
     }
+    
+    //class render xuống dòng
+    class MultiLineTableCellRenderer extends DefaultTableCellRenderer {
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+        Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        if (component instanceof JTextArea) {
+            JTextArea textArea = (JTextArea) component;
+            textArea.setLineWrap(true);
+            textArea.setWrapStyleWord(true);
+        }
+        return component;
+    }
+}
     
     public void xuLyThoat() {
 
@@ -113,6 +163,16 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         }
     }
     
+    private void xuLyClickTblGioHang() {
+        int row = tblGioHang.getSelectedRow();
+        if (row > -1) {
+            String strMa = tblGioHang.getValueAt(row, 0) + "";
+            int ma = Integer.parseInt(strMa);
+            SanPham sp = spBUS.getSanPham(ma);
+            loadAnh(sp.getHinhAnh());
+        }
+    }
+    
     private void xuLyThemVaoGioHang(){
         int row = tblSanPham.getSelectedRow();
         if (row < 0) {
@@ -135,7 +195,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
                 int soLuongHienTai = Integer.parseInt(tblGioHang.getValueAt(i, 3) + "");
                 soLuongHienTai += soLuong;
                 tblGioHang.setValueAt(soLuongHienTai, i, 3);
-                tblGioHang.setValueAt(dcf.format(soLuong * donGia), i, 4);
+                tblGioHang.setValueAt(dcf.format(soLuongHienTai * donGia), i, 4);
                 lamMoi();
                 return;
             }
@@ -370,7 +430,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã SP", "Tên SP", "Đơn giá", "Đơn vị tính"
+                "Mã", "Tên sản phẩm", "Hình ảnh", "Đơn giá"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -405,6 +465,11 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblGioHang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGioHangMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(tblGioHang);
@@ -542,7 +607,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
                                 .addGap(56, 56, 56))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBanHangLayout.createSequentialGroup()
                                 .addComponent(lblAnhSP)
-                                .addGap(95, 95, 95))))))
+                                .addGap(93, 93, 93))))))
         );
         pnBanHangLayout.setVerticalGroup(
             pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -553,7 +618,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
                     .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnBanHangLayout.createSequentialGroup()
                         .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(cb_loaisp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -563,7 +628,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
                             .addComponent(txtMaSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
-                        .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(pnBanHangLayout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(0, 0, Short.MAX_VALUE))
@@ -576,20 +641,22 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
                         .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(spnSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnThem)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                            .addComponent(btnThem))
+                        .addGap(79, 79, 79))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBanHangLayout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnBanHangLayout.createSequentialGroup()
                         .addComponent(lblAnhSP)
-                        .addGap(71, 71, 71)
+                        .addGap(18, 18, 18)
                         .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         jPanel1.add(pnBanHang);
@@ -968,6 +1035,10 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     private void cb_loaispItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_loaispItemStateChanged
         loadDataTableSanPhamBan();
     }//GEN-LAST:event_cb_loaispItemStateChanged
+
+    private void tblGioHangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGioHangMouseClicked
+        xuLyClickTblGioHang();
+    }//GEN-LAST:event_tblGioHangMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
