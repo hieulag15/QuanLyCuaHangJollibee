@@ -34,6 +34,33 @@ public class SanPhamDAO {
 
         return null;
     }
+    
+    public ArrayList<SanPham> getListSanPhamByIdLoai(int maLoai) {
+        try {
+            String sql = "SELECT * FROM SanPham WHERE MaLoai = ?";
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            pre.setInt(1, maLoai);
+            ResultSet rs = pre.executeQuery();
+            ArrayList<SanPham> dssp = new ArrayList<>();
+            while (rs.next()) {
+                SanPham sp = new SanPham();
+
+                sp.setMaSP(rs.getInt(1));
+                sp.setTenSP(rs.getString(2));
+                sp.setMaLoai(rs.getInt(3));
+                sp.setDonViTinh(rs.getString(4));
+                sp.setHinhAnh(rs.getString(5));
+                sp.setDonGia(rs.getInt(6));
+
+                dssp.add(sp);
+            }
+            return dssp;
+        } catch (SQLException e) {
+        }
+
+        return null;
+    }
+    
     public SanPham getSanPham(int maSP){
         try {
             String sql = "SELECT * FROM SanPham WHERE MaSP = ?";

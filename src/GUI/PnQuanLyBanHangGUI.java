@@ -64,17 +64,13 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         dtmSanPhamBan = (DefaultTableModel) tblSanPham.getModel();
         dtmSanPhamBan.setRowCount(0);
         ArrayList<SanPham> dssp = null;
+        
+        int maLoai = cb_loaisp.getSelectedIndex();
 
-        if (cb_loaisp.getItemCount() > 0) {
-            String loai = cb_loaisp.getSelectedItem() + "";
-            String loaiArr[] = loai.split("-");
-            String loaiSP = loaiArr[0].trim();
-
-            if (loaiSP.equals("0")) {
-                dssp = spBUS.getListSanPham();
-            } 
+        if (maLoai == 0) {
+            dssp = spBUS.getListSanPham(); 
         } else {
-            dssp = spBUS.getListSanPham();
+            dssp = spBUS.getListSanPhamByIdLoai(maLoai);
         }
 
         for (SanPham sp : dssp) {
@@ -354,6 +350,11 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         jLabel5.setText("Mã SP");
 
         cb_loaisp.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        cb_loaisp.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_loaispItemStateChanged(evt);
+            }
+        });
 
         txtMaSP.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         txtMaSP.setDisabledTextColor(new java.awt.Color(255, 255, 255));
@@ -963,6 +964,10 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
         xuLyXoaSPGioHang();
     }//GEN-LAST:event_btnXoaMouseClicked
+
+    private void cb_loaispItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_loaispItemStateChanged
+        loadDataTableSanPhamBan();
+    }//GEN-LAST:event_cb_loaispItemStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

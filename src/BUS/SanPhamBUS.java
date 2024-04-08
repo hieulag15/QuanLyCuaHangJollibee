@@ -13,6 +13,11 @@ public class SanPhamBUS {
     public ArrayList<SanPham> getListSanPham() {
         return sanphamDAO.getAllSanPham();
     }
+    
+    public ArrayList<SanPham> getListSanPhamByIdLoai(int maLoai) {
+        return sanphamDAO.getListSanPhamByIdLoai(maLoai);
+    }
+    
     public SanPham getSanPham(int maSP){
         return sanphamDAO.getSanPham(maSP);
     }
