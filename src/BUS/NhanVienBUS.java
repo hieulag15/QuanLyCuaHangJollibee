@@ -32,7 +32,7 @@ public class NhanVienBUS {
         return dsnv;
     }
     
-    public boolean themNhanVien(String ho, String ten, String gioiTinh, String chucVu) {
+    public boolean themNhanVien(int manv, String ho, String ten, String gioiTinh, String chucVu) {
         if (ho.trim().equals("")) {
             new MyDialog("Họ không được để trống!", MyDialog.ERROR_DIALOG);
             return false;
@@ -46,6 +46,7 @@ public class NhanVienBUS {
             return false;
         }
         NhanVien nv = new NhanVien();
+        nv.setMaNV(manv);
         nv.setHo(ho);
         nv.setTen(ten);
         nv.setGioiTinh(gioiTinh);

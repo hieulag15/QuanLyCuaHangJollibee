@@ -62,13 +62,14 @@ public class NhanVienDAO {
     
     public boolean themNhanVien(NhanVien nv) {
         boolean result = false;
-        String sql = "INSERT INTO NhanVien(Ho, Ten, GioiTinh, ChucVu) VALUES(?, ?, ?, ?)";
+        String sql = "INSERT INTO NhanVien(MaNV, Ho, Ten, GioiTinh, ChucVu) VALUES(?, ?, ?, ?, ?)";
         try {
-            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
-            pre.setString(1, nv.getHo());
-            pre.setString(2, nv.getTen());
-            pre.setString(3, nv.getGioiTinh());
-            pre.setString(4, nv.getChucVu());
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
+            pre.setInt(1, nv.getMaNV());
+            pre.setString(2, nv.getHo());
+            pre.setString(3, nv.getTen());
+            pre.setString(4, nv.getGioiTinh());
+            pre.setString(5, nv.getChucVu());
             
             result = pre.executeUpdate() > 0;
         } catch (SQLException ex) {

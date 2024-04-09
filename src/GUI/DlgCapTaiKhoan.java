@@ -8,6 +8,7 @@ import Model.TaiKhoan;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 public class DlgCapTaiKhoan extends javax.swing.JDialog {
@@ -42,7 +43,7 @@ public class DlgCapTaiKhoan extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         txtTenDangNhap = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        cmbQuyen = new javax.swing.JComboBox<>();
+        cbQuyen = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         btnTaoTaiKhoan = new javax.swing.JButton();
 
@@ -84,7 +85,7 @@ public class DlgCapTaiKhoan extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel5.setText("Quyền");
 
-        cmbQuyen.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        cbQuyen.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         javax.swing.GroupLayout pnInfoLayout = new javax.swing.GroupLayout(pnInfo);
         pnInfo.setLayout(pnInfoLayout);
@@ -100,7 +101,7 @@ public class DlgCapTaiKhoan extends javax.swing.JDialog {
                 .addGroup(pnInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtMaNV)
                     .addComponent(txtTenDangNhap, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                    .addComponent(cmbQuyen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cbQuyen, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnInfoLayout.setVerticalGroup(
@@ -117,12 +118,17 @@ public class DlgCapTaiKhoan extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(cmbQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbQuyen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btnTaoTaiKhoan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnTaoTaiKhoan.setText("Cấp tài khoản");
+        btnTaoTaiKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnTaoTaiKhoanMouseClicked(evt);
+            }
+        });
         btnTaoTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTaoTaiKhoanActionPerformed(evt);
@@ -157,33 +163,43 @@ public class DlgCapTaiKhoan extends javax.swing.JDialog {
 
 
     private void btnTaoTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoTaiKhoanActionPerformed
-        int maNV = Integer.parseInt(txtMaNV.getText());
-        TaiKhoan tk = new TaiKhoan(maNV,
-                txtTenDangNhap.getText(), "",
-                (String) cmbQuyen.getSelectedItem());
-        if (tk.getTenDangNhap().trim().equals("")) {
-            new MyDialog("Không được để trống Tên đăng nhập!", MyDialog.ERROR_DIALOG);
-        } else {
-            taiKhoanBUS.addTaiKhoan(tk);
-        }
+//        int maNV = Integer.parseInt(txtMaNV.getText());
+//        TaiKhoan tk = new TaiKhoan(maNV,
+//                txtTenDangNhap.getText(), "",
+//                (String) cmbQuyen.getSelectedItem());
+//        if (tk.getTenDangNhap().trim().equals("")) {
+//            new MyDialog("Không được để trống Tên đăng nhập!", MyDialog.ERROR_DIALOG);
+//        } else {
+//            taiKhoanBUS.addTaiKhoan(tk);
+//        }
     }//GEN-LAST:event_btnTaoTaiKhoanActionPerformed
 
     private void txtTenDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenDangNhapActionPerformed
         btnTaoTaiKhoan.doClick();
     }//GEN-LAST:event_txtTenDangNhapActionPerformed
 
+    private void btnTaoTaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTaoTaiKhoanMouseClicked
+        taiKhoanBUS = new TaiKhoanBUS();
+        int manv = Integer.parseInt(txtMaNV.getText().toString());
+        String tendangnhap = txtTenDangNhap.getText().toString();
+        String matkhau = txtTenDangNhap.getText().toString();
+        String quyen = cbQuyen.getSelectedItem().toString();
+        TaiKhoan tk = new TaiKhoan(manv, tendangnhap, matkhau, quyen);
+        taiKhoanBUS.addTaiKhoan(tk);
+    }//GEN-LAST:event_btnTaoTaiKhoanMouseClicked
+
     private void loadDataCmbQuyen() {
-        cmbQuyen.removeAllItems();
+        cbQuyen.removeAllItems();
         ArrayList<PhanQuyen> dsq = phanQuyenBUS.getListQuyen();
         for (PhanQuyen pq : dsq) {
-            cmbQuyen.addItem(pq.getQuyen());
+            cbQuyen.addItem(pq.getQuyen());
         }
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTaoTaiKhoan;
-    private javax.swing.JComboBox<String> cmbQuyen;
+    private javax.swing.JComboBox<String> cbQuyen;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
