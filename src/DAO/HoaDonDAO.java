@@ -25,7 +25,7 @@ public class HoaDonDAO {
             while (rs.next()) {
                 HoaDon hd = new HoaDon();
                 hd.setMaHD(rs.getInt(1));
-                hd.setMaKH(rs.getInt(2));
+                hd.setSdt(rs.getString(2));
                 hd.setMaNV(rs.getInt(3));
                 hd.setNgayLap(rs.getDate(4));
                 hd.setTongTien(rs.getInt(5));
@@ -47,7 +47,7 @@ public class HoaDonDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 hd.setMaHD(rs.getInt(1));
-                hd.setMaKH(rs.getInt(2));
+                hd.setSdt(rs.getString(2));
                 hd.setMaNV(rs.getInt(3));
                 hd.setNgayLap(rs.getDate(4));
                 hd.setTongTien(rs.getInt(5));
@@ -63,15 +63,15 @@ public class HoaDonDAO {
         boolean result = false;
         try {
             
-            String sql1 = "UPDATE KhachHang SET TongChiTieu = TongChiTieu + ? WHERE MaKH=?";
+            String sql1 = "UPDATE KhachHang SET TongChiTieu = TongChiTieu + ? WHERE SoDienThoai=?";
             PreparedStatement ps1 = myConnect.conn.prepareStatement(sql1);
             ps1.setInt(1, hd.getTongTien());
-            ps1.setInt(2, hd.getMaKH());
+            ps1.setString(2, hd.getSdt());
             ps1.executeUpdate();
             
             String sql = "INSERT INTO hoadon(MaKH, MaNV, NgayLap, TongTien, GhiChu) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement ps2 = myConnect.conn.prepareStatement(sql);
-            ps2.setInt(1, hd.getMaKH());
+            ps1.setString(2, hd.getSdt());
             ps2.setInt(2, hd.getMaNV());
             ps2.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
             ps2.setInt(4, hd.getTongTien());
@@ -110,7 +110,7 @@ public class HoaDonDAO {
             while (rs.next()) {
                 HoaDon hd = new HoaDon();
                 hd.setMaHD(rs.getInt(1));
-                hd.setMaKH(rs.getInt(2));
+                hd.setSdt(rs.getString(2));
                 hd.setMaNV(rs.getInt(3));
                 hd.setNgayLap(rs.getDate(4));
                 hd.setTongTien(rs.getInt(5));

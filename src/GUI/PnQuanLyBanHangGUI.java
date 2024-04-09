@@ -349,7 +349,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         for (HoaDon hd : dshd) {
             Object[] row = new Object[4];
             row[0] = hd.getMaHD();
-            row[1] = hd.getMaKH();
+            row[1] = hd.getSdt();
             row[2] = dateFormat.format(hd.getNgayLap());
             row[3] = dcf.format(hd.getTongTien());
             dtmHoaDon.addRow(row);
@@ -384,7 +384,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             
             //đổ dữ liệu hóa đơn
             txtMaHD.setText(strMa);
-            txtMaKH.setText(String.valueOf(hd.getMaKH()));
+            txtMaKH.setText(hd.getSdt());
             txtMaNV.setText(String.valueOf(hd.getMaNV()));
             txtNgayLap.setText(dateFormat.format(hd.getNgayLap()));
             txtTongTien.setText(dcf.format(hd.getTongTien()));
@@ -882,11 +882,9 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
                         .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnThem)
                             .addComponent(jLabel6)
-                            .addComponent(spnSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnBanHangLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)))
+                            .addComponent(spnSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnBanHangLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1205,9 +1203,9 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnResetHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnResetHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtMaHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1412,9 +1410,6 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     private javax.swing.JButton btnHoaDon;
     private javax.swing.JButton btnReset;
     private javax.swing.JButton btnResetHoaDon;
-    private javax.swing.JButton btnResetKho;
-    private javax.swing.JButton btnResetKho1;
-    private javax.swing.JButton btnResetKho2;
     private javax.swing.JLabel btnThem;
     private javax.swing.JButton btnTimGia;
     private javax.swing.JButton btnTimNgay;
