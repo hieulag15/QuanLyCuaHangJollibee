@@ -22,7 +22,7 @@ public class NhanVienDAO {
         String sql = "SELECT * FROM NhanVien";
         ArrayList<NhanVien> dsnv = new ArrayList<>();
         try {
-            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
             ResultSet rs = pre.executeQuery();
             while(rs.next()) {
                 NhanVien nv = new NhanVien();

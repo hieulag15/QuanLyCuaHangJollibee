@@ -13,11 +13,13 @@ import java.util.ArrayList;
  * @author ADMIN
  */
 public class LoaiDAO {
+
     MyConnect myConnect = new MyConnect();
-     public ArrayList<LoaiSP> getDanhSachLoai() {
+
+    public ArrayList<LoaiSP> getDanhSachLoai() {
         try {
             String sql = "SELECT * FROM Loai";
-            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             ArrayList<LoaiSP> dsLoai = new ArrayList<>();
             while (rs.next()) {
@@ -34,9 +36,9 @@ public class LoaiDAO {
 
     public boolean addLoai(String tenLoai) {
         try {
-            
+
             String sql = "insert into loai(TenLoai) values (?)";
-            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ps.setString(1, tenLoai);
             int x = ps.executeUpdate();
             return x > 0 ? true : false;
@@ -49,7 +51,7 @@ public class LoaiDAO {
     public boolean deleteLoai(int maLoai) {
         try {
             String sql = "DELETE FROM Loai WHERE MaLoai=?";
-            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ps.setInt(1, maLoai);
             int x = ps.executeUpdate();
             return x > 0 ? true : false;
@@ -61,7 +63,7 @@ public class LoaiDAO {
     public boolean updateLoai(int maLoai, String ten) {
         try {
             String sql = "UPDATE Loai SET TenLoai=? WHERE MaLoai=?";
-            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ps.setString(1, ten);
             ps.setInt(2, maLoai);
             int x = ps.executeUpdate();

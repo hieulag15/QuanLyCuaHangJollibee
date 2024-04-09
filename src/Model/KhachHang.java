@@ -9,7 +9,7 @@ package Model;
  * @author ADMIN
  */
 public class KhachHang {
-    private int maKH;
+    private int sdt;
     private String ho;
     private String ten;
     private String gioiTinh;
@@ -18,20 +18,20 @@ public class KhachHang {
     public KhachHang() {
     }
 
-    public KhachHang(int maKH, String ho, String ten, String gioiTinh, int tongChiTieu) {
-        this.maKH = maKH;
+    public KhachHang(int sdt, String ho, String ten, String gioiTinh, int tongChiTieu) {
+        this.sdt = sdt;
         this.ho = ho;
         this.ten = ten;
         this.gioiTinh = gioiTinh;
         this.tongChiTieu = tongChiTieu;
     }
 
-    public int getMaKH() {
-        return maKH;
+    public int getSdt() {
+        return sdt;
     }
 
-    public void setMaKH(int maKH) {
-        this.maKH = maKH;
+    public void setSdt(int sdt) {
+        this.sdt = sdt;
     }
 
     public String getHo() {
@@ -65,5 +65,6 @@ public class KhachHang {
     public void setTongChiTieu(int tongChiTieu) {
         this.tongChiTieu = tongChiTieu;
     }
+
     
 }

@@ -21,7 +21,24 @@ public class KhachHangBUS {
         return khachHangDAO.getDanhSachKhachHang();
     }
     
-    public boolean themKhachHang(String ho, String ten, String gioiTinh) {
+    public boolean checkSoDienThoai(String sdt){
+        try {
+            int number = Integer.parseInt(sdt);
+            return number > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    public boolean themKhachHang(String SoDienThoai, String ho, String ten, String gioiTinh) {
+        if (SoDienThoai.trim().equals("")) {
+            new MyDialog("Không được để trống số điện thoại!", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+        if(!checkSoDienThoai(SoDienThoai.trim())){
+            new MyDialog("Số điện thoại không hợp lệ!", MyDialog.ERROR_DIALOG);
+            return false;
+        }
         if (ho.trim().equals("")) {
             new MyDialog("Không được để trống họ!", MyDialog.ERROR_DIALOG);
             return false;
@@ -34,7 +51,9 @@ public class KhachHangBUS {
             new MyDialog("Hãy chọn giới tính!", MyDialog.ERROR_DIALOG);
             return false;
         }
+        
         KhachHang kh = new KhachHang();
+        kh.setSdt(Integer.parseInt(SoDienThoai));
         kh.setHo(ho);
         kh.setTen(ten);
         kh.setGioiTinh(gioiTinh);
@@ -48,7 +67,7 @@ public class KhachHangBUS {
         return flag;
     }
     
-    public boolean suaKhachHang(String ma, String ho, String ten, String gioiTinh) {
+    public boolean suaKhachHang(String sdt, String ho, String ten, String gioiTinh) {
         if (ho.trim().equals("")) {
             new MyDialog("Không được để trống họ!", MyDialog.ERROR_DIALOG);
             return false;
@@ -62,7 +81,7 @@ public class KhachHangBUS {
             return false;
         }
         KhachHang kh = new KhachHang();
-        kh.setMaKH(Integer.parseInt(ma));
+        kh.setSdt(Integer.parseInt(sdt));
         kh.setHo(ho);
         kh.setTen(ten);
         kh.setGioiTinh(gioiTinh);
@@ -75,14 +94,14 @@ public class KhachHangBUS {
         return flag;
     }
     
-    public boolean xoaKhachHang(String maKh) {
+    public boolean xoaKhachHang(String sdt) {
         boolean flag = false;
         try {
-            int maKH = Integer.parseInt(maKh);
+            int SoDienThoai = Integer.parseInt(sdt);
             MyDialog dlg = new MyDialog("Bạn có chắc chắn muốn xoá?", MyDialog.WARNING_DIALOG);
             if(dlg.getAction() == MyDialog.CANCEL_OPTION)
                 return false;
-            flag = khachHangDAO.xoaKhachHang(maKH);
+            flag = khachHangDAO.xoaKhachHang(SoDienThoai);
         } catch (Exception e) {
             new MyDialog("Chưa chọn khách hàng!", MyDialog.ERROR_DIALOG);
         }
