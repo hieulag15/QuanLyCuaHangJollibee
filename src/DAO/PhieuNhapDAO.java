@@ -12,7 +12,7 @@ public class PhieuNhapDAO {
         List<PhieuNhap> list = new ArrayList<>();
         String sql = "SELECT * FROM PhieuNhap";
         try {
-            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int maPN = rs.getInt("MaPN");
@@ -34,7 +34,7 @@ public class PhieuNhapDAO {
         PhieuNhap pn = new PhieuNhap();
         String sql = "SELECT * FROM PhieuNhap WHERE MaPN = "+ maPN;
         try {
-            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             int maPNh = rs.getInt("MaPN");
             int maNCC = rs.getInt("MaNCC");
@@ -54,7 +54,7 @@ public class PhieuNhapDAO {
         boolean result = false;
         String sql = "INSERT INTO PhieuNhap (MaPN, MaNCC, MaNV, NgayLap, TongTien) VALUES (?, ?, ?, ?, ?)";
         try {
-            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ps.setInt(1, pn.getMaPN());
             ps.setInt(2, pn.getMaNCC());
             ps.setInt(3, pn.getMaNV());
@@ -74,7 +74,7 @@ public class PhieuNhapDAO {
         String sql = "UPDATE PhieuNhap SET MaNCC = ?, MaNV = ?, NgayLap = ?, TongTien = ? WHERE MaPN = ?";
 
         try {
-            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ps.setInt(1, phieuNhap.getMaNCC());
             ps.setInt(2, phieuNhap.getMaNV());
             ps.setDate(3, (Date) phieuNhap.getNgayLap());
@@ -94,7 +94,7 @@ public class PhieuNhapDAO {
         String sql = "DELETE FROM PhieuNhap WHERE MaPN = ?";
         
         try {
-            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ps.setInt(1, maPN);
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {

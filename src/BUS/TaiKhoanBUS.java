@@ -56,8 +56,7 @@ public class TaiKhoanBUS {
     }
     
     public String getTenDangNhapByMaNV(String manv) {
-        int maNV = Integer.parseInt(manv);
-        return taiKhoanDAO.getTenDangNhapTheoMa(maNV);
+        return taiKhoanDAO.getTenDangNhapTheoMa(manv);
     }
     
     public void datLaiMatKhau(String ma, String tenDangNhap) {
@@ -76,5 +75,8 @@ public class TaiKhoanBUS {
     
     public TaiKhoan getTaiKhoan (String manv){
         return taiKhoanDAO.getTaiKhoan(manv);
+    }
+    public List<TaiKhoan> getTaiKhoanByQuyen(String quyen){
+        return taiKhoanDAO.getTaiKhoanByQuyen(quyen);
     }
 }

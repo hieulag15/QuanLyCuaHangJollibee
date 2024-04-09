@@ -13,7 +13,7 @@ public class ThongKeDAO {
         List<ThongKe> list = new ArrayList<>();
         String sql = "SELECT * FROM ThongKe";
         try {
-            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int soLuongSP = rs.getInt("SoLuongSP");
