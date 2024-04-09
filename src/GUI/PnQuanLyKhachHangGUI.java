@@ -415,12 +415,12 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         } finally {
             if (rs) {
                 for (KhachHang khachHang : lsKhachHang) {
-                    String maKH = String.valueOf(khachHang.getSdt());
+                    String sdt = String.valueOf(khachHang.getSdt());
                     String ho = khachHang.getHo().toLowerCase();
                     String ten = khachHang.getTen().toLowerCase();
                     String gioitinh = khachHang.getGioiTinh().toLowerCase();
                     int tongChiTieu = khachHang.getTongChiTieu();
-                    if ((maKH.contains(tuKhoa) || ho.contains(tuKhoa) || ten.contains(tuKhoa) || gioitinh.contains(tuKhoa)) && (tongChiTieu >= numStart && tongChiTieu <= numEnd)) {
+                    if ((sdt.contains(tuKhoa) || ho.contains(tuKhoa) || ten.contains(tuKhoa) || gioitinh.contains(tuKhoa)) && (tongChiTieu >= numStart && tongChiTieu <= numEnd)) {
                         model.addRow(new Object[]{khachHang.getSdt(), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), khachHang.getTongChiTieu()});
                     }
                 }
