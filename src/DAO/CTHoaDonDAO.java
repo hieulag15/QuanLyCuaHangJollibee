@@ -37,6 +37,28 @@ public class CTHoaDonDAO {
         return dsChiTietHoaDon;
     }
     
+    public ArrayList<CTHoaDon> getListChiTietHoaDonTheoMaHD(int maHD) {
+        ArrayList<CTHoaDon> dsChiTietHoaDon = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM cthoadon where MaHD = ?";
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            ps.setInt(1, maHD);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                CTHoaDon cthd = new CTHoaDon();
+                cthd.setMaHD(rs.getInt("MaHD"));
+                cthd.setMaSP(rs.getInt("MaSP"));
+                cthd.setSoLuong(rs.getInt("SoLuong"));
+                cthd.setDonGia(rs.getInt("DonGia"));
+                cthd.setThanhTien(rs.getInt("ThanhTien"));
+                dsChiTietHoaDon.add(cthd);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return dsChiTietHoaDon;
+    }
+    
     public boolean addChiTietHoaDon(CTHoaDon cthd) {
         boolean result = false;
         try {
@@ -84,12 +106,13 @@ public class CTHoaDonDAO {
         return result;
 }
     
-    public CTHoaDon getChiTietHoaDon(int maHD) {
-    String sql = "SELECT * FROM cthoadon WHERE MaHD = ?";
+    public CTHoaDon getChiTietHoaDon(int maHD, int maSP) {
+    String sql = "SELECT * FROM cthoadon WHERE MaHD = ? and MaSP = ?";
     CTHoaDon cthd = new CTHoaDon();
     try {
         PreparedStatement pre = myConnect.conn.prepareStatement(sql);
         pre.setInt(1, maHD);
+        pre.setInt(2, maSP);
         ResultSet rs = pre.executeQuery();
         if (rs.next()) {
             cthd.setMaHD(rs.getInt("MaHD"));

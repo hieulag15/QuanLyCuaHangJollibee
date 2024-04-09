@@ -37,6 +37,27 @@ public class HoaDonDAO {
         }
         return dsHoaDon;
     }
+    
+    public HoaDon getHoaDon(int ma) {
+        HoaDon hd = new HoaDon();
+        try {
+            String sql = "SELECT * FROM hoadon where MaHD = ?";
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            ps.setInt(1, ma);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                hd.setMaHD(rs.getInt(1));
+                hd.setMaKH(rs.getInt(2));
+                hd.setMaNV(rs.getInt(3));
+                hd.setNgayLap(rs.getDate(4));
+                hd.setTongTien(rs.getInt(5));
+                hd.setGhiChu(rs.getString(6));
+            }
+        } catch (SQLException ex) {
+            return null;
+        }
+        return hd;
+    }
 
     public boolean addHoaDon(HoaDon hd) {
         boolean result = false;

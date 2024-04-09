@@ -24,6 +24,10 @@ public class HoaDonBUS {
     public ArrayList<HoaDon> getListHoaDon() {
         return hoaDonDAO.getListHoaDon();
     }
+    
+    public HoaDon getHoaDon(int ma){
+        return hoaDonDAO.getHoaDon(ma);
+    }
 
     public boolean addHoaDon(HoaDon hd) {
         return hoaDonDAO.addHoaDon(hd);
