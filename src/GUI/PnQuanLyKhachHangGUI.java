@@ -39,7 +39,7 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         model.setRowCount(0);
         ArrayList<KhachHang> lsKhachHang = khachHangBUS.getListKhachHang();
         for (KhachHang khachHang : lsKhachHang) {
-            model.addRow(new Object[]{"0".concat(String.valueOf(khachHang.getSdt())), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), khachHang.getTongChiTieu()});
+            model.addRow(new Object[]{khachHang.getSdt(), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), khachHang.getTongChiTieu()});
         }
     }
 

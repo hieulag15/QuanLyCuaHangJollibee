@@ -14,28 +14,29 @@ import java.util.ArrayList;
  * @author ADMIN
  */
 public class KhachHangBUS {
+
     private ArrayList<KhachHang> dskh = new ArrayList<>();
     private KhachHangDAO khachHangDAO = new KhachHangDAO();
-    
+
     public ArrayList<KhachHang> getListKhachHang() {
         return khachHangDAO.getDanhSachKhachHang();
     }
-    
-    public boolean checkSoDienThoai(String sdt){
+
+    public boolean checkSoDienThoai(String sdt) {
         try {
             int number = Integer.parseInt(sdt);
-            return number > 0;
+            return number > -1;
         } catch (NumberFormatException e) {
             return false;
         }
     }
-    
-    public boolean themKhachHang(String SoDienThoai, String ho, String ten, String gioiTinh) {
-        if (SoDienThoai.trim().equals("")) {
+
+    public boolean themKhachHang(String sdt, String ho, String ten, String gioiTinh) {
+        if (sdt.trim().equals("")) {
             new MyDialog("Không được để trống số điện thoại!", MyDialog.ERROR_DIALOG);
             return false;
         }
-        if(!checkSoDienThoai(SoDienThoai.trim())){
+        if (!checkSoDienThoai(sdt.trim())) {
             new MyDialog("Số điện thoại không hợp lệ!", MyDialog.ERROR_DIALOG);
             return false;
         }
@@ -51,9 +52,9 @@ public class KhachHangBUS {
             new MyDialog("Hãy chọn giới tính!", MyDialog.ERROR_DIALOG);
             return false;
         }
-        
+
         KhachHang kh = new KhachHang();
-        kh.setSdt(Integer.parseInt(SoDienThoai));
+        kh.setSdt(sdt);
         kh.setHo(ho);
         kh.setTen(ten);
         kh.setGioiTinh(gioiTinh);
@@ -66,7 +67,7 @@ public class KhachHangBUS {
         }
         return flag;
     }
-    
+
     public boolean suaKhachHang(String sdt, String ho, String ten, String gioiTinh) {
         if (ho.trim().equals("")) {
             new MyDialog("Không được để trống họ!", MyDialog.ERROR_DIALOG);
@@ -81,7 +82,7 @@ public class KhachHangBUS {
             return false;
         }
         KhachHang kh = new KhachHang();
-        kh.setSdt(Integer.parseInt(sdt));
+        kh.setSdt(sdt);
         kh.setHo(ho);
         kh.setTen(ten);
         kh.setGioiTinh(gioiTinh);
@@ -93,18 +94,21 @@ public class KhachHangBUS {
         }
         return flag;
     }
-    
+
     public boolean xoaKhachHang(String sdt) {
-        boolean flag = false;
-        try {
-            int SoDienThoai = Integer.parseInt(sdt);
-            MyDialog dlg = new MyDialog("Bạn có chắc chắn muốn xoá?", MyDialog.WARNING_DIALOG);
-            if(dlg.getAction() == MyDialog.CANCEL_OPTION)
-                return false;
-            flag = khachHangDAO.xoaKhachHang(SoDienThoai);
-        } catch (Exception e) {
+        if (sdt.equals("")) {
             new MyDialog("Chưa chọn khách hàng!", MyDialog.ERROR_DIALOG);
+            return false;
         }
+        boolean flag = false;
+
+        MyDialog dlg = new MyDialog("Bạn có chắc chắn muốn xoá?", MyDialog.WARNING_DIALOG);
+        if (dlg.getAction() == MyDialog.CANCEL_OPTION) {
+            return false;
+        }
+        
+        flag = khachHangDAO.xoaKhachHang(sdt);
+
         if (flag) {
             new MyDialog("Xoá thành công!", MyDialog.SUCCESS_DIALOG);
         } else {
