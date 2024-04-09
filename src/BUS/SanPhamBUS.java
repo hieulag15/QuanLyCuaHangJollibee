@@ -18,6 +18,10 @@ public class SanPhamBUS {
         return sanphamDAO.getListSanPhamByIdLoai(maLoai);
     }
     
+    public ArrayList<SanPham> getListSanPhamByKey(String key){
+        return sanphamDAO.getListSanPhamByKey(key);
+    }
+    
     public SanPham getSanPham(int maSP){
         return sanphamDAO.getSanPham(maSP);
     }
