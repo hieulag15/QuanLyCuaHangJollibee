@@ -16,8 +16,8 @@ import java.util.ArrayList;
  */
 public class GiamGiaDAO {
     MyConnect myConnect = new MyConnect();
-    public List<GiamGia> getAllGiamGia() {     
-        List<GiamGia> list = new ArrayList<>();
+    public ArrayList<GiamGia> getAllGiamGia() {     
+        ArrayList<GiamGia> list = new ArrayList<>();
         String sql = "SELECT * FROM giamgia";
         try {
             PreparedStatement ps = myConnect.conn.prepareStatement(sql);
@@ -53,6 +53,43 @@ public class GiamGiaDAO {
             e.printStackTrace();
         }
         return result;
+    }
+      
+      public boolean themMaGiam(GiamGia gg) {
+        try {
+            String sql = "INSERT INTO giamgia(TenGiamGia, PhanTramGiam, DieuKien, NgayBD, NgayKT) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            pre.setString(1, gg.getTenGiamGia());
+            pre.setInt(2, gg.getPhanTramGiam());
+            pre.setInt(3, gg.getDieuKien());
+
+            pre.setTimestamp(4, new java.sql.Timestamp(gg.getNgayBD().getTime()));
+            pre.setTimestamp(5, new java.sql.Timestamp(gg.getNgayKT().getTime()));
+
+            return pre.executeUpdate() > 0;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    public boolean suaMaGiam(GiamGia gg) {
+        try {
+            String sql = "UPDATE giamgia SET TenGiamGia=?, PhanTramGiam=?, DieuKien=?, NgayBD=?, NgayKT=? WHERE MaGiam=?";
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            pre.setString(1, gg.getTenGiamGia());
+            pre.setInt(2, gg.getPhanTramGiam());
+            pre.setInt(3, gg.getDieuKien());
+
+            pre.setTimestamp(4, new java.sql.Timestamp(gg.getNgayBD().getTime()));
+            pre.setTimestamp(5, new java.sql.Timestamp(gg.getNgayKT().getTime()));
+
+            pre.setInt(6, gg.getMaGiam());
+            return pre.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
       

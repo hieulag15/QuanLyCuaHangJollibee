@@ -26,6 +26,10 @@ public class CTHoaDonBUS {
         return ctHoaDonDAO.getListChiTietHoaDon();
     }
     
+    public ArrayList<CTHoaDon> getListChiTietHoaDonTheoMaHD(int maHD) {
+        return ctHoaDonDAO.getListChiTietHoaDonTheoMaHD(maHD);
+    }
+    
     public boolean addChiTietHoaDon(CTHoaDon cthd) {
        return ctHoaDonDAO.addChiTietHoaDon(cthd);
     }
@@ -38,8 +42,8 @@ public class CTHoaDonBUS {
        return ctHoaDonDAO.capNhatChiTietHoaDon(cthd);
     }
     
-    public CTHoaDon getChiTietHoaDon(int maHD) {
-        return ctHoaDonDAO.getChiTietHoaDon(maHD);
+    public CTHoaDon getChiTietHoaDon(int maHD, int maSP) {
+        return ctHoaDonDAO.getChiTietHoaDon(maHD, maSP);
     }    }
 
     
