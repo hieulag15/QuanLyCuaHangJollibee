@@ -5,6 +5,7 @@
 package GUI;
 
 import BUS.CTHoaDonBUS;
+import BUS.DangNhapBUS;
 import BUS.HoaDonBUS;
 import BUS.LoaiBUS;
 import BUS.NhanVienBUS;
@@ -52,7 +53,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     /**
      * Creates new form PnBangHang
     */
-    private TaiKhoan tk = null;
+    private DangNhapBUS dnBus = new DangNhapBUS();
     private SanPhamBUS spBUS = new SanPhamBUS();
     private NhanVienBUS nvBUS = new NhanVienBUS();
     private LoaiBUS loaiBUS = new LoaiBUS();
@@ -61,15 +62,6 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     DefaultTableModel dtmSanPhamBan, dtmGioHang, dtmHoaDon, dtmCTHoaDon;
     
     public PnQuanLyBanHangGUI() {
-        initComponents();
-        pnBanHang.setVisible(true);
-        pnHoaDon.setVisible(false);
-        addControl();
-        load();
-    }
-    
-    public PnQuanLyBanHangGUI(TaiKhoan tk) {
-        this.tk = tk;
         initComponents();
         pnBanHang.setVisible(true);
         pnHoaDon.setVisible(false);
@@ -571,9 +563,10 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             tongTien += Integer.parseInt((tblGioHang.getValueAt(i, 5) + "").replace(",", ""));
             dsGioHang.add(ob);
         }
-        
-        NhanVien nv = nvBUS.getNhanVien(tk.getMaNhanVien());
-        XuatHoaDonGUI hoaDonUI = new XuatHoaDonGUI(dsGioHang, tongTien, nv.getTen());
+              
+        int maNV = DangNhapBUS.taiKhoanLogin.getMaNhanVien();
+        NhanVien nv = nvBUS.getNhanVien(maNV);
+        XuatHoaDonGUI hoaDonUI = new XuatHoaDonGUI(dsGioHang, tongTien, nv.getHo()+ " " + nv.getTen());
         hoaDonUI.setVisible(true);
         if (hoaDonUI.checkBanHang) {
             dtmGioHang.setRowCount(0);

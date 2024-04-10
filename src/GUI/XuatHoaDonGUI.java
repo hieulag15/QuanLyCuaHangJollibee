@@ -38,7 +38,7 @@ public class XuatHoaDonGUI extends JDialog {
         this();
         this.tongTien = tongTien;
         this.dsGioHang = dsGioHang;
-        this.nhanVien = (String) nhanVien;
+        this.nhanVien = nhanVien;
         DecimalFormat dcf = new DecimalFormat("###,###");
         txtTongTien.setText(dcf.format(tongTien)); 
     }
@@ -110,19 +110,18 @@ public class XuatHoaDonGUI extends JDialog {
         hd += "<div style='text-align:center'>";
         hd += "<table style='max-width:100%'>";
         hd += "<tr>"
-                + "<th>Mã SP</th>"
-                + "<th>Tên SP</th>"
-                + "<th>Số lượng</th>"
+                + "<th>Tên sản phẩm</th>"
                 + "<th>Đơn giá</th>"
+                + "<th>Số lượng</th>"
                 + "<th>Thành tiền</th>"
                 + "</tr>";
         for (Object ob : dsGioHang) {
             if (ob instanceof Object[]) {
                 Object[] array = (Object[]) ob;
                 hd += "<tr>";
-                hd += "<td style='text-align:center;'>" + array[0] + "</td>";
-                hd += "<td style='text-align:left;'>" + array[1] + "</td>";
-                hd += "<td style='text-align:center;'>" + array[2] + "</td>";
+                hd += "<td style='text-align:left; width: 180px'>" + array[0] + "</td>";
+                hd += "<td style='text-align:center; width: 50px'>" + array[1] + "</td>";
+                hd += "<td style='text-align:center; width: 30px'>" + array[2] + "</td>";
                 hd += "<td style='text-align:center;'>" + array[3] + "</td>";
                 hd += "</tr>";
             }
@@ -345,6 +344,7 @@ public class XuatHoaDonGUI extends JDialog {
         if (timMaUI.maGiamTimDuoc != null) {
             txtMaGiam.setText(timMaUI.maGiamTimDuoc.getMaGiam() + " - " + timMaUI.maGiamTimDuoc.getTenGiamGia());
         }
+        xuLyHienThiHoaDon();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

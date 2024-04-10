@@ -46,8 +46,9 @@ public class NhanVienDAO {
         NhanVien nv = new NhanVien();
         try {
             PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            pre.setInt(1, ma);
             ResultSet rs = pre.executeQuery();
-            while(rs.next()) {
+            if(rs.next()) {
                 nv.setMaNV(rs.getInt(1));
                 nv.setHo(rs.getString(2));
                 nv.setTen(rs.getString(3));

@@ -12,18 +12,7 @@ import javax.swing.*;
 
 public class MainQuanLyGUI extends JFrame {
     
-    private TaiKhoan tk = null;
     public MainQuanLyGUI() {
-        this.setTitle("Phần mềm quản lý cửa hàng Jollibee");
-        this.setSize(1280, 900);
-        Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/icon-app.png");
-        this.setIconImage(icon);
-        addControls();
-        addEvents();
-    }
-    
-    public MainQuanLyGUI(TaiKhoan tk) {
-        this.tk = tk;
         this.setTitle("Phần mềm quản lý cửa hàng Jollibee");
         this.setSize(1280, 900);
         Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/icon-app.png");
@@ -168,7 +157,7 @@ public class MainQuanLyGUI extends JFrame {
         pnCard.add(pnThongKe, "7");
 
         //==========ADD PANEL BÁN HÀNG + KHUYẾN MÃI (Ko phân quyền)==========
-        banHangPanel = new PnQuanLyBanHangGUI(tk);
+        banHangPanel = new PnQuanLyBanHangGUI();
         pnBanHang.setLayout(new BorderLayout());
         pnBanHang.add(banHangPanel, BorderLayout.CENTER);
 
