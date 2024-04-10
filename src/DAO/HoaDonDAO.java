@@ -7,6 +7,8 @@ package DAO;
 import java.util.ArrayList;
 import java.sql.*;
 import Model.HoaDon;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -96,13 +98,13 @@ public class HoaDonDAO {
         }
         return -1;
     }
-
-    public ArrayList<HoaDon> getListHoaDon(Date dateStart, Date dateEnd) {
+    public ArrayList<HoaDon> getListHoaDonByDate(String startDate, String endDate) { 
         try {
+            
             String sql = "SELECT * FROM hoadon WHERE NgayLap BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)";
             PreparedStatement pre = myConnect.conn.prepareStatement(sql);
-            pre.setDate(1, dateStart);
-            pre.setDate(2, dateEnd);
+            pre.setString(1, startDate);
+            pre.setString(2, endDate);
             ResultSet rs = pre.executeQuery();
 
             ArrayList<HoaDon> dsHoaDon = new ArrayList<>();
@@ -118,9 +120,35 @@ public class HoaDonDAO {
                 dsHoaDon.add(hd);
             }
             return dsHoaDon;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        
         return null;
     }
+    
+    public ArrayList<HoaDon> getListHoaDonByCost(int startCost, int endCost) {
+    ArrayList<HoaDon> result = new ArrayList<>();
+    try {
+        String sql = "SELECT * FROM hoadon WHERE TongTien >= ? AND TongTien <= ?";
+        PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+        ps.setInt(1, startCost);
+        ps.setInt(2, endCost);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            HoaDon hd = new HoaDon();
+            hd.setMaHD(rs.getInt(1));
+            hd.setSdt(rs.getString(2));
+            hd.setMaNV(rs.getInt(3));
+            hd.setNgayLap(rs.getDate(4));
+            hd.setTongTien(rs.getInt(5));
+            hd.setGhiChu(rs.getString(6));
+            result.add(hd);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return result;
+}
 }

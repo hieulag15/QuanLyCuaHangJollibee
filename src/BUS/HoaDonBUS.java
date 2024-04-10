@@ -8,6 +8,10 @@ import Model.HoaDon;
 import java.sql.Date;
 import java.util.ArrayList;
 import DAO.HoaDonDAO;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -37,7 +41,11 @@ public class HoaDonBUS {
         return hoaDonDAO.getMaHoaDonMoiNhat();
     }
 
-    public ArrayList<HoaDon> getListHoaDon(Date dateStart, Date dateEnd) {
-        return hoaDonDAO.getListHoaDon(dateStart, dateEnd);
+    public ArrayList<HoaDon> getListHoaDonByDate(String startDate, String endDate) {
+        return hoaDonDAO.getListHoaDonByDate(startDate, endDate);
+    }
+    
+    public ArrayList<HoaDon> getListHoaDonByCost(int startCost, int endCost) {
+        return hoaDonDAO.getListHoaDonByCost(startCost, endCost);
     }
 }
