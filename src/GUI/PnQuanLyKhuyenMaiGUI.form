@@ -45,7 +45,7 @@
                   <Component id="txtPhanTramGiam" alignment="0" pref="325" max="32767" attributes="0"/>
                   <Component id="txtTenChuongTrinh" alignment="0" max="32767" attributes="0"/>
                   <Component id="txtDieuKien" alignment="0" max="32767" attributes="0"/>
-                  <Component id="dateBD" alignment="0" max="32767" attributes="0"/>
+                  <Component id="dateBD" max="32767" attributes="0"/>
                   <Component id="dateKT" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="0" pref="268" max="32767" attributes="0"/>
@@ -65,9 +65,9 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -92,14 +92,17 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="dateBD" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="273" max="-2" attributes="0"/>
+                      <Component id="dateBD" min="-2" pref="31" max="-2" attributes="0"/>
+                  </Group>
               </Group>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                  <Component id="dateKT" min="-2" max="-2" attributes="0"/>
+                  <Component id="dateKT" min="-2" pref="31" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnThem" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                   <Component id="btnSua" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
@@ -333,6 +336,7 @@
         <Property name="horizontalTextPosition" type="int" value="4"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXoaMouseClicked"/>
         <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXoaMouseEntered"/>
         <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXoaMouseExited"/>
       </Events>

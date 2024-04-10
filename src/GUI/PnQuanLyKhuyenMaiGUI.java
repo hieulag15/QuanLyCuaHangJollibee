@@ -23,7 +23,7 @@ import java.util.Vector;
  */
 public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
 
-    private GiamGiaBUS giamgiabus = new GiamGiaBUS();
+    private GIamGiaBUS giamgiabus = new GIamGiaBUS();
     /**
      * Creates new form PnKhuyenMai
      */
@@ -75,6 +75,13 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
             loadData();
     }
     
+    private void xuLyXoaKhuyenMai() {
+        int maKhuyenMai = Integer.parseInt(txtMaKhuyenMai.getText());
+        
+        boolean flag = giamgiabus.deleteGiamGia(maKhuyenMai);
+        if (flag)
+            loadData();
+    }
     private void loadData() {
         DefaultTableModel dtmKhuyenMai = (DefaultTableModel) tblKhuyenMai.getModel();
         
@@ -220,6 +227,9 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         btnXoa.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnXoa.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnXoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXoaMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnXoaMouseEntered(evt);
             }
@@ -271,9 +281,9 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
                         .addComponent(jLabel1)
                         .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -293,12 +303,14 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
                             .addComponent(txtDieuKien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel9))
-                    .addComponent(dateBD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(273, 273, 273)
+                        .addComponent(dateBD, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6)
-                    .addComponent(dateKT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                    .addComponent(dateKT, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -348,6 +360,10 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
     private void btnSuaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaMouseClicked
         xuLySuaKhuyenMai();        // TODO add your handling code here:
     }//GEN-LAST:event_btnSuaMouseClicked
+
+    private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
+        xuLyXoaKhuyenMai();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnXoaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

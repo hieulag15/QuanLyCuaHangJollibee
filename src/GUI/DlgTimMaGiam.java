@@ -1,6 +1,6 @@
 package GUI;
 
-import BUS.GiamGiaBUS;
+import BUS.GIamGiaBUS;
 import Model.GiamGia;
 import Custom.MyDialog;
 import Custom.MyTable;
@@ -31,7 +31,7 @@ import javax.swing.table.TableColumnModel;
 public class DlgTimMaGiam extends JDialog {
 
     public static GiamGia maGiamTimDuoc = null;
-    private GiamGiaBUS giamGiaBUS = new GiamGiaBUS();
+    private GIamGiaBUS giamGiaBUS = new GIamGiaBUS();
     private int tongTien = 0;
 
     public DlgTimMaGiam(int tongTien) {
