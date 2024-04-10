@@ -102,7 +102,7 @@ public class DlgTimKhach extends JDialog {
         btnThemKhach.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                xuLyThemKhach();
+                xuLyThemKhach();
             }
         });
     }
@@ -121,14 +121,13 @@ public class DlgTimKhach extends JDialog {
         this.dispose();
     }
 
-//    private void xuLyThemKhach() {
-//        DlgThemKhachHang dlg = new DlgThemKhachHang();
-//        dlg.setVisible(true);
-//        if (dlg.checkThemKhach) {
-//            khachHangBUS.docDanhSach();
-//            loadDataLenTable();
-//        }
-//    }
+    private void xuLyThemKhach() {
+        DlgThemKhachHang dlg = new DlgThemKhachHang();
+        dlg.setVisible(true);
+        if (dlg.checkThemKhach) {
+            loadDataLenTable();
+        }
+    }
 
     private void loadDataLenTable() {
         dtmKhachHang.setRowCount(0);

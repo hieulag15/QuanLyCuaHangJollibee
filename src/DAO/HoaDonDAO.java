@@ -9,6 +9,8 @@ import java.sql.*;
 import Model.HoaDon;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -61,8 +63,7 @@ public class HoaDonDAO {
         return hd;
     }
 
-    public boolean addHoaDon(HoaDon hd) {
-        boolean result = false;
+    public void addHoaDon(HoaDon hd) {
         try {
             
             String sql1 = "UPDATE KhachHang SET TongChiTieu = TongChiTieu + ? WHERE SoDienThoai=?";
@@ -71,19 +72,20 @@ public class HoaDonDAO {
             ps1.setString(2, hd.getSdt());
             ps1.executeUpdate();
             
-            String sql = "INSERT INTO hoadon(MaKH, MaNV, NgayLap, TongTien, GhiChu) VALUES(?, ?, ?, ?, ?)";
+//            SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
+//            LocalDateTime now = LocalDateTime.now();
+            String sql = "INSERT INTO hoadon(SoDienThoai, MaNV, NgayLap, TongTien, GhiChu) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement ps2 = myConnect.conn.prepareStatement(sql);
-            ps1.setString(2, hd.getSdt());
+            ps2.setString(1, hd.getSdt());
             ps2.setInt(2, hd.getMaNV());
-            ps2.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
+            ps2.setString(3, "2024-04-10");
             ps2.setInt(4, hd.getTongTien());
             ps2.setString(5, hd.getGhiChu());
-            result = ps2.executeUpdate() > 0;
+            ps2.executeUpdate();
             
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return result;
     }
 
     public int getMaHoaDonMoiNhat() {

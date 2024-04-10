@@ -555,11 +555,12 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         if (row == 0) return;
         int tongTien = 0;
         for (int i = 0; i < row; i++) {
-            Object[] ob = new Object[4];
-            ob[0] = tblGioHang.getValueAt(i, 1);
-            ob[1] = tblGioHang.getValueAt(i, 2);
-            ob[2] = tblGioHang.getValueAt(i, 4);
-            ob[3] = tblGioHang.getValueAt(i, 5);
+            Object[] ob = new Object[5];
+            ob[0] = tblGioHang.getValueAt(i, 0);
+            ob[1] = tblGioHang.getValueAt(i, 1);
+            ob[2] = tblGioHang.getValueAt(i, 2);
+            ob[3] = tblGioHang.getValueAt(i, 4);
+            ob[4] = tblGioHang.getValueAt(i, 5);
             tongTien += Integer.parseInt((tblGioHang.getValueAt(i, 5) + "").replace(",", ""));
             dsGioHang.add(ob);
         }

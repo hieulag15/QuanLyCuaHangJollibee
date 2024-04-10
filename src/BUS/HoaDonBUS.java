@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -33,12 +35,22 @@ public class HoaDonBUS {
         return hoaDonDAO.getHoaDon(ma);
     }
 
-    public boolean addHoaDon(HoaDon hd) {
-        return hoaDonDAO.addHoaDon(hd);
+    public void addHoaDon(HoaDon hd) {
+        hoaDonDAO.addHoaDon(hd);
     }
 
     public int getMaHoaDonMoiNhat() {
         return hoaDonDAO.getMaHoaDonMoiNhat();
+    }
+    
+    public void luuHoaDon(String sdt, int maNV, int tongTien, String ghiChu) {      
+        HoaDon hd = new HoaDon();
+        hd.setMaNV(maNV);
+        hd.setSdt(sdt);
+        hd.setGhiChu(ghiChu);
+        hd.setTongTien(tongTien);
+
+        hoaDonDAO.addHoaDon(hd);
     }
 
     public ArrayList<HoaDon> getListHoaDonByDate(String startDate, String endDate) {

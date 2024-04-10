@@ -16,6 +16,8 @@ import java.util.ArrayList;
  */
 public class CTHoaDonBUS {
     private CTHoaDonDAO ctHoaDonDAO;
+    private HoaDonBUS hdBUS = new HoaDonBUS();
+    
 
     public CTHoaDonBUS() {
        ctHoaDonDAO = new CTHoaDonDAO();
@@ -44,7 +46,25 @@ public class CTHoaDonBUS {
     
     public CTHoaDon getChiTietHoaDon(int maHD, int maSP) {
         return ctHoaDonDAO.getChiTietHoaDon(maHD, maSP);
-    }    }
+    }    
+    
+    public void addCTHoaDon(String maSP, String soLuong, String donGia, String thanhTien) {
+        int ma = hdBUS.getMaHoaDonMoiNhat();
+
+        donGia = donGia.replace(",","");
+        thanhTien = thanhTien.replace(",", "");
+
+        CTHoaDon cthd = new CTHoaDon();
+
+        cthd.setMaHD(ma);
+        cthd.setMaSP(Integer.parseInt(maSP));
+        cthd.setDonGia(Integer.parseInt(donGia));
+        cthd.setSoLuong(Integer.parseInt(soLuong));
+        cthd.setThanhTien(Integer.parseInt(thanhTien));
+
+        ctHoaDonDAO.addChiTietHoaDon(cthd);
+    }
+}
 
     
     

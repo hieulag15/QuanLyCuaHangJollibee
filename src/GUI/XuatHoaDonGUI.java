@@ -3,6 +3,8 @@ package GUI;
 import Custom.MyDialog;
 import Model.HoaDon;
 import BUS.CTHoaDonBUS;
+import BUS.DangNhapBUS;
+import BUS.HoaDonBUS;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.print.PrinterException;
@@ -18,6 +20,8 @@ import javax.swing.event.DocumentListener;
 public class XuatHoaDonGUI extends JDialog {
     private DlgTimKhach timKhachUI = new DlgTimKhach();
     private DlgTimMaGiam timMaUI = null;
+    HoaDonBUS hoadonBUS = new HoaDonBUS();
+    CTHoaDonBUS ctHoaDonBUS = new CTHoaDonBUS();
     
     public XuatHoaDonGUI() {
         checkBanHang = false;
@@ -83,7 +87,7 @@ public class XuatHoaDonGUI extends JDialog {
 
     private void xuLyHienThiHoaDon() {
         txtHoaDon.setContentType("text/html");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime now = LocalDateTime.now();
         DecimalFormat dcf = new DecimalFormat("###,### VND");
 
@@ -119,10 +123,10 @@ public class XuatHoaDonGUI extends JDialog {
             if (ob instanceof Object[]) {
                 Object[] array = (Object[]) ob;
                 hd += "<tr>";
-                hd += "<td style='text-align:left; width: 180px'>" + array[0] + "</td>";
-                hd += "<td style='text-align:center; width: 50px'>" + array[1] + "</td>";
-                hd += "<td style='text-align:center; width: 30px'>" + array[2] + "</td>";
-                hd += "<td style='text-align:center;'>" + array[3] + "</td>";
+                hd += "<td style='text-align:left; width: 180px'>" + array[1] + "</td>";
+                hd += "<td style='text-align:center; width: 50px'>" + array[2] + "</td>";
+                hd += "<td style='text-align:center; width: 30px'>" + array[3] + "</td>";
+                hd += "<td style='text-align:center;'>" + array[4] + "</td>";
                 hd += "</tr>";
             }
         }
@@ -209,6 +213,7 @@ public class XuatHoaDonGUI extends JDialog {
 
         btnInHoaDon.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnInHoaDon.setText("In hoá đơn");
+        btnInHoaDon.setEnabled(false);
         btnInHoaDon.setPreferredSize(new java.awt.Dimension(128, 45));
         btnInHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -316,7 +321,35 @@ public class XuatHoaDonGUI extends JDialog {
     public static boolean checkBanHang = false;
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {
-        
+        checkBanHang = false;
+        if (txtTenKhach.getText().equals("")) {
+            new MyDialog("Xin chọn khách hàng", MyDialog.ERROR_DIALOG);
+            return;
+        }
+        if (txtMaGiam.getText().equals("")) {
+            new MyDialog("Xin chọn mã giảm", MyDialog.ERROR_DIALOG);
+            return;
+        }
+        xuLyHienThiHoaDon();
+        btnInHoaDon.setEnabled(true);
+
+        hoadonBUS.luuHoaDon(DlgTimKhach.khachHangTimDuoc.getSdt(), DangNhapBUS.taiKhoanLogin.getMaNhanVien(), tongTien, "Đã thanh toán");
+
+        for (Object ob : dsGioHang) {
+            if (ob instanceof Object[]) {
+                Object[] array = (Object[]) ob;
+                String maSP = array[0] + "";
+                String donGia = array[2] + "";
+                String soLuong = array[3] + "";
+                String thanhTien = array[4] + "";
+                ctHoaDonBUS.addCTHoaDon(maSP, soLuong, donGia, thanhTien);
+            }          
+        }       
+        btnThanhToan.setEnabled(false);
+        btnTimMaGiam.setEnabled(false);
+        btnTimKhach.setEnabled(false);
+        checkBanHang = true;
+        new MyDialog("Thanh toán thành công", MyDialog.SUCCESS_DIALOG);
     }
 
     private void btnInHoaDonActionPerformed(java.awt.event.ActionEvent evt) {
