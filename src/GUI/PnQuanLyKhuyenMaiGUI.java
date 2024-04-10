@@ -23,7 +23,7 @@ import java.util.Vector;
  */
 public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
 
-    private GIamGiaBUS giamgiabus = new GIamGiaBUS();
+    private GiamGiaBUS giamgiabus = new GiamGiaBUS();
     /**
      * Creates new form PnKhuyenMai
      */

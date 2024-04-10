@@ -16,7 +16,9 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 public class XuatHoaDonGUI extends JDialog {
-
+    private DlgTimKhach timKhachUI = new DlgTimKhach();
+    private DlgTimMaGiam timMaUI = null;
+    
     public XuatHoaDonGUI() {
         checkBanHang = false;
         initComponents();
@@ -28,11 +30,11 @@ public class XuatHoaDonGUI extends JDialog {
         customEvents();
     }
 
-    private ArrayList<Vector> dsGioHang;
+    private ArrayList<Object> dsGioHang;
     private int tongTien;
     private String nhanVien;
 
-    public XuatHoaDonGUI(ArrayList<Vector> dsGioHang, int tongTien, Object nhanVien) {
+    public XuatHoaDonGUI(ArrayList<Object> dsGioHang, int tongTien, String nhanVien) {
         this();
         this.tongTien = tongTien;
         this.dsGioHang = dsGioHang;
@@ -42,7 +44,7 @@ public class XuatHoaDonGUI extends JDialog {
     }
 
     private void customEvents() {
-        txtMaKhach.getDocument().addDocumentListener(new DocumentListener() {
+        txtTenKhach.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
                 checkKhachMa();
             }
@@ -72,11 +74,97 @@ public class XuatHoaDonGUI extends JDialog {
     }
 
     private void checkKhachMa() {
-        if (!txtMaKhach.getText().equals("") && !txtMaGiam.getText().equals("")) {
+        if (!txtTenKhach.getText().equals("") && !txtMaGiam.getText().equals("")) {
             btnThanhToan.setEnabled(true);
         } else {
             btnThanhToan.setEnabled(false);
         }
+    }
+
+    private void xuLyHienThiHoaDon() {
+        txtHoaDon.setContentType("text/html");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        DecimalFormat dcf = new DecimalFormat("###,### VND");
+
+        String hd = "<style> "
+                + "table {"
+                + "border: 1px solid;"
+                + "border-bottom: none"
+                + "}"
+                + "tr {"
+                + "border-bottom: 1px solid;"
+                + "}"
+                + "td {"
+                + "padding: 8px;"
+                + "} "
+                + "th {"
+                + "font-size:16pt"
+                + "}"
+                + "</style>";
+        hd += "<h1 style='text-align:center;'>HOÁ ĐƠN THANH TOÁN</h1>";
+        hd += "Nhân viên: " + nhanVien + "<br/>";
+        hd += "Ngày lập: " + dtf.format(now) + "<br/>";
+        hd += "Khách hàng: " + txtTenKhach.getText() + "<br/>";
+        hd += "<div style='text-align:center;'>==========================================</div><br/>";
+        hd += "<div style='text-align:center'>";
+        hd += "<table style='max-width:100%'>";
+        hd += "<tr>"
+                + "<th>Mã SP</th>"
+                + "<th>Tên SP</th>"
+                + "<th>Số lượng</th>"
+                + "<th>Đơn giá</th>"
+                + "<th>Thành tiền</th>"
+                + "</tr>";
+        for (Object ob : dsGioHang) {
+            if (ob instanceof Object[]) {
+                Object[] array = (Object[]) ob;
+                hd += "<tr>";
+                hd += "<td style='text-align:center;'>" + array[0] + "</td>";
+                hd += "<td style='text-align:left;'>" + array[1] + "</td>";
+                hd += "<td style='text-align:center;'>" + array[2] + "</td>";
+                hd += "<td style='text-align:center;'>" + array[3] + "</td>";
+                hd += "</tr>";
+            }
+        }
+        hd += "<tr>";
+        hd += "<td style='text-align:center;'>" + "</td>";
+        hd += "<td style='text-align:left;'>" + "</td>";
+        hd += "<td style='text-align:center;'>" + "</td>";
+        hd += "<td style='text-align:center;font-weight:bold'>Tổng cộng</td>";
+        hd += "<td style='text-align:center;'>" + dcf.format(tongTien) + "</td>";
+        hd += "</tr>";
+        if (timMaUI.maGiamTimDuoc != null) {
+            int percent = 0;
+            // lấy phần trăm giảm
+            percent = timMaUI.maGiamTimDuoc.getPhanTramGiam();
+            if (tongTien >= timMaUI.maGiamTimDuoc.getDieuKien()) {
+                tongTien = tongTien - (tongTien * percent / 100);
+            } else {
+                new MyDialog("Không đủ điều kiện nhận ưu đãi!", MyDialog.ERROR_DIALOG);
+                btnTimMaGiam.setEnabled(true);
+                return;
+            }
+        }
+        hd += "<tr>";
+        hd += "<td style='text-align:center;'>" + "</td>";
+        hd += "<td style='text-align:left;'>" + "</td>";
+        hd += "<td style='text-align:center;'>" + "</td>";
+        hd += "<td style='text-align:center;font-weight:bold'>Khuyến mãi</td>";
+        hd += "<td style='text-align:center;'>" + timMaUI.maGiamTimDuoc.getPhanTramGiam() + "%" + "</td>";
+        hd += "</tr>";
+        hd += "<tr>";
+        hd += "<td style='text-align:center;'>" + "</td>";
+        hd += "<td style='text-align:left;'>" + "</td>";
+        hd += "<td style='text-align:center;'>" + "</td>";
+        hd += "<td style='text-align:center;font-weight:bold'>Thành tiền</td>";
+        hd += "<td style='text-align:center;'>" + dcf.format(tongTien) + "</td>";
+        hd += "</tr>";
+        hd += "</table>";
+        hd += "</div>";
+        hd += "<div style='text-align:center;'>==========================================</div><br/>";
+        txtHoaDon.setText(hd);
+        txtTongTien.setText(dcf.format(tongTien));
     }
 
     
@@ -93,7 +181,7 @@ public class XuatHoaDonGUI extends JDialog {
         btnInHoaDon = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtHoaDon = new javax.swing.JEditorPane();
-        txtMaKhach = new javax.swing.JTextField();
+        txtTenKhach = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtMaGiam = new javax.swing.JTextField();
@@ -112,7 +200,6 @@ public class XuatHoaDonGUI extends JDialog {
 
         btnThanhToan.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnThanhToan.setText("Thanh toán");
-        btnThanhToan.setEnabled(false);
         btnThanhToan.setPreferredSize(new java.awt.Dimension(128, 45));
         btnThanhToan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -123,7 +210,6 @@ public class XuatHoaDonGUI extends JDialog {
 
         btnInHoaDon.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnInHoaDon.setText("In hoá đơn");
-        btnInHoaDon.setEnabled(false);
         btnInHoaDon.setPreferredSize(new java.awt.Dimension(128, 45));
         btnInHoaDon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -135,8 +221,8 @@ public class XuatHoaDonGUI extends JDialog {
         txtHoaDon.setEditable(false);
         jScrollPane1.setViewportView(txtHoaDon);
 
-        txtMaKhach.setEditable(false);
-        txtMaKhach.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtTenKhach.setEditable(false);
+        txtTenKhach.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Khách hàng");
@@ -187,7 +273,7 @@ public class XuatHoaDonGUI extends JDialog {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 368, Short.MAX_VALUE)
-                    .addComponent(txtMaKhach)
+                    .addComponent(txtTenKhach)
                     .addComponent(txtMaGiam))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,7 +289,7 @@ public class XuatHoaDonGUI extends JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtMaKhach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTenKhach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnTimKhach, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -235,17 +321,30 @@ public class XuatHoaDonGUI extends JDialog {
     }
 
     private void btnInHoaDonActionPerformed(java.awt.event.ActionEvent evt) {
-
+        try {
+            if (!txtHoaDon.getText().equals("")) {
+                txtHoaDon.print();
+                this.dispose();
+            }
+        } catch (PrinterException ex) {
+        }
     }
 
 
     private void btnTimKhachActionPerformed(java.awt.event.ActionEvent evt) {
-        
+        timKhachUI.setVisible(true);
+        if (timKhachUI.khachHangTimDuoc != null) {
+            txtTenKhach.setText(timKhachUI.khachHangTimDuoc.getSdt() + " - " + timKhachUI.khachHangTimDuoc.getHo() + " " + timKhachUI.khachHangTimDuoc.getTen());
+        }
     }
 
 
     private void btnTimMaGiamActionPerformed(java.awt.event.ActionEvent evt) {
-
+        timMaUI = new DlgTimMaGiam(tongTien);
+        timMaUI.setVisible(true);
+        if (timMaUI.maGiamTimDuoc != null) {
+            txtMaGiam.setText(timMaUI.maGiamTimDuoc.getMaGiam() + " - " + timMaUI.maGiamTimDuoc.getTenGiamGia());
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -264,7 +363,7 @@ public class XuatHoaDonGUI extends JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JEditorPane txtHoaDon;
     private javax.swing.JTextField txtMaGiam;
-    private javax.swing.JTextField txtMaKhach;
+    private javax.swing.JTextField txtTenKhach;
     private javax.swing.JTextField txtTongTien;
     // End of variables declaration//GEN-END:variables
 }

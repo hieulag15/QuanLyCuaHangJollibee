@@ -32,6 +32,10 @@ public class NhanVienBUS {
         return dsnv;
     }
     
+    public NhanVien getNhanVien(int ma) {
+        return nhanVienDAO.getNhanVien(ma);
+    }
+    
     public boolean themNhanVien(int manv, String ho, String ten, String gioiTinh, String chucVu) {
         if (ho.trim().equals("")) {
             new MyDialog("Họ không được để trống!", MyDialog.ERROR_DIALOG);

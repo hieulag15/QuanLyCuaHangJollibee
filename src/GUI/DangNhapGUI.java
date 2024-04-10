@@ -52,7 +52,7 @@ public class DangNhapGUI extends javax.swing.JFrame {
                 txtPassword.getText(), ckbRemember.isSelected());
         if (tk != null) {
             this.dispose();
-            MainQuanLyGUI gui = new MainQuanLyGUI();
+            MainQuanLyGUI gui = new MainQuanLyGUI(tk);
             this.dispose();
             gui.showWindow();
         }
