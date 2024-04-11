@@ -150,9 +150,9 @@ public class DlgTimKhach extends JDialog {
         }
     }
 
-//    private void loadDataLenTable(String tuKhoa) {
+//    private void loadDataLenTableByKey(String tuKhoa) {
 //        dtmKhachHang.setRowCount(0);
-//        ArrayList<KhachHang> dskh = khachHangBUS.timKiemKhachHang(tuKhoa);
+//        ArrayList<KhachHang> dskh = khachHangBUS.getListKhachHang();
 //        for (KhachHang kh : dskh) {
 //                Object[] row = new Object[5];
 //                row[0] = kh.getSdt();

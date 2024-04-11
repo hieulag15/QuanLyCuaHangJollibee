@@ -156,9 +156,11 @@ public class DlgTimMaGiam extends JDialog {
                     return;
                 }
                 
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Date ngayBD = sdf.parse(tblMaGiam.getValueAt(row, 4) + "");
                 Date ngayKT = sdf.parse(tblMaGiam.getValueAt(row, 5) + "");
+                
+                
 
                 maGiamTimDuoc = new GiamGia();
                 maGiamTimDuoc.setMaGiam(ma);

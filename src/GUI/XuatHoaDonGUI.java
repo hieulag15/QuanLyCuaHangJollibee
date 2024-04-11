@@ -90,6 +90,7 @@ public class XuatHoaDonGUI extends JDialog {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime now = LocalDateTime.now();
         DecimalFormat dcf = new DecimalFormat("###,### VND");
+        int tongTienFinal = 0;
 
         String hd = "<style> "
                 + "table {"
@@ -142,8 +143,9 @@ public class XuatHoaDonGUI extends JDialog {
             // lấy phần trăm giảm
             percent = timMaUI.maGiamTimDuoc.getPhanTramGiam();
             if (tongTien >= timMaUI.maGiamTimDuoc.getDieuKien()) {
-                tongTien = tongTien - (tongTien * percent / 100);
+                tongTienFinal = tongTien - (tongTien * percent / 100);
             } else {
+                tongTienFinal = tongTien;
                 new MyDialog("Không đủ điều kiện nhận ưu đãi!", MyDialog.ERROR_DIALOG);
                 btnTimMaGiam.setEnabled(true);
                 return;
@@ -161,13 +163,12 @@ public class XuatHoaDonGUI extends JDialog {
         hd += "<td style='text-align:left;'>" + "</td>";
         hd += "<td style='text-align:center;'>" + "</td>";
         hd += "<td style='text-align:center;font-weight:bold'>Thành tiền</td>";
-        hd += "<td style='text-align:center;'>" + dcf.format(tongTien) + "</td>";
+        hd += "<td style='text-align:center;'>" + dcf.format(tongTienFinal) + "</td>";
         hd += "</tr>";
         hd += "</table>";
         hd += "</div>";
         hd += "<div style='text-align:center;'>==========================================</div><br/>";
         txtHoaDon.setText(hd);
-        txtTongTien.setText(dcf.format(tongTien));
     }
 
     
