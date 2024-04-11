@@ -125,6 +125,27 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
 
 
     private void xuLySuaKhuyenMai() {
+        try {
+        int phanTramValue = Integer.parseInt(txtPhanTramGiam.getText());
+        if (phanTramValue < 0 || phanTramValue > 100) {
+            new MyDialog("Phần trăm giảm giá phải nằm trong khoảng từ 0 đến 100.", MyDialog.ERROR_DIALOG);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        new MyDialog("Phần trăm giảm giá phải là một số nguyên.", MyDialog.ERROR_DIALOG);
+        return;
+    }
+    
+    try {
+        int dieukien = Integer.parseInt(txtDieuKien.getText());
+        if (dieukien < 0 ) {
+            new MyDialog("Điều kiện không được âm.", MyDialog.ERROR_DIALOG);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        new MyDialog("Điều kiện giảm giá phải là một số nguyên.", MyDialog.ERROR_DIALOG);
+        return;
+    }
         boolean flag = giamgiabus.suaMaGiam(txtMaKhuyenMai.getText(), txtTenChuongTrinh.getText(), txtPhanTramGiam.getText(), txtDieuKien.getText(), dateBD.getDate(), dateKT.getDate());
         if (flag)
             loadData();
