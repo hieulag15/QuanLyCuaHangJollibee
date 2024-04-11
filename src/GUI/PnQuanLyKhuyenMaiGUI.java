@@ -64,7 +64,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
             dateKT.setDate(ngayKT);
         }};
     private void xuLyThemKhuyenMai() {
-        boolean flag = giamgiabus.themMaGiam(txtTenChuongTrinh.getText(), txtPhanTramGiam.getText(), txtDieuKien.getText(), dateBD.getDate(), dateKT.getDate());
+        boolean flag = giamgiabus.themMaGiam(Integer.parseInt(txtMaKhuyenMai.getText()),txtTenChuongTrinh.getText(), txtPhanTramGiam.getText(), txtDieuKien.getText(), dateBD.getDate(), dateKT.getDate());
         if (flag)
             loadData();
     }
