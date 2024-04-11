@@ -1,5 +1,6 @@
 package GUI;
 import BUS.NhaCungCapBUS;
+import Custom.MyDialog;
 import java.text.ParseException;
 import javax.swing.JOptionPane;
 public class DlgThemNhaCungCap extends javax.swing.JDialog {
@@ -25,6 +26,7 @@ public class DlgThemNhaCungCap extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        txtMaNCC = new javax.swing.JTextField();
         txtTenNCC = new javax.swing.JTextField();
         txtDiaChi = new javax.swing.JTextField();
         txtDienThoai = new javax.swing.JTextField();
@@ -37,6 +39,15 @@ public class DlgThemNhaCungCap extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("Thêm mới Nhà cung cấp");
         jPanel1.add(jLabel1);
+
+        txtMaNCC.setColumns(15);
+        txtMaNCC.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtMaNCC.setBorder(javax.swing.BorderFactory.createTitledBorder("Mã NCC"));
+        txtMaNCC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMaNCCActionPerformed(evt);
+            }
+        });
 
         txtTenNCC.setColumns(15);
         txtTenNCC.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -92,25 +103,29 @@ public class DlgThemNhaCungCap extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDienThoai)
+                    .addComponent(txtDienThoai, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
                     .addComponent(txtDiaChi, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtTenNCC))
+                    .addComponent(txtTenNCC)
+                    .addComponent(txtMaNCC))
                 .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(5, 5, 5)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtMaNCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(txtTenNCC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtDiaChi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtDienThoai, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        txtMaNCC.getAccessibleContext().setAccessibleName("Mã NCC");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,7 +139,7 @@ public class DlgThemNhaCungCap extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -137,20 +152,29 @@ public class DlgThemNhaCungCap extends javax.swing.JDialog {
 
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        int mancc = Integer.valueOf(txtMaNCC.getText());
         String tenncc = txtTenNCC.getText().toString();
         String diachi = txtDiaChi.getText().toString();
         String sodt = txtDienThoai.getText().toString();
         try {
             int sdt = Integer.parseInt(sodt);
+            if (tenncc.equals("")||diachi.equals("")|| sodt.equals("")){
+            new MyDialog("Điền đầy đủ thông tin", MyDialog.ERROR_DIALOG);
+        }else{
+            NhaCungCapBUS nccbus = new NhaCungCapBUS();
+            boolean flag = nccbus.themNhaCungCap(mancc, tenncc, diachi, sodt);
+            if (flag) {
+                new MyDialog("Thêm nhà cung cấp thành công!", MyDialog.SUCCESS_DIALOG);
+                checkThemNCC = true;
+                this.dispose();
+            } else {
+                new MyDialog("Thêm nhà cung cấp thất bại", MyDialog.ERROR_DIALOG);
+            }
+        }
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null,"Số điện thoại không hợp lệ");
         }
-        if (tenncc.equals("")||diachi.equals("")|| sodt.equals("")){
-            JOptionPane.showConfirmDialog(null,"Điền đầy đủ thông tin");
-        }else{
-            NhaCungCapBUS nccbus = new NhaCungCapBUS();
-            nccbus.themNhaCungCap(tenncc, diachi, sodt);
-        }
+        
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void txtTenNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenNCCActionPerformed
@@ -165,6 +189,10 @@ public class DlgThemNhaCungCap extends javax.swing.JDialog {
         btnThem.doClick();
     }//GEN-LAST:event_txtDienThoaiActionPerformed
 
+    private void txtMaNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaNCCActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMaNCCActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHuy;
     private javax.swing.JButton btnThem;
@@ -174,6 +202,7 @@ public class DlgThemNhaCungCap extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTextField txtDiaChi;
     private javax.swing.JTextField txtDienThoai;
+    private javax.swing.JTextField txtMaNCC;
     private javax.swing.JTextField txtTenNCC;
     // End of variables declaration//GEN-END:variables
 }

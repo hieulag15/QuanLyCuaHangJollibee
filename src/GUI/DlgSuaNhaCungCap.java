@@ -7,12 +7,15 @@ import Model.NhaCungCap;
 public class DlgSuaNhaCungCap extends javax.swing.JDialog {
 
     boolean success = false;
+    private NhaCungCap ncc;
     
     public DlgSuaNhaCungCap(NhaCungCap nhaCungCap) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setModal(true);
         this.setResizable(false);
+        ncc = nhaCungCap;
+        loadData(ncc);
     }
 
     public void loadData(NhaCungCap nhaCungCap) {
@@ -178,13 +181,14 @@ public class DlgSuaNhaCungCap extends javax.swing.JDialog {
             return;
         }
         if(sdt.equals("")){
-            new MyDialog("Vui lòng nhập số điệnt thoại!", MyDialog.ERROR_DIALOG);
+            new MyDialog("Vui lòng nhập số điện thoại!", MyDialog.ERROR_DIALOG);
             txtDienThoaiNCC.requestFocus();
             return;
         }
         
         success = nhaCungCapBUS.suaNhaCungCap(txtMaNCC.getText(),tenNCC, diachi, sdt);
         if (success) {
+            new MyDialog("Sửa thông tin nhà cung cấp thành công!", MyDialog.SUCCESS_DIALOG);
             this.dispose();
         }
     }//GEN-LAST:event_btnLuuActionPerformed

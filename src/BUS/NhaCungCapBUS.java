@@ -28,8 +28,8 @@ public class NhaCungCapBUS {
         return nhaCungCapDAO.getListNhaCungCap();
     }
 
-    public boolean themNhaCungCap(String tenNCC, String diaChi, String dienThoai) {
-        NhaCungCap ncc = new NhaCungCap(tenNCC, diaChi, dienThoai);
+    public boolean themNhaCungCap(int maNCC, String tenNCC, String diaChi, String dienThoai) {
+        NhaCungCap ncc = new NhaCungCap(maNCC, tenNCC, diaChi, dienThoai);
         boolean flag = nhaCungCapDAO.addNCC(ncc);
         return flag;
     }

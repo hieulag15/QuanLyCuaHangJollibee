@@ -855,7 +855,14 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     private void btnChonNhaCungCapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonNhaCungCapActionPerformed
-
+        DlgChonNhaCungCap dlg = new DlgChonNhaCungCap();
+        dlg.setVisible(true);
+        
+        if (dlg.getNhaCungCap() != null) {
+            txtNhaCungCap.setText(dlg.getNhaCungCap().getMaNCC() + " - " + dlg.getNhaCungCap().getTenNCC());
+        } else {
+            txtNhaCungCap.setText("");
+        }
     }//GEN-LAST:event_btnChonNhaCungCapActionPerformed
 
     private void tblPhieuNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPhieuNhapMouseClicked

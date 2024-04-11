@@ -59,11 +59,12 @@ public class NhaCungCapDAO {
     public boolean addNCC(NhaCungCap ncc) {
         boolean result = false;
         try {
-            String sql = "INSERT INTO nhacungcap VALUES(?,?,?)";
+            String sql = "INSERT INTO nhacungcap VALUES(?,?,?,?)";
             PreparedStatement ps = myConnect.conn.prepareStatement(sql);
-            ps.setString(1, ncc.getTenNCC());
-            ps.setString(2, ncc.getDiaChi());
-            ps.setString(3, ncc.getDienThoai());
+            ps.setInt(1, ncc.getMaNCC());
+            ps.setString(2, ncc.getTenNCC());
+            ps.setString(3, ncc.getDiaChi());
+            ps.setString(4, ncc.getDienThoai());
             result = ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             return false;
