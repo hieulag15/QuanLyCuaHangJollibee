@@ -4,11 +4,14 @@ import BUS.GiamGiaBUS;
 import Model.GiamGia;
 import Custom.MyDialog;
 import Custom.MyTable;
+import Custom.Utils;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
@@ -38,7 +41,8 @@ public class DlgTimMaGiam extends JDialog {
         this.tongTien = tongTien;
         addControls();
         addEvents();
-
+        Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/logo-app.jpg");
+        this.setIconImage(icon);
         this.setSize(750, 500);
         this.setModal(true);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -75,6 +79,7 @@ public class DlgTimMaGiam extends JDialog {
         dtmMaGiam.addColumn("Kết thúc");
         dtmMaGiam.addColumn("Trạng thái");
         tblMaGiam = new MyTable(dtmMaGiam);
+        Utils.customTable(tblMaGiam);
         JScrollPane scrMaGiam = new JScrollPane(tblMaGiam);
         pnTable.add(scrMaGiam, BorderLayout.CENTER);
         con.add(pnTable, BorderLayout.CENTER);

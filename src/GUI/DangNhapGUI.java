@@ -7,6 +7,8 @@ package GUI;
 import BUS.DangNhapBUS;
 import Custom.MyDialog;
 import Model.TaiKhoan;
+import java.awt.Image;
+import java.awt.Toolkit;
 
 /**
  *
@@ -20,6 +22,8 @@ public class DangNhapGUI extends javax.swing.JFrame {
     public DangNhapGUI() {
         initComponents();
         setLocationRelativeTo(null);
+        Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/logo-app.jpg");
+        this.setIconImage(icon);
     }
     
     private void xuLyTaiKhoanDaGhiNho() {

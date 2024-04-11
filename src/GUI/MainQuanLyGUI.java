@@ -15,7 +15,7 @@ public class MainQuanLyGUI extends JFrame {
     public MainQuanLyGUI() {
         this.setTitle("Phần mềm quản lý cửa hàng Jollibee");
         this.setSize(1280, 900);
-        Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/icon-app.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/logo-app.jpg");
         this.setIconImage(icon);
         addControls();
         addEvents();

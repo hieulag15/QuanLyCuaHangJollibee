@@ -4,11 +4,14 @@ import BUS.KhachHangBUS;
 import DAO.MyConnect;
 import Model.KhachHang;
 import Custom.MyTable;
+import Custom.Utils;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -30,8 +33,9 @@ public class DlgTimKhach extends JDialog {
     public DlgTimKhach() {
         addControls();
         addEvents();
-
-        this.setSize(500, 400);
+        Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/logo-app.jpg");
+        this.setIconImage(icon);
+        this.setSize(750, 500);
         this.setModal(true);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
@@ -59,12 +63,13 @@ public class DlgTimKhach extends JDialog {
         JPanel pnTable = new JPanel();
         pnTable.setLayout(new BorderLayout());
         dtmKhachHang = new DefaultTableModel();
-        dtmKhachHang.addColumn("Mã KH");
+        dtmKhachHang.addColumn("Số điện thoại");
         dtmKhachHang.addColumn("Họ");
         dtmKhachHang.addColumn("Tên");
         dtmKhachHang.addColumn("Giới tính");
         dtmKhachHang.addColumn("Tổng chi tiêu");
         tblKhachHang = new MyTable(dtmKhachHang);
+        Utils.customTable(tblKhachHang);
         JScrollPane scrKhachHang = new JScrollPane(tblKhachHang);
         pnTable.add(scrKhachHang, BorderLayout.CENTER);
         con.add(pnTable, BorderLayout.CENTER);

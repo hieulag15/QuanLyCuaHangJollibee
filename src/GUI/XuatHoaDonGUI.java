@@ -29,7 +29,7 @@ public class XuatHoaDonGUI extends JDialog {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setModal(true);
-        Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/icon-app.png");
+        Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/logo-app.jpg");
         this.setIconImage(icon);
         customEvents();
     }
@@ -197,7 +197,7 @@ public class XuatHoaDonGUI extends JDialog {
         jLabel5.setText("jLabel5");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 153, 51));
+        jLabel1.setForeground(new java.awt.Color(228, 22, 61));
         jLabel1.setText("Chi tiết hoá đơn");
         jPanel1.add(jLabel1);
 
