@@ -8,6 +8,7 @@ import Custom.MyDialog;
 import DAO.KhachHangDAO;
 import Model.KhachHang;
 import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,9 +22,26 @@ public class KhachHangBUS {
     public ArrayList<KhachHang> getListKhachHang() {
         return khachHangDAO.getDanhSachKhachHang();
     }
-    
-    public ArrayList<KhachHang> getDanhSachKhachHangByKey(String key, int minChiTieu, int maxChiTieu) {
-        return khachHangDAO.getDanhSachKhachHangByKey(key, minChiTieu, maxChiTieu);
+
+    public ArrayList<KhachHang> getDanhSachKhachHangByKey(String key, String minChiTieu, String maxChiTieu) {
+        boolean rs = true;
+        int min = 0, max = 0;
+        try {
+            min = minChiTieu.equals("") ? 0 : Integer.valueOf(minChiTieu);
+            max = maxChiTieu.equals("") ? Integer.MAX_VALUE : Integer.valueOf(maxChiTieu);
+            if (max < min || max < 0 || min < 0) {
+                rs = false;
+            }
+        } catch (Exception ex) {
+            rs = false;
+        }
+
+        if (rs) {
+            return khachHangDAO.getDanhSachKhachHangByKey(key, min, max);
+        } else {
+            new MyDialog("Thông tin kiếm không hợp lệ!!!", MyDialog.ERROR);
+            return null;
+        }
     }
 
     public boolean checkSoDienThoai(String sdt) {
@@ -110,7 +128,7 @@ public class KhachHangBUS {
         if (dlg.getAction() == MyDialog.CANCEL_OPTION) {
             return false;
         }
-        
+
         flag = khachHangDAO.xoaKhachHang(sdt);
 
         if (flag) {
