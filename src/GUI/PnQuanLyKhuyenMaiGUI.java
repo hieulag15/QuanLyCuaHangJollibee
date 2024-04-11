@@ -71,7 +71,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
             txtPhanTramGiam.getText().isEmpty() || txtDieuKien.getText().isEmpty() ||
             dateBD.getDate() == null || dateKT.getDate() == null) {
         // Thông báo cho người dùng nhập đầy đủ thông tin
-        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        new MyDialog("Vui lòng nhập đầy đủ thông tin.", MyDialog.ERROR_DIALOG);
         return;
     }
     
@@ -90,10 +90,33 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         return;
     }
 
+    
+    try {
+        int phanTramValue = Integer.parseInt(txtPhanTramGiam.getText());
+        if (phanTramValue < 0 || phanTramValue > 100) {
+            new MyDialog("Phần trăm giảm giá phải nằm trong khoảng từ 0 đến 100.", MyDialog.ERROR_DIALOG);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        new MyDialog("Phần trăm giảm giá phải là một số nguyên.", MyDialog.ERROR_DIALOG);
+        return;
+    }
+    
+    try {
+        int dieukien = Integer.parseInt(txtDieuKien.getText());
+        if (dieukien < 0 ) {
+            new MyDialog("Điều kiện không được âm.", MyDialog.ERROR_DIALOG);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        new MyDialog("Điều kiện giảm giá phải là một số nguyên.", MyDialog.ERROR_DIALOG);
+        return;
+    }
+    
     boolean flag = giamgiabus.themMaGiam(maGiamGia, txtTenChuongTrinh.getText(), txtPhanTramGiam.getText(), txtDieuKien.getText(), dateBD.getDate(), dateKT.getDate());
     if (flag) {
         loadData();
-        new MyDialog("Thêm mã giảm giá thành côn.", MyDialog.SUCCESS_DIALOG);
+        new MyDialog("Thêm mã giảm giá thành công.", MyDialog.SUCCESS_DIALOG);
         
     } else {
         new MyDialog("Thêm mã giảm giá không thành công.", MyDialog.ERROR_DIALOG);
