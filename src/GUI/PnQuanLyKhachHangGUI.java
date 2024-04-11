@@ -392,37 +392,21 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
     private void btnTimKiemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTimKiemMouseClicked
         // TODO add your handling code here:
 
-        boolean rs = true;
-        int numStart = 0, numEnd = 0;
+        String min = txtStart.getText().trim();
+        String max = txtEnd.getText().trim();
+        String key = txtTuKhoa.getText().trim().toLowerCase();
 
-        String start = txtStart.getText().trim();
-        String end = txtEnd.getText().trim();
-        String tuKhoa = txtTuKhoa.getText().trim().toLowerCase();
+        ArrayList<KhachHang> lsKhachHang = khachHangBUS.getDanhSachKhachHangByKey(key, min, max);
 
-        try {
-            numStart = start.equals("")?0:Integer.valueOf(start);
-            numEnd = end.equals("")?Integer.MAX_VALUE:Integer.valueOf(end);
-            if (numEnd < numStart || numEnd < 0 || numStart < 0) {
-                rs = false;
-            }
-
-        } catch (Exception ex) {
-            rs = false;
-        } finally {
-            if (rs) {
-                DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
-                model.setRowCount(0);
-                ArrayList<KhachHang> lsKhachHang = khachHangBUS.getDanhSachKhachHangByKey(tuKhoa, numStart, numEnd);
-                for (KhachHang khachHang : lsKhachHang) {
-                    model.addRow(new Object[]{khachHang.getSdt(), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), khachHang.getTongChiTieu()});
-                }
-            } else {
-                new MyDialog("Thông tin kiếm không hợp lệ!!!", MyDialog.ERROR);
-                loadData();
+        if (lsKhachHang == null) {
+            loadData();
+        } else {
+            DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
+            model.setRowCount(0);
+            for (KhachHang khachHang : lsKhachHang) {
+                model.addRow(new Object[]{khachHang.getSdt(), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), khachHang.getTongChiTieu()});
             }
         }
-
-
     }//GEN-LAST:event_btnTimKiemMouseClicked
 
 
