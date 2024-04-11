@@ -394,10 +394,6 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
 
         boolean rs = true;
         int numStart = 0, numEnd = 0;
-        
-        DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
-        model.setRowCount(0);
-        ArrayList<KhachHang> lsKhachHang = khachHangBUS.getListKhachHang();
 
         String start = txtStart.getText().trim();
         String end = txtEnd.getText().trim();
@@ -414,15 +410,11 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
             rs = false;
         } finally {
             if (rs) {
+                DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
+                model.setRowCount(0);
+                ArrayList<KhachHang> lsKhachHang = khachHangBUS.getDanhSachKhachHangByKey(tuKhoa, numStart, numEnd);
                 for (KhachHang khachHang : lsKhachHang) {
-                    String sdt = String.valueOf(khachHang.getSdt());
-                    String ho = khachHang.getHo().toLowerCase();
-                    String ten = khachHang.getTen().toLowerCase();
-                    String gioitinh = khachHang.getGioiTinh().toLowerCase();
-                    int tongChiTieu = khachHang.getTongChiTieu();
-                    if ((sdt.contains(tuKhoa) || ho.contains(tuKhoa) || ten.contains(tuKhoa) || gioitinh.contains(tuKhoa)) && (tongChiTieu >= numStart && tongChiTieu <= numEnd)) {
-                        model.addRow(new Object[]{khachHang.getSdt(), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), khachHang.getTongChiTieu()});
-                    }
+                    model.addRow(new Object[]{khachHang.getSdt(), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), khachHang.getTongChiTieu()});
                 }
             } else {
                 new MyDialog("Thông tin kiếm không hợp lệ!!!", MyDialog.ERROR);

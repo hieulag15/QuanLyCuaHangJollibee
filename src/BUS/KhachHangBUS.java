@@ -21,6 +21,10 @@ public class KhachHangBUS {
     public ArrayList<KhachHang> getListKhachHang() {
         return khachHangDAO.getDanhSachKhachHang();
     }
+    
+    public ArrayList<KhachHang> getDanhSachKhachHangByKey(String key, int minChiTieu, int maxChiTieu) {
+        return khachHangDAO.getDanhSachKhachHangByKey(key, minChiTieu, maxChiTieu);
+    }
 
     public boolean checkSoDienThoai(String sdt) {
         try {
