@@ -76,7 +76,10 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         tblSanPham1 = new javax.swing.JTable();
         jSpinner1 = new javax.swing.JSpinner();
 
+        jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         txtMaKhuyenMai.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
@@ -91,7 +94,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         txtDonViTin.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        jLabel1.setText("QUẢN LÝ SẢN PHẨM");
+        jLabel1.setText("QUẢN LÝ MÓN ĂN");
 
         txtTuKhoaTim.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -306,6 +309,8 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         );
 
         jTabbedPane1.addTab("Sản phẩm", jPanel1);
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         txtMaKhuyenMai1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
