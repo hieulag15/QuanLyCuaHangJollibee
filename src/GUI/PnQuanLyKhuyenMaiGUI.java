@@ -12,10 +12,12 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.DefaultTableModel;
 import BUS.*;
+import Custom.MyDialog;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -64,10 +66,40 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
             dateKT.setDate(ngayKT);
         }};
     private void xuLyThemKhuyenMai() {
-        boolean flag = giamgiabus.themMaGiam(Integer.parseInt(txtMaKhuyenMai.getText()),txtTenChuongTrinh.getText(), txtPhanTramGiam.getText(), txtDieuKien.getText(), dateBD.getDate(), dateKT.getDate());
-        if (flag)
-            loadData();
+    // Kiểm tra không để trống các trường
+    if (txtMaKhuyenMai.getText().isEmpty() || txtTenChuongTrinh.getText().isEmpty() ||
+            txtPhanTramGiam.getText().isEmpty() || txtDieuKien.getText().isEmpty() ||
+            dateBD.getDate() == null || dateKT.getDate() == null) {
+        // Thông báo cho người dùng nhập đầy đủ thông tin
+        JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return;
     }
+    
+    // Kiểm tra mã giảm giá không âm
+    int maGiamGia;
+    try {
+        maGiamGia = Integer.parseInt(txtMaKhuyenMai.getText());
+        if (maGiamGia < 0) {
+            new MyDialog("Mã giảm giá không được âm.", MyDialog.ERROR_DIALOG);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        
+        new MyDialog("Mã giảm giá phải là số nguyên.", MyDialog.ERROR_DIALOG);
+        
+        return;
+    }
+
+    boolean flag = giamgiabus.themMaGiam(maGiamGia, txtTenChuongTrinh.getText(), txtPhanTramGiam.getText(), txtDieuKien.getText(), dateBD.getDate(), dateKT.getDate());
+    if (flag) {
+        loadData();
+        new MyDialog("Thêm mã giảm giá thành côn.", MyDialog.SUCCESS_DIALOG);
+        
+    } else {
+        new MyDialog("Thêm mã giảm giá không thành công.", MyDialog.ERROR_DIALOG);
+    }
+}
+
 
     private void xuLySuaKhuyenMai() {
         boolean flag = giamgiabus.suaMaGiam(txtMaKhuyenMai.getText(), txtTenChuongTrinh.getText(), txtPhanTramGiam.getText(), txtDieuKien.getText(), dateBD.getDate(), dateKT.getDate());

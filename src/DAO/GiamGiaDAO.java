@@ -57,15 +57,16 @@ public class GiamGiaDAO {
       
       public boolean themMaGiam(GiamGia gg) {
         try {
-            String sql = "INSERT INTO giamgia(TenGiamGia, PhanTramGiam, DieuKien, NgayBD, NgayKT) " +
-                    "VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO giamgia(MaGiam,TenGiamGia, PhanTramGiam, DieuKien, NgayBD, NgayKT) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement pre = myConnect.conn.prepareStatement(sql);
-            pre.setString(1, gg.getTenGiamGia());
-            pre.setInt(2, gg.getPhanTramGiam());
-            pre.setInt(3, gg.getDieuKien());
+            pre.setInt(1, gg.getMaGiam());
+            pre.setString(2, gg.getTenGiamGia());
+            pre.setInt(3, gg.getPhanTramGiam());
+            pre.setInt(4, gg.getDieuKien());
 
-            pre.setTimestamp(4, new java.sql.Timestamp(gg.getNgayBD().getTime()));
-            pre.setTimestamp(5, new java.sql.Timestamp(gg.getNgayKT().getTime()));
+            pre.setTimestamp(5, new java.sql.Timestamp(gg.getNgayBD().getTime()));
+            pre.setTimestamp(6, new java.sql.Timestamp(gg.getNgayKT().getTime()));
 
             return pre.executeUpdate() > 0;
         } catch (Exception e) {
@@ -91,6 +92,23 @@ public class GiamGiaDAO {
         }
         return false;
     }
+    
+    public boolean kiemTraMaGiamDaTonTai(int maGiam) {
+    String sql = "SELECT COUNT(*) FROM giamgia WHERE MaGiam = ?";
+    try {
+        PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+        ps.setInt(1, maGiam);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            return count > 0;
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return false;
+}
+    
 }
       
      
