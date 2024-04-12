@@ -6,6 +6,12 @@ package Custom;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -24,7 +30,7 @@ public class Utils {
         parentPanel.repaint(); // Vẽ lại panel cha để hiển thị panel con mới
     }
     
-        public static void customTable(JTable tbl){
+    public static void customTable(JTable tbl){
         tbl.setFocusable(false);
         tbl.setIntercellSpacing(new Dimension(0, 0));
         tbl.setRowHeight(25);
@@ -39,5 +45,32 @@ public class Utils {
         header.setForeground(Color.WHITE);
         header.setReorderingAllowed(false);
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+    }
+        
+    static File fileAnhSP;
+    public static ImageIcon getAnhSP(String src) {
+        src = src.trim().equals("") ? "default.png" : src;
+        //Xử lý ảnh
+        BufferedImage img = null;
+        File fileImg = new File("image/SanPham/" + src);
+
+        if (!fileImg.exists()) {
+            src = "default.png";
+            fileImg = new File("image/SanPham/" + src);
+        }
+
+        try {
+            img = ImageIO.read(fileImg);
+            fileAnhSP = new File("image/SanPham/" + src);
+        } catch (IOException e) {
+            fileAnhSP = new File("image/SanPham/default.png");
+        }
+
+        if (img != null) {
+            Image dimg = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+
+            return new ImageIcon(dimg);
+        }
+        return null;
     }
 }

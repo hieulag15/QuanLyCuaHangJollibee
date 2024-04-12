@@ -23,6 +23,10 @@ public class LoaiBUS {
     public ArrayList<LoaiSP> getDanhSachLoai() {
         return loaiDAO.getDanhSachLoai();
     }
+    
+    public LoaiSP getLoai(int ma) {
+        return loaiDAO.getLoai(ma);
+    }
 
     public boolean addLoai(String tenLoai) {
         return loaiDAO.addLoai(tenLoai);

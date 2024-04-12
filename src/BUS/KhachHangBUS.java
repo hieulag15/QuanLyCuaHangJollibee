@@ -52,6 +52,10 @@ public class KhachHangBUS {
             return false;
         }
     }
+    
+    public KhachHang getKhachHang(String SoDienThoai){
+        return khachHangDAO.getKhachHang(SoDienThoai);
+    }
 
     public boolean themKhachHang(String sdt, String ho, String ten, String gioiTinh) {
         if (sdt.trim().equals("")) {

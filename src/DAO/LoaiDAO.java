@@ -33,6 +33,23 @@ public class LoaiDAO {
         }
         return null;
     }
+    
+    public LoaiSP getLoai(int ma) {
+        try {
+            String sql = "SELECT * FROM Loai where MaLoai = ?";
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
+            ps.setInt(1, ma);
+            ResultSet rs = ps.executeQuery();
+            LoaiSP loai = new LoaiSP();
+            if (rs.next()) {         
+                loai.setMaLoai(rs.getInt(1));
+                loai.setTenLoai(rs.getString(2));
+            }
+            return loai;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
 
     public boolean addLoai(String tenLoai) {
         try {
