@@ -232,6 +232,7 @@ public class XuatHoaDonGUI extends JDialog {
 
         txtTenKhach.setEditable(false);
         txtTenKhach.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtTenKhach.setFocusable(false);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("Khách hàng");
@@ -241,6 +242,7 @@ public class XuatHoaDonGUI extends JDialog {
 
         txtMaGiam.setEditable(false);
         txtMaGiam.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtMaGiam.setFocusable(false);
 
         btnTimMaGiam.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnTimMaGiam.setText("...");
@@ -265,6 +267,7 @@ public class XuatHoaDonGUI extends JDialog {
 
         txtTongTien.setEditable(false);
         txtTongTien.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        txtTongTien.setFocusable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
