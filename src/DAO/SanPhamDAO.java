@@ -63,27 +63,38 @@ public class SanPhamDAO {
     
     public ArrayList<SanPham> getListSanPhamByKey(String key) {
         try {
-            String sql = "SELECT * FROM SanPham WHERE TenSP LIKE ?";
-            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
-            pre.setString(1, "%" + key + "%"); // Sử dụng % để đánh dấu vị trí của key trong tên sản phẩm
-            ResultSet rs = pre.executeQuery();
-            ArrayList<SanPham> dssp = new ArrayList<>();
-            while (rs.next()) {
-                SanPham sp = new SanPham();
+        String sql = "SELECT s.*, l.TenLoai " +
+                     "FROM SanPham s " +
+                     "INNER JOIN Loai l ON s.MaLoai = l.MaLoai " +
+                     "WHERE s.TenSP LIKE ? OR s.DonViTinh LIKE ? OR s.DonGia LIKE ? OR l.TenLoai LIKE ?";
+        
+        PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+        pre.setString(1, "%" + key + "%");
+        pre.setString(2, "%" + key + "%");
+        pre.setString(3, "%" + key + "%");
+        pre.setString(4, "%" + key + "%");
+        
+        ResultSet rs = pre.executeQuery();
+        ArrayList<SanPham> dssp = new ArrayList<>();
+        
+        while (rs.next()) {
+            SanPham sp = new SanPham();
 
-                sp.setMaSP(rs.getInt(1));
-                sp.setTenSP(rs.getString(2));
-                sp.setMaLoai(rs.getInt(3));
-                sp.setDonViTinh(rs.getString(4));
-                sp.setHinhAnh(rs.getString(5));
-                sp.setDonGia(rs.getInt(6));
+            sp.setMaSP(rs.getInt("MaSP"));
+            sp.setTenSP(rs.getString("TenSP"));
+            sp.setMaLoai(rs.getInt("MaLoai"));
+            sp.setDonViTinh(rs.getString("DonViTinh"));
+            sp.setHinhAnh(rs.getString("HinhAnh"));
+            sp.setDonGia(rs.getInt("DonGia"));
 
-                dssp.add(sp);
-            }
-            return dssp;
-        } catch (SQLException e) {
-            e.printStackTrace(); // In ra thông báo lỗi nếu có
+            dssp.add(sp);
         }
+        
+        return dssp;
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
 
     return null;
 }

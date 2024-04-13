@@ -43,6 +43,10 @@ public class KhachHangBUS {
             return null;
         }
     }
+    
+    public ArrayList<KhachHang> getDanhSachKhachHangByKey(String key){
+        return khachHangDAO.getDanhSachKhachHangByKey(key);
+    }
 
     public boolean checkSoDienThoai(String sdt) {
         try {

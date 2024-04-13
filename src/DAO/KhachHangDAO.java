@@ -68,6 +68,33 @@ public class KhachHangDAO {
         return dskh;
     }
     
+    public ArrayList<KhachHang> getDanhSachKhachHangByKey(String key) {
+        String sql = "SELECT * FROM KhachHang WHERE (SoDienThoai LIKE ? OR Ho LIKE ? OR Ten LIKE ? OR GioiTinh LIKE ?) AND TinhTrang = 1";
+        ArrayList<KhachHang> dskh = new ArrayList<>();
+        try {
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
+            pre.setString(1, "%" + key + "%");
+            pre.setString(2, "%" + key + "%");
+            pre.setString(3, "%" + key + "%");
+            pre.setString(4, "%" + key + "%");
+            ResultSet rs = pre.executeQuery();
+            while(rs.next()) {
+                KhachHang kh = new KhachHang();
+                
+                kh.setSdt(rs.getString(1));
+                kh.setHo(rs.getString(2));
+                kh.setTen(rs.getString(3));
+                kh.setGioiTinh(rs.getString(4));
+                kh.setTongChiTieu(rs.getInt(5));
+                
+                dskh.add(kh);
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        return dskh;
+    }
+    
     public KhachHang getKhachHang(String SoDienThoai) {
         String sql = "SELECT * From KhachHang where SoDienThoai=? and TinhTrang=1";
         KhachHang kh = new KhachHang();
