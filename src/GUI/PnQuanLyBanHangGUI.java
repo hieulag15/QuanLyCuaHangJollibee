@@ -63,6 +63,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     private HoaDonBUS hoaDonBUS = new HoaDonBUS();
     private CTHoaDonBUS ctHoaDonBUS = new CTHoaDonBUS();
     DefaultTableModel dtmSanPhamBan, dtmGioHang, dtmHoaDon, dtmCTHoaDon;
+    File fileAnhSP;
     
     public PnQuanLyBanHangGUI() {
         initComponents();
@@ -107,6 +108,8 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         columnModelGH.getColumn(3).setPreferredWidth(100);
         columnModelGH.getColumn(4).setPreferredWidth(50);
         columnModelGH.getColumn(5).setPreferredWidth(100); 
+        //set chiều cao dòng
+        tblGioHang.setRowHeight(50); 
         //chỉnh nội dung nằm giữa
         columnModelGH.getColumn(0).setCellRenderer(centerRenderer);
         columnModelGH.getColumn(2).setCellRenderer(centerRenderer);
@@ -166,7 +169,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             row[1] = sp.getTenSP();
             //Hiển thị ảnh sp
             JLabel imgJL = new JLabel();
-            ImageIcon imgIcon = Utils.getAnhSP(sp.getHinhAnh());
+            ImageIcon imgIcon = Utils.getAnhSP(sp.getHinhAnh(), fileAnhSP);
             imgIcon = new ImageIcon(imgIcon.getImage().getScaledInstance(175, 175, Image.SCALE_SMOOTH));
             imgJL.setIcon(imgIcon);
             row[2] = imgJL;
@@ -324,11 +327,11 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     }
     
     private void loadAnhSPBH(String anh) {
-        lblAnhSP.setIcon(Utils.getAnhSP(anh));
+        lblAnhSP.setIcon(Utils.getAnhSP(anh, fileAnhSP));
     }
     
     private void loadAnhSPHD(String anh) {
-        lblAnhSPHD.setIcon(Utils.getAnhSP(anh));
+        lblAnhSPHD.setIcon(Utils.getAnhSP(anh, fileAnhSP));
     }   
     
     private void addDataTableHoaDon(ArrayList<HoaDon> dshd){

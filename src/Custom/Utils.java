@@ -47,8 +47,7 @@ public class Utils {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
     }
         
-    static File fileAnhSP;
-    public static ImageIcon getAnhSP(String src) {
+    public static ImageIcon getAnhSP(String src, File fileAnhSP) {
         src = src.trim().equals("") ? "default.png" : src;
         //Xử lý ảnh
         BufferedImage img = null;
@@ -72,5 +71,23 @@ public class Utils {
             return new ImageIcon(dimg);
         }
         return null;
+    }
+    
+    public static boolean checkMa(String input) {
+        try {
+            int number = Integer.parseInt(input);
+            return number > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+    
+    public static boolean checkTien(String input) {
+        try {
+            int number = Integer.parseInt(input.replace(",", ""));
+            return number > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 }
