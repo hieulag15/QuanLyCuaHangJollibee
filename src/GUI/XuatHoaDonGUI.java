@@ -91,6 +91,10 @@ public class XuatHoaDonGUI extends JDialog {
         LocalDateTime now = LocalDateTime.now();
         DecimalFormat dcf = new DecimalFormat("###,### VND");
         int tongTienFinal = 0;
+        
+        if (txtTenKhach.getText().isEmpty()){
+            txtTenKhach.setText("Khách vãng lai");
+        }
 
         String hd = "<style> "
                 + "table {"
@@ -333,8 +337,16 @@ public class XuatHoaDonGUI extends JDialog {
         }
         xuLyHienThiHoaDon();
         btnInHoaDon.setEnabled(true);
+        
+        String sdt;
+        if (DlgTimKhach.khachHangTimDuoc == null){
+            sdt = "0";
+        }
+        else{
+            sdt = DlgTimKhach.khachHangTimDuoc.getSdt();
+        }
 
-        hoadonBUS.luuHoaDon(DlgTimKhach.khachHangTimDuoc.getSdt(), DangNhapBUS.taiKhoanLogin.getMaNhanVien(), tongTien, "Đã thanh toán");
+        hoadonBUS.luuHoaDon(sdt, DangNhapBUS.taiKhoanLogin.getMaNhanVien(), tongTien, "Đã thanh toán");
 
         for (Object ob : dsGioHang) {
             if (ob instanceof Object[]) {

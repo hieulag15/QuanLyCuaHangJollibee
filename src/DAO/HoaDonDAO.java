@@ -72,13 +72,13 @@ public class HoaDonDAO {
             ps1.setString(2, hd.getSdt());
             ps1.executeUpdate();
             
-//            SimpleDateFormat dtf = new SimpleDateFormat("yyyy-MM-dd");
-//            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime now = LocalDateTime.now();
+            Timestamp timestamp = Timestamp.valueOf(now);
             String sql = "INSERT INTO hoadon(SoDienThoai, MaNV, NgayLap, TongTien, GhiChu) VALUES(?, ?, ?, ?, ?)";
             PreparedStatement ps2 = myConnect.conn.prepareStatement(sql);
             ps2.setString(1, hd.getSdt());
             ps2.setInt(2, hd.getMaNV());
-            ps2.setString(3, "2024-04-10");
+            ps2.setTimestamp(3, timestamp);
             ps2.setInt(4, hd.getTongTien());
             ps2.setString(5, hd.getGhiChu());
             ps2.executeUpdate();

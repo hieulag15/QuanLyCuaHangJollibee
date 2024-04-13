@@ -90,10 +90,9 @@ public class DlgTimKhach extends JDialog {
     }
 
     private void addEvents() {
-        txtTuKhoa.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadDataLenTable();
+        txtTuKhoa.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTuKhoaCaretUpdate(evt);
             }
         });
 
@@ -110,6 +109,10 @@ public class DlgTimKhach extends JDialog {
                 xuLyThemKhach();
             }
         });
+    }
+    
+    private void txtTuKhoaCaretUpdate(javax.swing.event.CaretEvent evt) {                                      
+        loadDataLenTableByKey(txtTuKhoa.getText()+"");
     }
 
     private void xuLyChonKhachHang() {
@@ -150,18 +153,18 @@ public class DlgTimKhach extends JDialog {
         }
     }
 
-//    private void loadDataLenTableByKey(String tuKhoa) {
-//        dtmKhachHang.setRowCount(0);
-//        ArrayList<KhachHang> dskh = khachHangBUS.getListKhachHang();
-//        for (KhachHang kh : dskh) {
-//                Object[] row = new Object[5];
-//                row[0] = kh.getSdt();
-//                row[1] = kh.getHo();
-//                row[2] = kh.getTen();
-//                row[3] = kh.getGioiTinh();
-//                row[4] = kh.getTongChiTieu();
-//                dtmKhachHang.addRow(row);
-//            }
-//    }
+    private void loadDataLenTableByKey(String tuKhoa) {
+        dtmKhachHang.setRowCount(0);
+        ArrayList<KhachHang> dskh = khachHangBUS.getDanhSachKhachHangByKey(tuKhoa);
+        for (KhachHang kh : dskh) {
+                Object[] row = new Object[5];
+                row[0] = kh.getSdt();
+                row[1] = kh.getHo();
+                row[2] = kh.getTen();
+                row[3] = kh.getGioiTinh();
+                row[4] = kh.getTongChiTieu();
+                dtmKhachHang.addRow(row);
+            }
+    }
 
 }
