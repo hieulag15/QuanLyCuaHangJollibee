@@ -94,6 +94,7 @@ public class XuatHoaDonGUI extends JDialog {
         
         if (txtTenKhach.getText().isEmpty()){
             txtTenKhach.setText("Khách vãng lai");
+            DlgTimKhach.khachHangTimDuoc = null;
         }
 
         String hd = "<style> "
