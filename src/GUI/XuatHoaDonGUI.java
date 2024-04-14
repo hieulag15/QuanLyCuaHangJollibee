@@ -339,7 +339,6 @@ public class XuatHoaDonGUI extends JDialog {
             new MyDialog("Xin chọn mã giảm", MyDialog.ERROR_DIALOG);
             return;
         }
-        xuLyHienThiHoaDon();
         btnInHoaDon.setEnabled(true);
         
         String sdt;
@@ -385,6 +384,7 @@ public class XuatHoaDonGUI extends JDialog {
         if (timKhachUI.khachHangTimDuoc != null) {
             txtTenKhach.setText(timKhachUI.khachHangTimDuoc.getSdt() + " - " + timKhachUI.khachHangTimDuoc.getHo() + " " + timKhachUI.khachHangTimDuoc.getTen());
         }
+        xuLyHienThiHoaDon();
     }
 
 

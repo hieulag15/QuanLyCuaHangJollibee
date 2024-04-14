@@ -693,9 +693,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         }
     }
     
-    private void xuLyXuatFileExcel() {
+    private void xuLyXuatFileExcel(JTable tbl) {
         XuLyFileExcel xuatFile = new XuLyFileExcel();
-        xuatFile.xuatExcel(tblSanPham);
+        xuatFile.xuatExcel(tbl);
     }
 
     /**
@@ -1105,6 +1105,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         btnXuatNL.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnXuatNL.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnXuatNL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXuatNLMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnXuatNLMouseEntered(evt);
             }
@@ -1516,8 +1519,12 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnResetSanPhamMouseExited
 
     private void btnXuatSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatSPMouseClicked
-        xuLyXuatFileExcel();
+        xuLyXuatFileExcel(tblSanPham);
     }//GEN-LAST:event_btnXuatSPMouseClicked
+
+    private void btnXuatNLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatNLMouseClicked
+        xuLyXuatFileExcel(tblNguyenLieu);
+    }//GEN-LAST:event_btnXuatNLMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

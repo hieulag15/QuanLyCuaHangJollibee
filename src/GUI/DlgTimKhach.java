@@ -119,12 +119,8 @@ public class DlgTimKhach extends JDialog {
         int row = tblKhachHang.getSelectedRow();
         if (row > -1) {
             String sdt = tblKhachHang.getValueAt(row, 0) + "";
-            String ho = tblKhachHang.getValueAt(row, 1) + "";
-            String ten = tblKhachHang.getValueAt(row, 2) + "";
-            String gioiTinh = tblKhachHang.getValueAt(row, 3) + "";
-            int tongChiTieu = Integer.parseInt(tblKhachHang.getValueAt(row, 4) + "");
-
-            khachHangTimDuoc = new KhachHang(sdt, ho, ten, gioiTinh, tongChiTieu);
+           
+            khachHangTimDuoc = khachHangBUS.getKhachHang(sdt);
         }
         this.dispose();
     }
