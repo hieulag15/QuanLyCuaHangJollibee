@@ -63,4 +63,55 @@ public class NguyenLieuDAO {
 
         return null;
     }
+    
+    public boolean addNguyenLieu(NguyenLieu nl) {
+        boolean result = false;
+        String sql = "INSERT INTO NguyenLieu (MaNL, TenNL, SoLuong, DonViTinh, HinhAnh, DonGia) VALUES (?, ?, ?, ?, ?, ?)";
+        try {
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
+            ps.setInt(1, nl.getMaNL());
+            ps.setString(2, nl.getTenNL());
+            ps.setInt(3, nl.getSoLuong());
+            ps.setString(4, nl.getDonViTinh());
+            ps.setString(5, nl.getHinhAnh());
+            ps.setInt(6, nl.getDonGia());
+
+            result = ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    public boolean updateNguyenLieu(NguyenLieu nl) {
+        boolean result = false;
+        String sql = "UPDATE NguyenLieu SET TenNL = ?, SoLuong = ?, DonViTinh = ?, HinhAnh = ?, DonGia = ? WHERE MaNL = ?";
+        try {
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);           
+            ps.setString(1, nl.getTenNL());
+            ps.setInt(2, nl.getSoLuong());
+            ps.setString(3, nl.getDonViTinh());
+            ps.setString(4, nl.getHinhAnh());
+            ps.setInt(5, nl.getDonGia());
+            ps.setInt(6, nl.getMaNL());
+
+            result = ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    public boolean deleteNguyenLieu(int ma) {
+        boolean result = false;
+        String sql = "DELETE FROM NguyenLieu WHERE MaNL = ?";
+        try {
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
+            ps.setInt(1, ma);
+            result = ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

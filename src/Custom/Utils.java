@@ -47,22 +47,22 @@ public class Utils {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
     }
         
-    public static ImageIcon getAnhSP(String src, File fileAnh) {
+    public static ImageIcon getAnh(String path, String src, File fileAnh) {
         src = src.trim().equals("") ? "default.png" : src;
         //Xử lý ảnh
         BufferedImage img = null;
-        File fileImg = new File("image/SanPham/" + src);
+        File fileImg = new File(path + src);
 
         if (!fileImg.exists()) {
             src = "default.png";
-            fileImg = new File("image/SanPham/" + src);
+            fileImg = new File(path + src);
         }
 
         try {
             img = ImageIO.read(fileImg);
-            fileAnh = new File("image/SanPham/" + src);
+            fileAnh = new File(path + src);
         } catch (IOException e) {
-            fileAnh = new File("image/SanPham/default.png");
+            fileAnh = new File(path + "default.png");
         }
 
         if (img != null) {
@@ -71,6 +71,19 @@ public class Utils {
             return new ImageIcon(dimg);
         }
         return null;
+    }
+    
+    public static void luuFileAnh(String path, File fileAnh) {
+        BufferedImage bImage = null;
+        try {
+            File initialImage = new File(fileAnh.getPath());
+            bImage = ImageIO.read(initialImage);
+
+            ImageIO.write(bImage, "png", new File(path + fileAnh.getName()));
+
+        } catch (IOException e) {
+            System.out.println("Exception occured :" + e.getMessage());
+        }
     }
     
     public static boolean checkMa(String input) {

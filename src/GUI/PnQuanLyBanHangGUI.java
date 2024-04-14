@@ -161,6 +161,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     DecimalFormat dcf = new DecimalFormat("###,###");
     //định dạng ngày
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    String path = "image/SanPham/";
     
     private void addDataTableSanPhamBan(ArrayList<SanPham> dssp){
        for (SanPham sp : dssp) {
@@ -169,7 +170,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             row[1] = sp.getTenSP();
             //Hiển thị ảnh sp
             JLabel imgJL = new JLabel();
-            ImageIcon imgIcon = Utils.getAnhSP(sp.getHinhAnh(), fileAnhSP);
+            ImageIcon imgIcon = Utils.getAnh(path, sp.getHinhAnh(), fileAnhSP);
             imgIcon = new ImageIcon(imgIcon.getImage().getScaledInstance(175, 175, Image.SCALE_SMOOTH));
             imgJL.setIcon(imgIcon);
             row[2] = imgJL;
@@ -327,11 +328,11 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     }
     
     private void loadAnhSPBH(String anh) {
-        lblAnhSP.setIcon(Utils.getAnhSP(anh, fileAnhSP));
+        lblAnhSP.setIcon(Utils.getAnh(path, anh, fileAnhSP));
     }
     
     private void loadAnhSPHD(String anh) {
-        lblAnhSPHD.setIcon(Utils.getAnhSP(anh, fileAnhSP));
+        lblAnhSPHD.setIcon(Utils.getAnh(path, anh, fileAnhSP));
     }   
     
     private void addDataTableHoaDon(ArrayList<HoaDon> dshd){

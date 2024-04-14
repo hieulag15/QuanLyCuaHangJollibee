@@ -28,6 +28,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -60,15 +62,15 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         Utils.customTable(tblNguyenLieu);
         
         //
-        //Chỉnh bảng món ăn
+        //Chỉnh bảng sản phẩm
         //
         //chỉnh sửa chiều rộng của các cột
         TableColumnModel columnModelSP = tblSanPham.getColumnModel();
         columnModelSP.getColumn(0).setPreferredWidth(80);
-        columnModelSP.getColumn(1).setPreferredWidth(300);
+        columnModelSP.getColumn(1).setPreferredWidth(320);
         columnModelSP.getColumn(2).setPreferredWidth(150);
-        columnModelSP.getColumn(3).setPreferredWidth(100);
-        columnModelSP.getColumn(4).setPreferredWidth(120);
+        columnModelSP.getColumn(3).setPreferredWidth(120);
+        columnModelSP.getColumn(4).setPreferredWidth(100);
         //set chiều cao dòng
         tblSanPham.setRowHeight(50); 
         //chỉnh nội dung nằm giữa
@@ -78,6 +80,25 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         columnModelSP.getColumn(2).setCellRenderer(centerRenderer);
         columnModelSP.getColumn(3).setCellRenderer(centerRenderer);
         columnModelSP.getColumn(4).setCellRenderer(centerRenderer);
+        
+        //
+        //Chỉnh bảng nguyên liệu
+        //
+        //chỉnh sửa chiều rộng của các cột
+        TableColumnModel columnModelNL = tblNguyenLieu.getColumnModel();
+        columnModelNL.getColumn(0).setPreferredWidth(80);
+        columnModelNL.getColumn(1).setPreferredWidth(320);
+        columnModelSP.getColumn(2).setPreferredWidth(120);
+        columnModelSP.getColumn(3).setPreferredWidth(100);
+        columnModelSP.getColumn(4).setPreferredWidth(120);
+        //set chiều cao dòng
+        tblNguyenLieu.setRowHeight(50); 
+        //chỉnh nội dung nằm giữa
+        centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+        columnModelNL.getColumn(0).setCellRenderer(centerRenderer);
+        columnModelNL.getColumn(2).setCellRenderer(centerRenderer);
+        columnModelNL.getColumn(3).setCellRenderer(centerRenderer);
+        columnModelNL.getColumn(4).setCellRenderer(centerRenderer);
     }
     
     private void load(){
@@ -90,6 +111,8 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     DecimalFormat dcf = new DecimalFormat("###,###");
     //định dạng ngày
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    String pathSP = "image/SanPham/";
+    String pathNL = "image/NguyenLieu/";
     
     private void loadDataComboboxLoaiBanSP() {
         cbLoaiSP.removeAllItems();
@@ -127,11 +150,11 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     }
     
     private void loadAnhSP(String anh) {
-        lblAnhSP.setIcon(Utils.getAnhSP(anh,fileAnhSP));
+        lblAnhSP.setIcon(Utils.getAnh(pathSP, anh,fileAnhSP));
     }
     
     private void loadAnhNL(String anh) {
-        lblAnhNL.setIcon(Utils.getAnhSP(anh,fileAnhNL));
+        lblAnhNL.setIcon(Utils.getAnh(pathNL, anh,fileAnhNL));
     }
     
     private void loadDataTableSP(){
@@ -173,7 +196,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             NguyenLieu nl = nlBUS.getNguyenLieu(ma);
             txtMaNL.setText(strMa);
             txtTenNL.setText(nl.getTenNL());
-            spnNL.setValue(nl.getSoLuong());
+            spnSoLuongSL.setValue(nl.getSoLuong());
             txtDonGiaNL.setText(dcf.format(nl.getDonGia()));
             txtDonViTinhNL.setText(nl.getDonViTinh());
             loadAnhNL(nl.getHinhAnh());
@@ -191,8 +214,19 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         loadDataTableSP();
     }
     
+    private void lamMoiNL(){
+        txtMaNL.setText("");
+        txtTenNL.setText("");
+        spnSoLuongSL.setValue(0);
+        txtDonViTinhNL.setText("");
+        txtDonGiaNL.setText("");
+        loadAnhNL("default.png");
+        
+        loadDataTableNL();
+    }
+    
     private void xuLyThemSanPham() {
-        if (!checkThem()) {
+        if (!checkThemSP()) {
             return;
         }
         
@@ -215,8 +249,40 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
 
         try {
             spBUS.addSanPham(sp);
-            luuFileAnh();
+            Utils.luuFileAnh(pathSP, fileAnhSP);
             lamMoiSP();
+        } catch (Exception e) {
+            new MyDialog("Thêm thất bại.", MyDialog.ERROR_DIALOG);
+        }
+    
+    }
+    
+    private void xuLyThemNguyenLieu() {
+        if (!checkThemNL()) {
+            return;
+        }
+        
+        String anh = fileAnhNL.getName();
+        System.out.println(fileAnhNL.getName());
+        NguyenLieu nl = new NguyenLieu();
+        
+        int maNL = Integer.parseInt(txtMaNL.getText()+"");
+        String tenNL = txtTenNL.getText() + "";
+        int soLuong = (Integer)spnSoLuongSL.getValue();
+        String donViTinh = txtDonViTinhNL.getText() + "";
+        int donGia = Integer.parseInt((txtDonGiaNL.getText() + "").replace(",", ""));
+        
+        nl.setMaNL(maNL);
+        nl.setTenNL(tenNL);
+        nl.setSoLuong(soLuong);
+        nl.setDonViTinh(donViTinh);
+        nl.setHinhAnh(anh);
+        nl.setDonGia(donGia);
+
+        try {
+            nlBUS.addNguyenLieu(nl);
+            Utils.luuFileAnh(pathNL, fileAnhNL);
+            lamMoiNL();
         } catch (Exception e) {
             new MyDialog("Thêm thất bại.", MyDialog.ERROR_DIALOG);
         }
@@ -237,6 +303,20 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         }
     }
     
+    private void xuLyXoaNguyenLieu(){
+        int selectedRow = tblNguyenLieu.getSelectedRow();
+        
+        if (selectedRow > -1){
+            int maNL = Integer.parseInt(txtMaNL.getText()+"");
+            nlBUS.deleteNguyenLieu(maNL);
+            dtmNguyenLieu.removeRow(selectedRow);
+            lamMoiNL();
+        }
+        else{
+            new MyDialog("Vui lòng chọn một nguyên liệu để xóa.", MyDialog.ERROR_DIALOG);
+        }
+    }
+    
     private void timKiemSanPham(){
         dtmSanPham = (DefaultTableModel) tblSanPham.getModel();       
         dtmSanPham.setRowCount(0);
@@ -250,7 +330,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     }
     
     private void xuLySuaSanPham() {
-        if (!checkSua()) {
+        if (!checkSuaSP()) {
             return;
         }
         
@@ -273,7 +353,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
 
         try {
             spBUS.updateSanPham(sp);
-            luuFileAnh();
+            Utils.luuFileAnh(pathSP, fileAnhSP);
             lamMoiSP();
         } catch (Exception e) {
             new MyDialog("Sửa thất bại.", MyDialog.ERROR_DIALOG);
@@ -281,7 +361,39 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     
     }
     
-    private boolean checkThem(){
+    private void xuLySuaNguyenLieu() {
+        if (!checkSuaNL()) {
+            return;
+        }
+        
+        String anh = fileAnhNL.getName();
+        System.out.println(fileAnhNL.getName());
+        NguyenLieu nl = new NguyenLieu();
+        
+        int maNL = Integer.parseInt(txtMaNL.getText()+"");
+        String tenNL = txtTenNL.getText() + "";
+        int soLuong = (Integer)spnSoLuongSL.getValue();
+        String donViTinh = txtDonViTinhNL.getText() + "";
+        int donGia = Integer.parseInt((txtDonGiaNL.getText() + "").replace(",", ""));
+        
+        nl.setMaNL(maNL);
+        nl.setTenNL(tenNL);
+        nl.setSoLuong(soLuong);
+        nl.setDonViTinh(donViTinh);
+        nl.setHinhAnh(anh);
+        nl.setDonGia(donGia);
+
+        try {
+            nlBUS.updateNguyenLieu(nl);
+            Utils.luuFileAnh(pathNL, fileAnhNL);
+            lamMoiNL();
+        } catch (Exception e) {
+            new MyDialog("Sửa thất bại.", MyDialog.ERROR_DIALOG);
+        }
+    
+    }
+    
+    private boolean checkThemSP(){
         if (txtMaSP.getText().isEmpty()){
             new MyDialog("Vui lòng nhập mã sản phẩm.", MyDialog.ERROR_DIALOG);
             return false;
@@ -291,9 +403,10 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             new MyDialog("Vui lòng nhập mã sản phẩm là số nguyên dương.", MyDialog.ERROR_DIALOG);
             return false;
         }
+        int maSP = Integer.parseInt(txtMaSP.getText()+"");
         ArrayList<SanPham> dssp = spBUS.getListSanPham();
         for (SanPham sp : dssp){
-            if (sp.getMaSP() == Integer.parseInt(txtMaSP.getText()+"")){
+            if (sp.getMaSP() == maSP){
                 new MyDialog("Mã sản phẩm đã tồn tại.", MyDialog.ERROR_DIALOG);
                 return false;
             }
@@ -312,12 +425,13 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             return false;
         }
         if (txtDonGiaSP.getText().isEmpty()){
-            new MyDialog("Vui lòng nhập đơn giá cho sản phẩm.", MyDialog.ERROR_DIALOG);
+            new MyDialog("Vui lòng nhập đơn giá cho sản phẩm.", MyDialog.ERROR_DIALOG);           
             return false;
         }       
-
+        
         if(!Utils.checkTien(txtDonGiaSP.getText()+"")){
             new MyDialog("Vui lòng nhập đúng định dạng tiền.", MyDialog.ERROR_DIALOG);
+            txtDonGiaSP.setText("");
             return false;
         }
 
@@ -329,7 +443,72 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         return true;
     }
     
-    private boolean checkSua(){
+    private boolean checkThemNL(){
+        if (txtMaNL.getText().isEmpty()){
+            new MyDialog("Vui lòng nhập mã nguyên liệu.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+        
+        if (!Utils.checkMa(txtMaNL.getText()+"")){
+            new MyDialog("Vui lòng nhập mã nguyên liệu là số nguyên dương.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+        
+        int maNL = Integer.parseInt(txtMaNL.getText()+"");
+        ArrayList<NguyenLieu> dsnl = nlBUS.getAllNguyenLieu();
+        for (NguyenLieu nl : dsnl){
+            if (nl.getMaNL() == maNL){
+                new MyDialog("Mã nguyên liệu đã tồn tại.", MyDialog.ERROR_DIALOG);
+                return false;
+            }
+        }
+        
+        if (txtTenNL.getText().isEmpty()){
+            new MyDialog("Vui lòng nhập tên nguyên liệu.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+        if (txtDonViTinhNL.getText().isEmpty()){
+            new MyDialog("Vui lòng nhập đơn vị tính cho sản phẩm.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+        if (txtDonGiaNL.getText().isEmpty()){
+            new MyDialog("Vui lòng nhập đơn giá cho sản phẩm.", MyDialog.ERROR_DIALOG);
+            txtDonGiaNL.setText("");
+            return false;
+        }       
+        
+        if(!Utils.checkTien(txtDonGiaNL.getText()+"")){
+            new MyDialog("Vui lòng nhập đúng định dạng tiền.", MyDialog.ERROR_DIALOG);
+            txtDonGiaNL.setText("");
+            return false;
+        }
+        
+        JTextField textField = ((JSpinner.DefaultEditor) spnSoLuongSL.getEditor()).getTextField();
+        String strSoLuong = textField.getText() + "";
+        int soLuong;
+        
+        try {
+            soLuong = Integer.parseInt(strSoLuong);
+        } catch (NumberFormatException e) {
+            new MyDialog("Vui lòng nhập đúng định dạng số lượng.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+        
+        if (soLuong < 0){
+            new MyDialog("Vui lòng nhập số lượng lớn hơn hoặc bằng 0.", MyDialog.ERROR_DIALOG);
+            spnSoLuongSL.setValue(0);
+            return false;
+        }
+
+        if(fileAnhNL == null){
+            new MyDialog("Vui lòng chọn ảnh nguyên liệu.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+
+        return true;
+    }
+    
+    private boolean checkSuaSP(){
         if (txtMaSP.getText().isEmpty()){
             new MyDialog("Vui lòng nhập mã sản phẩm.", MyDialog.ERROR_DIALOG);
             return false;
@@ -339,13 +518,16 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             new MyDialog("Vui lòng nhập mã sản phẩm là số nguyên dương.", MyDialog.ERROR_DIALOG);
             return false;
         }
+        int maSP = Integer.parseInt(txtMaSP.getText()+"");
         ArrayList<SanPham> dssp = spBUS.getListSanPham();
         int flag = 0;
         for (SanPham sp : dssp){
-            if (sp.getMaSP() == Integer.parseInt(txtMaSP.getText()+"")){
+            if (sp.getMaSP() == maSP){
                 flag = 1;
             }
         }
+        
+        SanPham sp = spBUS.getSanPham(maSP);
         if (flag == 0){
             new MyDialog("Mã sản phẩm không tồn tại.", MyDialog.ERROR_DIALOG);
             return false;
@@ -363,13 +545,16 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             new MyDialog("Vui lòng nhập đơn vị tính cho sản phẩm.", MyDialog.ERROR_DIALOG);
             return false;
         }
+               
         if (txtDonGiaSP.getText().isEmpty()){
-            new MyDialog("Vui lòng nhập đơn giá cho sản phẩm.", MyDialog.ERROR_DIALOG);
+            new MyDialog("Vui lòng nhập đơn giá cho sản phẩm.", MyDialog.ERROR_DIALOG); 
+            txtDonGiaSP.setText(dcf.format(sp.getDonGia()));
             return false;
         }       
-
+        
         if(!Utils.checkTien(txtDonGiaSP.getText()+"")){
             new MyDialog("Vui lòng nhập đúng định dạng tiền.", MyDialog.ERROR_DIALOG);
+            txtDonGiaSP.setText(dcf.format(sp.getDonGia()));
             return false;
         }
 
@@ -380,22 +565,82 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
 
         return true;
     }
-
-    private void luuFileAnh() {
-        BufferedImage bImage = null;
-        try {
-            File initialImage = new File(fileAnhSP.getPath());
-            bImage = ImageIO.read(initialImage);
-
-            ImageIO.write(bImage, "png", new File("image/SanPham/" + fileAnhSP.getName()));
-
-        } catch (IOException e) {
-            System.out.println("Exception occured :" + e.getMessage());
+    
+    private boolean checkSuaNL(){
+        if (txtMaNL.getText().isEmpty()){
+            new MyDialog("Vui lòng nhập mã nguyên liệu.", MyDialog.ERROR_DIALOG);
+            return false;
         }
+        
+        if (!Utils.checkMa(txtMaNL.getText()+"")){
+            new MyDialog("Vui lòng nhập mã nguyên liệu là số nguyên dương.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+        
+        int maNL = Integer.parseInt(txtMaNL.getText()+"");
+        ArrayList<NguyenLieu> dsnl = nlBUS.getAllNguyenLieu();
+        int flag = 0;
+        for (NguyenLieu nl : dsnl){
+            if (nl.getMaNL() == maNL){
+                flag = 1;
+            }
+        }
+        
+        NguyenLieu nl = nlBUS.getNguyenLieu(maNL);
+        if (flag == 0){
+            new MyDialog("Mã nguyên liệu không tồn tại.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+        
+        if (txtTenNL.getText().isEmpty()){
+            new MyDialog("Vui lòng nhập tên nguyên liệu.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+        if (txtDonViTinhNL.getText().isEmpty()){
+            new MyDialog("Vui lòng nhập đơn vị tính cho sản phẩm.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+              
+        if (txtDonGiaNL.getText().isEmpty()){
+            new MyDialog("Vui lòng nhập đơn giá cho sản phẩm.", MyDialog.ERROR_DIALOG);   
+            txtDonGiaNL.setText(dcf.format(nl.getDonGia()));
+            return false;
+        }       
+        
+        
+        if(!Utils.checkTien(txtDonGiaNL.getText()+"")){
+            new MyDialog("Vui lòng nhập đúng định dạng tiền.", MyDialog.ERROR_DIALOG);
+            txtDonGiaNL.setText(dcf.format(nl.getDonGia()));
+            return false;
+        }
+        
+        JTextField textField = ((JSpinner.DefaultEditor) spnSoLuongSL.getEditor()).getTextField();
+        String strSoLuong = textField.getText() + "";
+        int soLuong;
+        
+        try {
+            soLuong = Integer.parseInt(strSoLuong);
+        } catch (NumberFormatException e) {
+            new MyDialog("Vui lòng nhập đúng định dạng số lượng.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+        
+        if (soLuong < 0){
+            new MyDialog("Vui lòng nhập số lượng lớn hơn hoặc bằng 0.", MyDialog.ERROR_DIALOG);
+            spnSoLuongSL.setValue(0);
+            return false;
+        }
+
+        if(fileAnhNL == null){
+            new MyDialog("Vui lòng chọn ảnh nguyên liệu.", MyDialog.ERROR_DIALOG);
+            return false;
+        }
+
+        return true;
     }
     
-    private void xuLyChonAnh() {
-        JFileChooser fileChooser = new MyFileChooser("image/SanPham/");
+    private void xuLyChonAnhSP() {
+        JFileChooser fileChooser = new MyFileChooser(pathSP);
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "Tệp hình ảnh", "jpg", "png", "jpeg");
         fileChooser.setFileFilter(filter);
@@ -403,7 +648,20 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             fileAnhSP = fileChooser.getSelectedFile();
-            lblAnhSP.setIcon(Utils.getAnhSP(fileAnhSP.getName(), fileAnhSP));
+            lblAnhSP.setIcon(Utils.getAnh(pathSP, fileAnhSP.getName(), fileAnhSP));
+        }
+    }
+    
+    private void xuLyChonAnhNL() {
+        JFileChooser fileChooser = new MyFileChooser(pathNL);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Tệp hình ảnh", "jpg", "png", "jpeg");
+        fileChooser.setFileFilter(filter);
+        int returnVal = fileChooser.showOpenDialog(null);
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            fileAnhNL = fileChooser.getSelectedFile();
+            lblAnhNL.setIcon(Utils.getAnh(pathNL, fileAnhNL.getName(), fileAnhNL));
         }
     }
 
@@ -450,7 +708,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         btnNhapNL = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblNguyenLieu = new javax.swing.JTable();
-        spnNL = new javax.swing.JSpinner();
+        spnSoLuongSL = new javax.swing.JSpinner();
         jLabel8 = new javax.swing.JLabel();
         txtMaNL = new javax.swing.JTextField();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -755,6 +1013,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         btnThemNL.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(255, 255, 255), new java.awt.Color(255, 255, 255), null, null));
         btnThemNL.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnThemNL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnThemNLMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnThemNLMouseEntered(evt);
             }
@@ -770,6 +1031,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         btnSuaNL.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnSuaNL.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnSuaNL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSuaNLMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSuaNLMouseEntered(evt);
             }
@@ -801,6 +1065,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         btnXoaNL.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnXoaNL.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnXoaNL.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXoaNLMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnXoaNLMouseEntered(evt);
             }
@@ -848,7 +1115,8 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         });
         jScrollPane2.setViewportView(tblNguyenLieu);
 
-        spnNL.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        spnSoLuongSL.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        spnSoLuongSL.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setText("Mã nguyên liệu");
@@ -908,32 +1176,30 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel16)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtTuKhoaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel13)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtDonViTinhNL, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(36, 36, 36)
-                                        .addComponent(jLabel14))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel10))
-                                        .addGap(35, 35, 35)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                .addComponent(txtDonGiaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(txtMaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(spnNL, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(jLabel12)
-                                            .addComponent(jLabel8))))
-                                .addGap(37, 37, 37)))
-                        .addGap(51, 51, 51)
+                                .addComponent(txtTuKhoaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel13)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtDonViTinhNL, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(36, 36, 36)
+                                    .addComponent(jLabel14))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel10))
+                                    .addGap(35, 35, 35)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtDonGiaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtMaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(spnSoLuongSL, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jLabel12)
+                                        .addComponent(jLabel8)))))
+                        .addGap(76, 76, 76)
                         .addComponent(lblAnhNL))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnThemNL, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -941,13 +1207,13 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                         .addComponent(btnSuaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnXoaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(128, 128, 128)
+                        .addGap(116, 116, 116)
                         .addComponent(btnNhapNL, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnXuatNL, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnChonAnhNL, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(81, 81, 81))
+                .addGap(99, 99, 99))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -987,7 +1253,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                                 .addComponent(jLabel13))
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(jLabel14)
-                                .addComponent(spnNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(spnSoLuongSL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1065,43 +1331,43 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnNhapSPMouseExited
 
     private void btnThemNLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemNLMouseEntered
-        btnThemSP.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+        btnThemNL.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
     }//GEN-LAST:event_btnThemNLMouseEntered
 
     private void btnThemNLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemNLMouseExited
-        btnThemSP.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+        btnThemNL.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
     }//GEN-LAST:event_btnThemNLMouseExited
 
     private void btnSuaNLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaNLMouseEntered
-        btnSuaSP.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+        btnSuaNL.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
     }//GEN-LAST:event_btnSuaNLMouseEntered
 
     private void btnSuaNLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaNLMouseExited
-        btnSuaSP.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+        btnSuaNL.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
     }//GEN-LAST:event_btnSuaNLMouseExited
 
     private void btnXuatNLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatNLMouseEntered
-        btnXuatSP.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+        btnXuatNL.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
     }//GEN-LAST:event_btnXuatNLMouseEntered
 
     private void btnXuatNLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatNLMouseExited
-        btnXuatSP.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+        btnXuatNL.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
     }//GEN-LAST:event_btnXuatNLMouseExited
 
     private void btnXoaNLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaNLMouseEntered
-        btnXoaSP.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+        btnXoaNL.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
     }//GEN-LAST:event_btnXoaNLMouseEntered
 
     private void btnXoaNLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaNLMouseExited
-        btnXoaSP.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+        btnXoaNL.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
     }//GEN-LAST:event_btnXoaNLMouseExited
 
     private void btnNhapNLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNhapNLMouseEntered
-        btnNhapSP.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+        btnNhapNL.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
     }//GEN-LAST:event_btnNhapNLMouseEntered
 
     private void btnNhapNLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNhapNLMouseExited
-        btnNhapSP.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+        btnNhapNL.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
     }//GEN-LAST:event_btnNhapNLMouseExited
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
@@ -1109,7 +1375,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_tblSanPhamMouseClicked
 
     private void btnChonAnhSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChonAnhSPMouseClicked
-        xuLyChonAnh();
+        xuLyChonAnhSP();
     }//GEN-LAST:event_btnChonAnhSPMouseClicked
 
     private void btnThemSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemSPMouseClicked
@@ -1129,7 +1395,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_txtTuKhoaCaretUpdate
 
     private void btnChonAnhNLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnChonAnhNLMouseClicked
-        // TODO add your handling code here:
+        xuLyChonAnhNL();
     }//GEN-LAST:event_btnChonAnhNLMouseClicked
 
     private void txtTuKhoaNLCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTuKhoaNLCaretUpdate
@@ -1139,6 +1405,18 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     private void tblNguyenLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNguyenLieuMouseClicked
         xuLyClickTblNguyenLieu();
     }//GEN-LAST:event_tblNguyenLieuMouseClicked
+
+    private void btnThemNLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemNLMouseClicked
+        xuLyThemNguyenLieu();
+    }//GEN-LAST:event_btnThemNLMouseClicked
+
+    private void btnXoaNLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaNLMouseClicked
+        xuLyXoaNguyenLieu();
+    }//GEN-LAST:event_btnXoaNLMouseClicked
+
+    private void btnSuaNLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaNLMouseClicked
+        xuLySuaNguyenLieu();
+    }//GEN-LAST:event_btnSuaNLMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1178,7 +1456,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblAnhNL;
     private javax.swing.JLabel lblAnhSP;
-    private javax.swing.JSpinner spnNL;
+    private javax.swing.JSpinner spnSoLuongSL;
     private javax.swing.JTable tblNguyenLieu;
     private javax.swing.JTable tblSanPham;
     private javax.swing.JTextField txtDonGiaNL;
