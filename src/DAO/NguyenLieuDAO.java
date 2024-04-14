@@ -42,6 +42,35 @@ public class NguyenLieuDAO {
         return null;
     }
     
+    public ArrayList<NguyenLieu> getListNguyenLieuByKey(String key) {
+        try {
+            String sql = "SELECT * FROM NguyenLieu WHERE MaNL LIKE ? OR TenNL LIKE ? OR DonViTinh LIKE ? OR DonGia LIKE ?";
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
+            pre.setString(1, "%" + key + "%");
+            pre.setString(2, "%" + key + "%");
+            pre.setString(3, "%" + key + "%");
+            pre.setString(4, "%" + key + "%");
+            ResultSet rs = pre.executeQuery();
+            ArrayList<NguyenLieu> dsnl = new ArrayList<>();
+            while (rs.next()) {
+                NguyenLieu nl = new NguyenLieu();
+
+                nl.setMaNL(rs.getInt(1));
+                nl.setTenNL(rs.getString(2));
+                nl.setSoLuong(rs.getInt(3));
+                nl.setDonViTinh(rs.getString(4));
+                nl.setHinhAnh(rs.getString(5));
+                nl.setDonGia(rs.getInt(6));
+
+                dsnl.add(nl);
+            }
+            return dsnl;
+        } catch (SQLException e) {
+        }
+
+        return null;
+    }
+    
     public NguyenLieu getNguyenLieu(int ma) {
         try {
             String sql = "SELECT * FROM NguyenLieu WHERE MaNL = ?";

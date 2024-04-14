@@ -47,7 +47,7 @@ public class Utils {
         ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
     }
         
-    public static ImageIcon getAnh(String path, String src, File fileAnh) {
+    public static File getAnh(String path, String src, File fileAnh) {
         src = src.trim().equals("") ? "default.png" : src;
         //Xử lý ảnh
         BufferedImage img = null;
@@ -63,6 +63,28 @@ public class Utils {
             fileAnh = new File(path + src);
         } catch (IOException e) {
             fileAnh = new File(path + "default.png");
+        }
+
+        if (img != null) {
+            return new File(path + src);
+        }
+        return null;
+    }
+    
+    public static ImageIcon getAnh(String path, String src) {
+        src = src.trim().equals("") ? "default.png" : src;
+        //Xử lý ảnh
+        BufferedImage img = null;
+        File fileImg = new File(path + src);
+
+        if (!fileImg.exists()) {
+            src = "default.png";
+            fileImg = new File(path + src);
+        }
+
+        try {
+            img = ImageIO.read(fileImg);
+        } catch (IOException e) {
         }
 
         if (img != null) {

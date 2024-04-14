@@ -22,6 +22,10 @@ public class NguyenLieuBUS {
         return nlDAO.getNguyenLieu(ma);
     }
     
+    public ArrayList<NguyenLieu> getListNguyenLieuByKey(String key) {
+        return nlDAO.getListNguyenLieuByKey(key);
+    }
+    
     public boolean addNguyenLieu(NguyenLieu nl) {
         return nlDAO.addNguyenLieu(nl);
     }

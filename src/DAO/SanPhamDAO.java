@@ -66,13 +66,14 @@ public class SanPhamDAO {
         String sql = "SELECT s.*, l.TenLoai " +
                      "FROM SanPham s " +
                      "INNER JOIN Loai l ON s.MaLoai = l.MaLoai " +
-                     "WHERE s.TenSP LIKE ? OR s.DonViTinh LIKE ? OR s.DonGia LIKE ? OR l.TenLoai LIKE ?";
+                     "WHERE s.MaSP LIKE ? OR s.TenSP LIKE ? OR s.DonViTinh LIKE ? OR s.DonGia LIKE ? OR l.TenLoai LIKE ?";
         
         PreparedStatement pre = myConnect.conn.prepareStatement(sql);
         pre.setString(1, "%" + key + "%");
         pre.setString(2, "%" + key + "%");
         pre.setString(3, "%" + key + "%");
         pre.setString(4, "%" + key + "%");
+        pre.setString(5, "%" + key + "%");
         
         ResultSet rs = pre.executeQuery();
         ArrayList<SanPham> dssp = new ArrayList<>();

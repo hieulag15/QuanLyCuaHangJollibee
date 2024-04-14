@@ -14,6 +14,7 @@ import BUS.SanPhamBUS;
 import Custom.MyDialog;
 import Custom.MyFileChooser;
 import Custom.Utils;
+import Custom.XuLyFileExcel;
 import Model.LoaiSP;
 import Model.NguyenLieu;
 import Model.SanPham;
@@ -29,6 +30,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -150,11 +152,45 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     }
     
     private void loadAnhSP(String anh) {
-        lblAnhSP.setIcon(Utils.getAnh(pathSP, anh,fileAnhSP));
+        fileAnhSP = Utils.getAnh(pathSP, anh, fileAnhSP);
+        ImageIcon originalIcon = new ImageIcon(fileAnhSP.getPath());
+        Image originalImage = originalIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        lblAnhSP.setIcon(new ImageIcon(scaledImage));
     }
     
     private void loadAnhNL(String anh) {
-        lblAnhNL.setIcon(Utils.getAnh(pathNL, anh,fileAnhNL));
+        fileAnhNL = Utils.getAnh(pathNL, anh, fileAnhNL);
+        ImageIcon originalIcon = new ImageIcon(fileAnhNL.getPath());
+        Image originalImage = originalIcon.getImage();
+        Image scaledImage = originalImage.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        lblAnhNL.setIcon(new ImageIcon(scaledImage));
+    }
+    
+    public ImageIcon getAnhSP(String src) {
+        src = src.trim().equals("") ? "default.png" : src;
+        //Xử lý ảnh
+        BufferedImage img = null;
+        File fileImg = new File(pathSP + src);
+
+        if (!fileImg.exists()) {
+            src = "default.png";
+            fileImg = new File(pathSP + src);
+        }
+
+        try {
+            img = ImageIO.read(fileImg);
+            fileAnhSP = new File(pathSP + src);
+        } catch (IOException e) {
+            fileAnhSP = new File(pathSP + "default.png");
+        }
+
+        if (img != null) {
+            Image dimg = img.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+
+            return new ImageIcon(dimg);
+        }
+        return null;
     }
     
     private void loadDataTableSP(){
@@ -329,6 +365,18 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         addDataTableSanPham(dssp);
     }
     
+    private void timKiemNguyenLieu(){
+        dtmNguyenLieu = (DefaultTableModel) tblNguyenLieu.getModel();       
+        dtmNguyenLieu.setRowCount(0);
+        
+        ArrayList<NguyenLieu> dsnl = null;
+        String tuKhoa = txtTuKhoaNL.getText().toLowerCase() + "";
+
+        dsnl = nlBUS.getListNguyenLieuByKey(tuKhoa);
+
+        addDataTableNguyenLieu(dsnl);
+    }
+    
     private void xuLySuaSanPham() {
         if (!checkSuaSP()) {
             return;
@@ -435,11 +483,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             return false;
         }
 
-        if(fileAnhSP == null){
-            new MyDialog("Vui lòng chọn ảnh sản phẩm.", MyDialog.ERROR_DIALOG);
-            return false;
-        }
-
         return true;
     }
     
@@ -500,11 +543,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             return false;
         }
 
-        if(fileAnhNL == null){
-            new MyDialog("Vui lòng chọn ảnh nguyên liệu.", MyDialog.ERROR_DIALOG);
-            return false;
-        }
-
         return true;
     }
     
@@ -555,11 +593,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         if(!Utils.checkTien(txtDonGiaSP.getText()+"")){
             new MyDialog("Vui lòng nhập đúng định dạng tiền.", MyDialog.ERROR_DIALOG);
             txtDonGiaSP.setText(dcf.format(sp.getDonGia()));
-            return false;
-        }
-
-        if(fileAnhSP == null){
-            new MyDialog("Vui lòng chọn ảnh sản phẩm.", MyDialog.ERROR_DIALOG);
             return false;
         }
 
@@ -631,11 +664,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             return false;
         }
 
-        if(fileAnhNL == null){
-            new MyDialog("Vui lòng chọn ảnh nguyên liệu.", MyDialog.ERROR_DIALOG);
-            return false;
-        }
-
         return true;
     }
     
@@ -648,7 +676,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             fileAnhSP = fileChooser.getSelectedFile();
-            lblAnhSP.setIcon(Utils.getAnh(pathSP, fileAnhSP.getName(), fileAnhSP));
+            lblAnhSP.setIcon(Utils.getAnh(pathSP, fileAnhSP.getName()));
         }
     }
     
@@ -661,8 +689,13 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
 
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             fileAnhNL = fileChooser.getSelectedFile();
-            lblAnhNL.setIcon(Utils.getAnh(pathNL, fileAnhNL.getName(), fileAnhNL));
+            lblAnhNL.setIcon(Utils.getAnh(pathNL, fileAnhNL.getName()));
         }
+    }
+    
+    private void xuLyXuatFileExcel() {
+        XuLyFileExcel xuatFile = new XuLyFileExcel();
+        xuatFile.xuatExcel(tblSanPham);
     }
 
     /**
@@ -699,6 +732,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         tblSanPham = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         txtTenSP = new javax.swing.JTextArea();
+        btnResetSanPham = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         btnThemNL = new javax.swing.JLabel();
@@ -723,6 +757,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         btnChonAnhNL = new javax.swing.JButton();
         txtTuKhoaNL = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
+        btnResetNguyenLieu = new javax.swing.JButton();
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -821,6 +856,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         btnXuatSP.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnXuatSP.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnXuatSP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXuatSPMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnXuatSPMouseEntered(evt);
             }
@@ -892,6 +930,20 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         txtTenSP.setRows(5);
         jScrollPane4.setViewportView(txtTenSP);
 
+        btnResetSanPham.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/refresh.png"))); // NOI18N
+        btnResetSanPham.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnResetSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResetSanPhamMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnResetSanPhamMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnResetSanPhamMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -941,8 +993,10 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                         .addComponent(btnChonAnhSP, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(79, 79, 79))))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(282, 282, 282)
+                .addGap(248, 248, 248)
                 .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(btnResetSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -953,9 +1007,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(31, 31, 31)
-                .addComponent(jLabel1)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -978,7 +1032,8 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                                 .addComponent(txtDonGiaSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel7)))
                         .addGap(0, 14, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnResetSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblAnhSP, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1167,6 +1222,20 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         jLabel16.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel16.setText("Từ khóa tìm");
 
+        btnResetNguyenLieu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/refresh.png"))); // NOI18N
+        btnResetNguyenLieu.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnResetNguyenLieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResetNguyenLieuMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnResetNguyenLieuMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnResetNguyenLieuMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -1217,8 +1286,10 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(355, 355, 355)
-                        .addComponent(jLabel11))
+                        .addGap(318, 318, 318)
+                        .addComponent(jLabel11)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnResetNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1010, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1227,8 +1298,10 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel11)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel11)
+                    .addComponent(btnResetNguyenLieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -1399,7 +1472,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnChonAnhNLMouseClicked
 
     private void txtTuKhoaNLCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTuKhoaNLCaretUpdate
-        // TODO add your handling code here:
+        timKiemNguyenLieu();
     }//GEN-LAST:event_txtTuKhoaNLCaretUpdate
 
     private void tblNguyenLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNguyenLieuMouseClicked
@@ -1418,12 +1491,42 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         xuLySuaNguyenLieu();
     }//GEN-LAST:event_btnSuaNLMouseClicked
 
+    private void btnResetNguyenLieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetNguyenLieuMouseClicked
+        lamMoiNL();
+    }//GEN-LAST:event_btnResetNguyenLieuMouseClicked
+
+    private void btnResetNguyenLieuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetNguyenLieuMouseEntered
+        btnResetNguyenLieu.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+    }//GEN-LAST:event_btnResetNguyenLieuMouseEntered
+
+    private void btnResetNguyenLieuMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetNguyenLieuMouseExited
+        btnResetNguyenLieu.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+    }//GEN-LAST:event_btnResetNguyenLieuMouseExited
+
+    private void btnResetSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetSanPhamMouseClicked
+        lamMoiSP();
+    }//GEN-LAST:event_btnResetSanPhamMouseClicked
+
+    private void btnResetSanPhamMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetSanPhamMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnResetSanPhamMouseEntered
+
+    private void btnResetSanPhamMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetSanPhamMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnResetSanPhamMouseExited
+
+    private void btnXuatSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatSPMouseClicked
+        xuLyXuatFileExcel();
+    }//GEN-LAST:event_btnXuatSPMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChonAnhNL;
     private javax.swing.JButton btnChonAnhSP;
     private javax.swing.JLabel btnNhapNL;
     private javax.swing.JLabel btnNhapSP;
+    private javax.swing.JButton btnResetNguyenLieu;
+    private javax.swing.JButton btnResetSanPham;
     private javax.swing.JLabel btnSuaNL;
     private javax.swing.JLabel btnSuaSP;
     private javax.swing.JLabel btnThemNL;
