@@ -10,6 +10,31 @@ import java.sql.Statement;
 
 public class SanPhamDAO {
     MyConnect myConnect = new MyConnect();
+    public ArrayList<SanPham> getListSanPhamActive() {
+        try {
+            String sql = "SELECT * FROM SanPham WHERE TinhTrang = 1";
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            ArrayList<SanPham> dssp = new ArrayList<>();
+            while (rs.next()) {
+                SanPham sp = new SanPham();
+
+                sp.setMaSP(rs.getInt(1));
+                sp.setTenSP(rs.getString(2));
+                sp.setMaLoai(rs.getInt(3));
+                sp.setDonViTinh(rs.getString(4));
+                sp.setHinhAnh(rs.getString(5));
+                sp.setDonGia(rs.getInt(6));
+                sp.setTinhTrang(rs.getInt(7));
+                dssp.add(sp);
+            }
+            return dssp;
+        } catch (SQLException e) {
+        }
+
+        return null;
+    }
+    
     public ArrayList<SanPham> getAllSanPham() {
         try {
             String sql = "SELECT * FROM SanPham";
@@ -25,7 +50,7 @@ public class SanPhamDAO {
                 sp.setDonViTinh(rs.getString(4));
                 sp.setHinhAnh(rs.getString(5));
                 sp.setDonGia(rs.getInt(6));
-
+                sp.setTinhTrang(rs.getInt(7));
                 dssp.add(sp);
             }
             return dssp;
@@ -37,7 +62,7 @@ public class SanPhamDAO {
     
     public ArrayList<SanPham> getListSanPhamByIdLoai(int maLoai) {
         try {
-            String sql = "SELECT * FROM SanPham WHERE MaLoai = ?";
+            String sql = "SELECT * FROM SanPham WHERE MaLoai = ? AND TinhTrang = 1";
             PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
             pre.setInt(1, maLoai);
             ResultSet rs = pre.executeQuery();
@@ -51,7 +76,7 @@ public class SanPhamDAO {
                 sp.setDonViTinh(rs.getString(4));
                 sp.setHinhAnh(rs.getString(5));
                 sp.setDonGia(rs.getInt(6));
-
+                sp.setTinhTrang(rs.getInt(7));
                 dssp.add(sp);
             }
             return dssp;
@@ -61,44 +86,83 @@ public class SanPhamDAO {
         return null;
     }
     
-    public ArrayList<SanPham> getListSanPhamByKey(String key) {
+    public ArrayList<SanPham> getListSanPhamByKeyActive(String key) {
         try {
-        String sql = "SELECT s.*, l.TenLoai " +
-                     "FROM SanPham s " +
-                     "INNER JOIN Loai l ON s.MaLoai = l.MaLoai " +
-                     "WHERE s.MaSP LIKE ? OR s.TenSP LIKE ? OR s.DonViTinh LIKE ? OR s.DonGia LIKE ? OR l.TenLoai LIKE ?";
-        
-        PreparedStatement pre = myConnect.conn.prepareStatement(sql);
-        pre.setString(1, "%" + key + "%");
-        pre.setString(2, "%" + key + "%");
-        pre.setString(3, "%" + key + "%");
-        pre.setString(4, "%" + key + "%");
-        pre.setString(5, "%" + key + "%");
-        
-        ResultSet rs = pre.executeQuery();
-        ArrayList<SanPham> dssp = new ArrayList<>();
-        
-        while (rs.next()) {
-            SanPham sp = new SanPham();
+            String sql = "SELECT s.*, l.TenLoai " +
+                         "FROM SanPham s " +
+                         "INNER JOIN Loai l ON s.MaLoai = l.MaLoai " +
+                         "WHERE (s.MaSP LIKE ? OR s.TenSP LIKE ? OR s.DonViTinh LIKE ? OR s.DonGia LIKE ? OR l.TenLoai LIKE ?) AND s.TinhTrang = 1";
 
-            sp.setMaSP(rs.getInt("MaSP"));
-            sp.setTenSP(rs.getString("TenSP"));
-            sp.setMaLoai(rs.getInt("MaLoai"));
-            sp.setDonViTinh(rs.getString("DonViTinh"));
-            sp.setHinhAnh(rs.getString("HinhAnh"));
-            sp.setDonGia(rs.getInt("DonGia"));
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            pre.setString(1, "%" + key + "%");
+            pre.setString(2, "%" + key + "%");
+            pre.setString(3, "%" + key + "%");
+            pre.setString(4, "%" + key + "%");
+            pre.setString(5, "%" + key + "%");
 
-            dssp.add(sp);
+            ResultSet rs = pre.executeQuery();
+            ArrayList<SanPham> dssp = new ArrayList<>();
+
+            while (rs.next()) {
+                SanPham sp = new SanPham();
+
+                sp.setMaSP(rs.getInt("MaSP"));
+                sp.setTenSP(rs.getString("TenSP"));
+                sp.setMaLoai(rs.getInt("MaLoai"));
+                sp.setDonViTinh(rs.getString("DonViTinh"));
+                sp.setHinhAnh(rs.getString("HinhAnh"));
+                sp.setDonGia(rs.getInt("DonGia"));
+                sp.setTinhTrang(rs.getInt(7));
+                dssp.add(sp);
+            }
+
+            return dssp;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        
-        return dssp;
-        
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
 
-    return null;
-}
+        return null;
+    }
+    
+    public ArrayList<SanPham> getListSanPhamByKey(String key) {
+            try {
+            String sql = "SELECT s.*, l.TenLoai " +
+                         "FROM SanPham s " +
+                         "INNER JOIN Loai l ON s.MaLoai = l.MaLoai " +
+                         "WHERE s.MaSP LIKE ? OR s.TenSP LIKE ? OR s.DonViTinh LIKE ? OR s.DonGia LIKE ? OR l.TenLoai LIKE ?";
+
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            pre.setString(1, "%" + key + "%");
+            pre.setString(2, "%" + key + "%");
+            pre.setString(3, "%" + key + "%");
+            pre.setString(4, "%" + key + "%");
+            pre.setString(5, "%" + key + "%");
+
+            ResultSet rs = pre.executeQuery();
+            ArrayList<SanPham> dssp = new ArrayList<>();
+
+            while (rs.next()) {
+                SanPham sp = new SanPham();
+
+                sp.setMaSP(rs.getInt("MaSP"));
+                sp.setTenSP(rs.getString("TenSP"));
+                sp.setMaLoai(rs.getInt("MaLoai"));
+                sp.setDonViTinh(rs.getString("DonViTinh"));
+                sp.setHinhAnh(rs.getString("HinhAnh"));
+                sp.setDonGia(rs.getInt("DonGia"));
+                sp.setTinhTrang(rs.getInt(7));
+                dssp.add(sp);
+            }
+
+            return dssp;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     
     public SanPham getSanPham(int maSP){
         try {
@@ -114,6 +178,7 @@ public class SanPhamDAO {
                 sp.setDonViTinh(rs.getString(4));
                 sp.setHinhAnh(rs.getString(5));
                 sp.setDonGia(rs.getInt(6));
+                sp.setTinhTrang(rs.getInt(7));
                 return sp;
             }
         } catch (SQLException e) {
@@ -124,7 +189,7 @@ public class SanPhamDAO {
 
     public boolean addSanPham(SanPham sp) {
         boolean result = false;
-        String sql = "INSERT INTO SanPham (MaSP, TenSP, MaLoai, DonViTinh, HinhAnh, DonGia) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO SanPham (MaSP, TenSP, MaLoai, DonViTinh, HinhAnh, DonGia, TinhTrang) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ps.setInt(1, sp.getMaSP());
@@ -133,6 +198,7 @@ public class SanPhamDAO {
             ps.setString(4, sp.getDonViTinh());
             ps.setString(5, sp.getHinhAnh());
             ps.setInt(6, sp.getDonGia());
+            ps.setInt(7, sp.getTinhTrang());
 
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -143,7 +209,7 @@ public class SanPhamDAO {
 
     public boolean updateSanPham(SanPham sp) {
         boolean result = false;
-        String sql = "UPDATE SanPham SET TenSP = ?, MaLoai = ?, DonViTinh = ?, HinhAnh = ?, DonGia = ? WHERE MaSP = ?";
+        String sql = "UPDATE SanPham SET TenSP = ?, MaLoai = ?, DonViTinh = ?, HinhAnh = ?, DonGia = ?, TinhTrang = ? WHERE MaSP = ?";
         try {
             PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ps.setString(1, sp.getTenSP());
@@ -151,7 +217,8 @@ public class SanPhamDAO {
             ps.setString(3, sp.getDonViTinh());
             ps.setString(4, sp.getHinhAnh());
             ps.setInt(5, sp.getDonGia());
-            ps.setInt(6, sp.getMaSP());
+            ps.setInt(6, sp.getTinhTrang());
+            ps.setInt(7, sp.getMaSP());
 
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {

@@ -42,6 +42,31 @@ public class NguyenLieuDAO {
         return null;
     }
     
+    public ArrayList<NguyenLieu> getListNguyenLieuActive() {
+        try {
+            String sql = "SELECT * FROM NguyenLieu WHERE TinhTrang = 1";
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
+            ResultSet rs = pre.executeQuery();
+            ArrayList<NguyenLieu> dsnl = new ArrayList<>();
+            while (rs.next()) {
+                NguyenLieu nl = new NguyenLieu();
+
+                nl.setMaNL(rs.getInt(1));
+                nl.setTenNL(rs.getString(2));
+                nl.setSoLuong(rs.getInt(3));
+                nl.setDonViTinh(rs.getString(4));
+                nl.setHinhAnh(rs.getString(5));
+                nl.setDonGia(rs.getInt(6));
+                nl.setTinhTrang(rs.getInt(7));
+                dsnl.add(nl);
+            }
+            return dsnl;
+        } catch (SQLException e) {
+        }
+
+        return null;
+    }
+    
     public ArrayList<NguyenLieu> getListNguyenLieuByKey(String key) {
         try {
             String sql = "SELECT * FROM NguyenLieu WHERE MaNL LIKE ? OR TenNL LIKE ? OR DonViTinh LIKE ? OR DonGia LIKE ?";
@@ -85,6 +110,7 @@ public class NguyenLieuDAO {
                 nl.setDonViTinh(rs.getString(4));
                 nl.setHinhAnh(rs.getString(5));
                 nl.setDonGia(rs.getInt(6));
+                nl.setTinhTrang(rs.getInt(7));
             }
             return nl;
         } catch (SQLException e) {
@@ -95,7 +121,7 @@ public class NguyenLieuDAO {
     
     public boolean addNguyenLieu(NguyenLieu nl) {
         boolean result = false;
-        String sql = "INSERT INTO NguyenLieu (MaNL, TenNL, SoLuong, DonViTinh, HinhAnh, DonGia) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO NguyenLieu (MaNL, TenNL, SoLuong, DonViTinh, HinhAnh, DonGia, TinhTrang) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ps.setInt(1, nl.getMaNL());
@@ -104,6 +130,7 @@ public class NguyenLieuDAO {
             ps.setString(4, nl.getDonViTinh());
             ps.setString(5, nl.getHinhAnh());
             ps.setInt(6, nl.getDonGia());
+            ps.setInt(7, nl.getTinhTrang());
 
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -114,7 +141,7 @@ public class NguyenLieuDAO {
     
     public boolean updateNguyenLieu(NguyenLieu nl) {
         boolean result = false;
-        String sql = "UPDATE NguyenLieu SET TenNL = ?, SoLuong = ?, DonViTinh = ?, HinhAnh = ?, DonGia = ? WHERE MaNL = ?";
+        String sql = "UPDATE NguyenLieu SET TenNL = ?, SoLuong = ?, DonViTinh = ?, HinhAnh = ?, DonGia = ?, TinhTrang = ? WHERE MaNL = ?";
         try {
             PreparedStatement ps = myConnect.getConn().prepareStatement(sql);           
             ps.setString(1, nl.getTenNL());
@@ -122,8 +149,9 @@ public class NguyenLieuDAO {
             ps.setString(3, nl.getDonViTinh());
             ps.setString(4, nl.getHinhAnh());
             ps.setInt(5, nl.getDonGia());
-            ps.setInt(6, nl.getMaNL());
-
+            ps.setInt(6, nl.getTinhTrang());
+            ps.setInt(7, nl.getMaNL());
+            
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

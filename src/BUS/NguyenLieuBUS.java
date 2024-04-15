@@ -18,6 +18,10 @@ public class NguyenLieuBUS {
         return nlDAO.getAllNguyenLieu();
     }
     
+    public ArrayList<NguyenLieu> getListNguyenLieuActive() {
+        return nlDAO.getListNguyenLieuActive();
+    }
+    
     public NguyenLieu getNguyenLieu(int ma) {
         return nlDAO.getNguyenLieu(ma);
     }

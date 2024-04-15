@@ -15,6 +15,7 @@ public class NguyenLieu {
     private String donViTinh;
     private String hinhAnh;
     private int donGia;
+    private int tinhTrang;
 
     public void setMaNL(int maNL) {
         this.maNL = maNL;
@@ -65,6 +66,14 @@ public class NguyenLieu {
     }
 
     public NguyenLieu() {
+    }
+
+    public int getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(int tinhTrang) {
+        this.tinhTrang = tinhTrang;
     }
 
     public NguyenLieu(int maNL, String tenNL, int soLuong, String donViTinh, String hinhAnh, int donGia) {

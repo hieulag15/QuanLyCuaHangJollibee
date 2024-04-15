@@ -188,7 +188,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         int maLoai = cb_loaisp.getSelectedIndex();
 
         if (maLoai == 0) {
-            dssp = spBUS.getListSanPham(); 
+            dssp = spBUS.getListSanPhamActive(); 
         } else {
             dssp = spBUS.getListSanPhamByIdLoai(maLoai);
         }
@@ -443,7 +443,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         ArrayList<SanPham> dssp = null;
         String tuKhoa = txtTuKhoa.getText().toLowerCase() + "";
 
-        dssp = spBUS.getListSanPhamByKey(tuKhoa);
+        dssp = spBUS.getListSanPhamByKeyActive(tuKhoa);
 
         addDataTableSanPhamBan(dssp);
     }
@@ -1530,6 +1530,8 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         lamMoiBanHang();
         if (!txtTuKhoa.getText().isEmpty()){
             txtTuKhoa.setText("");            
+        } else{
+            loadDataTableSanPhamBan();
         }
         txtTuKhoa.requestFocus();
         //Xóa sạch giỏ hàng

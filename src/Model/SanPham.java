@@ -7,6 +7,7 @@ public class SanPham {
     private String donViTinh;
     private String hinhAnh;
     private int donGia;
+    private int tinhTrang;
 
     public int getMaSP() {
         return maSP;
@@ -55,6 +56,16 @@ public class SanPham {
     public void setDonGia(int donGia) {
         this.donGia = donGia;
     }
+
+    public int getTinhTrang() {
+        return tinhTrang;
+    }
+
+    public void setTinhTrang(int tinhTrang) {
+        this.tinhTrang = tinhTrang;
+    }
+    
+    
 
     public SanPham() {
     }
