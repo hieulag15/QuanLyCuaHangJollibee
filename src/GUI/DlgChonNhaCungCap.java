@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class DlgChonNhaCungCap extends javax.swing.JDialog {
 
-    private NhaCungCap nhaCungCapChon = null;
+    public static NhaCungCap nhaCungCapChon = null;
     private NhaCungCapBUS nhaCungCapBUS = new NhaCungCapBUS();
     private DefaultTableModel dtmNhaCungCap;
 

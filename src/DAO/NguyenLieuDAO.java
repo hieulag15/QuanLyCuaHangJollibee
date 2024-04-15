@@ -32,6 +32,7 @@ public class NguyenLieuDAO {
                 nl.setDonViTinh(rs.getString(4));
                 nl.setHinhAnh(rs.getString(5));
                 nl.setDonGia(rs.getInt(6));
+                nl.setTinhTrang(rs.getInt(7));
 
                 dsnl.add(nl);
             }
@@ -42,10 +43,11 @@ public class NguyenLieuDAO {
         return null;
     }
     
-    public ArrayList<NguyenLieu> getListNguyenLieuActive() {
+    public ArrayList<NguyenLieu> getListNguyenLieuByActive(int tinhTrang) {
         try {
-            String sql = "SELECT * FROM NguyenLieu WHERE TinhTrang = 1";
+            String sql = "SELECT * FROM NguyenLieu WHERE TinhTrang = ?";
             PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
+            pre.setInt(1, tinhTrang);
             ResultSet rs = pre.executeQuery();
             ArrayList<NguyenLieu> dsnl = new ArrayList<>();
             while (rs.next()) {
@@ -67,14 +69,24 @@ public class NguyenLieuDAO {
         return null;
     }
     
-    public ArrayList<NguyenLieu> getListNguyenLieuByKey(String key) {
+    public ArrayList<NguyenLieu> getListNguyenLieuByKey(String key, Integer tinhTrang) {
         try {
-            String sql = "SELECT * FROM NguyenLieu WHERE MaNL LIKE ? OR TenNL LIKE ? OR DonViTinh LIKE ? OR DonGia LIKE ?";
-            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
-            pre.setString(1, "%" + key + "%");
-            pre.setString(2, "%" + key + "%");
-            pre.setString(3, "%" + key + "%");
-            pre.setString(4, "%" + key + "%");
+            String sql = "SELECT * FROM NguyenLieu WHERE (MaNL LIKE ? OR TenNL LIKE ? OR SoLuong LIKE ? OR DonViTinh LIKE ? OR DonGia LIKE ?)";
+            if (tinhTrang != null) {
+                sql += " AND TinhTrang = ?";
+            } else {
+                sql += " AND TinhTrang IN (0, 1)";
+            }
+
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            for (int i = 1; i <= 5; i++) {
+                pre.setString(i, "%" + key + "%");
+            }
+
+            if (tinhTrang != null) {
+                pre.setInt(6, tinhTrang);
+            }
+            
             ResultSet rs = pre.executeQuery();
             ArrayList<NguyenLieu> dsnl = new ArrayList<>();
             while (rs.next()) {
@@ -86,7 +98,7 @@ public class NguyenLieuDAO {
                 nl.setDonViTinh(rs.getString(4));
                 nl.setHinhAnh(rs.getString(5));
                 nl.setDonGia(rs.getInt(6));
-
+                nl.setTinhTrang(rs.getInt(7));
                 dsnl.add(nl);
             }
             return dsnl;

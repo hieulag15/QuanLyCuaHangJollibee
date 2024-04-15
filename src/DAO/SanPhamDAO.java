@@ -10,10 +10,11 @@ import java.sql.Statement;
 
 public class SanPhamDAO {
     MyConnect myConnect = new MyConnect();
-    public ArrayList<SanPham> getListSanPhamActive() {
+    public ArrayList<SanPham> getListSanPhamByActive(int tinhTrang) {
         try {
-            String sql = "SELECT * FROM SanPham WHERE TinhTrang = 1";
+            String sql = "SELECT * FROM SanPham WHERE TinhTrang = ?";
             PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
+            pre.setInt(1, tinhTrang);
             ResultSet rs = pre.executeQuery();
             ArrayList<SanPham> dssp = new ArrayList<>();
             while (rs.next()) {
@@ -86,58 +87,27 @@ public class SanPhamDAO {
         return null;
     }
     
-    public ArrayList<SanPham> getListSanPhamByKeyActive(String key) {
+    public ArrayList<SanPham> getListSanPhamByKey(String key, Integer tinhTrang) {
         try {
             String sql = "SELECT s.*, l.TenLoai " +
                          "FROM SanPham s " +
                          "INNER JOIN Loai l ON s.MaLoai = l.MaLoai " +
-                         "WHERE (s.MaSP LIKE ? OR s.TenSP LIKE ? OR s.DonViTinh LIKE ? OR s.DonGia LIKE ? OR l.TenLoai LIKE ?) AND s.TinhTrang = 1";
+                         "WHERE (s.MaSP LIKE ? OR s.TenSP LIKE ? OR s.DonViTinh LIKE ? OR s.DonGia LIKE ? OR l.TenLoai LIKE ?)";
 
-            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
-            pre.setString(1, "%" + key + "%");
-            pre.setString(2, "%" + key + "%");
-            pre.setString(3, "%" + key + "%");
-            pre.setString(4, "%" + key + "%");
-            pre.setString(5, "%" + key + "%");
-
-            ResultSet rs = pre.executeQuery();
-            ArrayList<SanPham> dssp = new ArrayList<>();
-
-            while (rs.next()) {
-                SanPham sp = new SanPham();
-
-                sp.setMaSP(rs.getInt("MaSP"));
-                sp.setTenSP(rs.getString("TenSP"));
-                sp.setMaLoai(rs.getInt("MaLoai"));
-                sp.setDonViTinh(rs.getString("DonViTinh"));
-                sp.setHinhAnh(rs.getString("HinhAnh"));
-                sp.setDonGia(rs.getInt("DonGia"));
-                sp.setTinhTrang(rs.getInt(7));
-                dssp.add(sp);
+            if (tinhTrang != null) {
+                sql += " AND s.TinhTrang = ?";
+            } else {
+                sql += " AND s.TinhTrang IN (0, 1)";
             }
 
-            return dssp;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-    
-    public ArrayList<SanPham> getListSanPhamByKey(String key) {
-            try {
-            String sql = "SELECT s.*, l.TenLoai " +
-                         "FROM SanPham s " +
-                         "INNER JOIN Loai l ON s.MaLoai = l.MaLoai " +
-                         "WHERE s.MaSP LIKE ? OR s.TenSP LIKE ? OR s.DonViTinh LIKE ? OR s.DonGia LIKE ? OR l.TenLoai LIKE ?";
-
             PreparedStatement pre = myConnect.conn.prepareStatement(sql);
-            pre.setString(1, "%" + key + "%");
-            pre.setString(2, "%" + key + "%");
-            pre.setString(3, "%" + key + "%");
-            pre.setString(4, "%" + key + "%");
-            pre.setString(5, "%" + key + "%");
+            for (int i = 1; i <= 5; i++) {
+                pre.setString(i, "%" + key + "%");
+            }
+
+            if (tinhTrang != null) {
+                pre.setInt(6, tinhTrang);
+            }
 
             ResultSet rs = pre.executeQuery();
             ArrayList<SanPham> dssp = new ArrayList<>();
@@ -151,7 +121,7 @@ public class SanPhamDAO {
                 sp.setDonViTinh(rs.getString("DonViTinh"));
                 sp.setHinhAnh(rs.getString("HinhAnh"));
                 sp.setDonGia(rs.getInt("DonGia"));
-                sp.setTinhTrang(rs.getInt(7));
+                sp.setTinhTrang(rs.getInt("TinhTrang"));
                 dssp.add(sp);
             }
 

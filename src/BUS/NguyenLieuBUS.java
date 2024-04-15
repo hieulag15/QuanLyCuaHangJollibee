@@ -18,16 +18,16 @@ public class NguyenLieuBUS {
         return nlDAO.getAllNguyenLieu();
     }
     
-    public ArrayList<NguyenLieu> getListNguyenLieuActive() {
-        return nlDAO.getListNguyenLieuActive();
+    public ArrayList<NguyenLieu> getListNguyenLieuByActive(int tinhTrang) {
+        return nlDAO.getListNguyenLieuByActive(tinhTrang);
     }
     
     public NguyenLieu getNguyenLieu(int ma) {
         return nlDAO.getNguyenLieu(ma);
     }
     
-    public ArrayList<NguyenLieu> getListNguyenLieuByKey(String key) {
-        return nlDAO.getListNguyenLieuByKey(key);
+    public ArrayList<NguyenLieu> getListNguyenLieuByKey(String key, Integer tinhTrang) {
+        return nlDAO.getListNguyenLieuByKey(key, tinhTrang);
     }
     
     public boolean addNguyenLieu(NguyenLieu nl) {

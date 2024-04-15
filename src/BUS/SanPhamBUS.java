@@ -10,8 +10,8 @@ public class SanPhamBUS {
     public SanPhamBUS() {
     }
     
-    public ArrayList<SanPham> getListSanPhamActive() {
-        return sanphamDAO.getListSanPhamActive();
+    public ArrayList<SanPham> getListSanPhamByActive(int tinhTrang) {
+        return sanphamDAO.getListSanPhamByActive(tinhTrang);
     }
     
     public ArrayList<SanPham> getListSanPham() {
@@ -22,12 +22,8 @@ public class SanPhamBUS {
         return sanphamDAO.getListSanPhamByIdLoai(maLoai);
     }
     
-    public ArrayList<SanPham> getListSanPhamByKeyActive(String key) {
-        return sanphamDAO.getListSanPhamByKeyActive(key);
-    }
-    
-    public ArrayList<SanPham> getListSanPhamByKey(String key){
-        return sanphamDAO.getListSanPhamByKey(key);
+    public ArrayList<SanPham> getListSanPhamByKey(String key, Integer tinhTrang) {
+        return sanphamDAO.getListSanPhamByKey(key, tinhTrang);
     }
     
     public SanPham getSanPham(int maSP){
