@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
 import Model.PhieuNhap;
+import java.time.LocalDateTime;
 
 
 public class PhieuNhapDAO {
@@ -32,10 +33,12 @@ public class PhieuNhapDAO {
     }
     public PhieuNhap getPhieuNhap(int maPN){
         PhieuNhap pn = new PhieuNhap();
-        String sql = "SELECT * FROM PhieuNhap WHERE MaPN = "+ maPN;
+        String sql = "SELECT * FROM PhieuNhap WHERE MaPN = ?";
         try {
             PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
+            ps.setInt(1, maPN);
             ResultSet rs = ps.executeQuery();
+            
             int maPNh = rs.getInt("MaPN");
             int maNCC = rs.getInt("MaNCC");
             int maNV = rs.getInt("MaNV");
@@ -50,16 +53,31 @@ public class PhieuNhapDAO {
         return pn;
     }
     
+    public int getPhieuNhapMoiNhat() {
+        try {
+            String sql = "SELECT MAX(MaPN) FROM PhieuNhap";
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+                return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    
     public boolean addPhieuNhap(PhieuNhap pn) {
         boolean result = false;
-        String sql = "INSERT INTO PhieuNhap (MaPN, MaNCC, MaNV, NgayLap, TongTien) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PhieuNhap (MaNCC, MaNV, NgayLap, TongTien) VALUES (?, ?, ?, ?)";
         try {
             PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
-            ps.setInt(1, pn.getMaPN());
-            ps.setInt(2, pn.getMaNCC());
-            ps.setInt(3, pn.getMaNV());
-            ps.setDate(4, (Date) pn.getNgayLap());
-            ps.setInt(5, pn.getTongTien());
+            
+            LocalDateTime now = LocalDateTime.now();
+            Timestamp timestamp = Timestamp.valueOf(now);
+            ps.setInt(1, pn.getMaNCC());
+            ps.setInt(2, pn.getMaNV());
+            ps.setTimestamp(3, timestamp);
+            ps.setInt(4, pn.getTongTien());
 
             result = ps.executeUpdate() > 0;
         } catch (SQLException e) {

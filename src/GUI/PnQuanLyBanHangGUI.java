@@ -545,7 +545,10 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     private void xuLyXuatHoaDonBanHang() {
         ArrayList<Object> dsGioHang = new ArrayList<>();
         int row = tblGioHang.getRowCount();
-        if (row == 0) return;
+        if (row == 0) {
+            new MyDialog("Chưa có sản phẩm nào trong giỏ.", MyDialog.ERROR_DIALOG);
+            return;
+        }
         int tongTien = 0;
         for (int i = 0; i < row; i++) {
             Object[] ob = new Object[5];

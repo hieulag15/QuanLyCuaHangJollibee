@@ -1,5 +1,7 @@
 package GUI;
+import BUS.DangNhapBUS;
 import BUS.NguyenLieuBUS;
+import BUS.NhanVienBUS;
 import Custom.MyDialog;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -9,6 +11,7 @@ import Custom.MyTable;
 import Custom.Utils;
 import Model.NguyenLieu;
 import Model.NhaCungCap;
+import Model.NhanVien;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -28,6 +31,7 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
 
     private DefaultTableModel dtmKho, dtmGioNhap, dtmPhieuNhap, dtmCTPhieuNhap;
     private NguyenLieuBUS nlBUS = new NguyenLieuBUS();
+    private NhanVienBUS nvBUS = new NhanVienBUS();
 
     private void customControls() {
         tblKho.setModel(dtmKho);
@@ -178,6 +182,32 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
         } else {
             txtNhaCungCap.setText("");
         }
+    }
+    
+    private void xuLyXuatPhieuNhap() {
+        ArrayList<Object> dsHangCho = new ArrayList<>();
+        int row = tblGioNhap.getRowCount();
+        if (row == 0) {
+            new MyDialog("Chưa có sản phẩm nào trong hàng chờ.", MyDialog.ERROR_DIALOG);
+            return;
+        }
+        int tongTien = 0;
+        //xử lý lấy chi tiết phiếu nhập
+        for (int i = 0; i < row; i++) {
+            Object[] ob = new Object[4];
+            ob[0] = tblGioNhap.getValueAt(i, 0);
+            ob[1] = tblGioNhap.getValueAt(i, 2);
+            ob[2] = tblGioNhap.getValueAt(i, 3);
+            ob[3] = tblGioNhap.getValueAt(i, 4);
+            tongTien += Integer.parseInt((tblGioNhap.getValueAt(i, 4) + "").replace(",", ""));
+            dsHangCho.add(ob);
+        }
+              
+        int maNV = DangNhapBUS.taiKhoanLogin.getMaNhanVien();
+        NhanVien nv = nvBUS.getNhanVien(maNV);
+        NhaCungCap nhaCC = DlgChonNhaCungCap.nhaCungCapChon;
+        XuatPhieuNhapGUI phieuNhapUI = new XuatPhieuNhapGUI(nhaCC.getMaNCC(), nv.getMaNV(), dsHangCho, tongTien);
+        phieuNhapUI.setVisible(true);
     }
 
     @SuppressWarnings("unchecked")
@@ -983,7 +1013,13 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaMouseExited
 
     private void btnXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatMouseClicked
- 
+        if (DlgChonNhaCungCap.nhaCungCapChon != null){
+            xuLyXuatPhieuNhap();
+        } else{
+            new MyDialog("Vui lòng chọn nhà cung cấp.", MyDialog.ERROR_DIALOG);
+            return;
+        }
+            
     }//GEN-LAST:event_btnXuatMouseClicked
 
     private void btnXuatMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatMouseEntered
