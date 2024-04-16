@@ -9,7 +9,7 @@ public class PhieuNhapBUS {
     public PhieuNhapBUS() {
         
     }
-    public List<PhieuNhap> getAllPhieuNhap() {
+    public ArrayList<PhieuNhap> getAllPhieuNhap() {
         return phieuNhapDAO.getAllPhieuNhap();
     }
     public int getPhieuNhapMoiNhat() {

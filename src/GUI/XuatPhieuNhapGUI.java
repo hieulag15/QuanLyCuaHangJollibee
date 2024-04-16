@@ -25,6 +25,7 @@ public class XuatPhieuNhapGUI extends javax.swing.JDialog {
     private NhaCungCapBUS nccBUS = new NhaCungCapBUS();
     private NguyenLieuBUS spBUS = new NguyenLieuBUS();
     private NhanVienBUS nvBUS = new NhanVienBUS();
+    private NguyenLieuBUS nlBUS = new NguyenLieuBUS();
     private int tongTien;
     private boolean checkNhap = false;
     int maNhaCungCap;
@@ -197,12 +198,21 @@ public class XuatPhieuNhapGUI extends javax.swing.JDialog {
                 //===================LƯU CTPN VÀO DB=================
                 //===================================================
                 CTPhieuNhap ctpn = new CTPhieuNhap();
+                
+                int maNL = Integer.parseInt(array[0]+"");
+                int soLuong = Integer.parseInt(array[1]+"");
+                
                 ctpn.setMaPN(maPN);
-                ctpn.setMaSP(Integer.parseInt(array[0]+""));
-                ctpn.setSoLuong(Integer.parseInt(array[1]+""));
+                ctpn.setMaSP(maNL);
+                ctpn.setSoLuong(soLuong);
                 ctpn.setDonGia(Integer.parseInt((array[2]+"").replace(",", "")));
                 ctpn.setThanhTien(Integer.parseInt((array[3]+"").replace(",", "")));
                 ctPhieuNhapBUS.themChiTietPhieuNhap(ctpn);
+                
+                //cập nhật số lượng nguyên liệu trong database
+                NguyenLieu nl = nlBUS.getNguyenLieu(maNL);
+                nl.setSoLuong(nl.getSoLuong() + soLuong);
+                nlBUS.updateNguyenLieu(nl);
             }
         }               
         

@@ -9,8 +9,8 @@ import java.time.LocalDateTime;
 
 public class PhieuNhapDAO {
     MyConnect myConnect = new MyConnect();
-    public List<PhieuNhap> getAllPhieuNhap() {
-        List<PhieuNhap> list = new ArrayList<>();
+    public ArrayList<PhieuNhap> getAllPhieuNhap() {
+        ArrayList<PhieuNhap> list = new ArrayList<>();
         String sql = "SELECT * FROM PhieuNhap";
         try {
             PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
@@ -39,13 +39,13 @@ public class PhieuNhapDAO {
             ps.setInt(1, maPN);
             ResultSet rs = ps.executeQuery();
             
-            int maPNh = rs.getInt("MaPN");
-            int maNCC = rs.getInt("MaNCC");
-            int maNV = rs.getInt("MaNV");
-            Date ngayLap = rs.getDate("NgayLap");
-            int tongTien = rs.getInt("TongTien");
-
-            pn = new PhieuNhap(maPNh, maNCC, maNV, ngayLap, tongTien);
+            if (rs.next()){
+                pn.setMaPN(rs.getInt("MaPN"));
+                pn.setMaNCC(rs.getInt("MaNCC"));
+                pn.setMaNV(rs.getInt("MaNV"));
+                pn.setNgayLap(rs.getDate("NgayLap"));
+                pn.setTongTien(rs.getInt("TongTien"));
+            }
         } catch (SQLException ex) {
             ex.printStackTrace(); 
             return null;
