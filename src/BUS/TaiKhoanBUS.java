@@ -79,4 +79,10 @@ public class TaiKhoanBUS {
     public List<TaiKhoan> getTaiKhoanByQuyen(String quyen){
         return taiKhoanDAO.getTaiKhoanByQuyen(quyen);
     }
+    public boolean khoaTaiKhoan(int maNV){
+        return taiKhoanDAO.khoaTaiKhoan(maNV);
+    }
+    public TaiKhoan getTaiKhoan_DatLaiMatKhau(int manv){
+        return taiKhoanDAO.getTaiKhoan_DatLaiMatKhau(manv);
+    }
 }

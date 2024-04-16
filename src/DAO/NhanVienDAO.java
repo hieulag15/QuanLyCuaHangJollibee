@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class NhanVienDAO {
     MyConnect myConnect = new MyConnect();
     public ArrayList<NhanVien> getDanhSachNhanVien() {
-        String sql = "SELECT * FROM NhanVien";
+        String sql = "SELECT * FROM NhanVien WHERE TrangThai <> 0";
         ArrayList<NhanVien> dsnv = new ArrayList<>();
         try {
             PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
@@ -63,7 +63,7 @@ public class NhanVienDAO {
     
     public boolean themNhanVien(NhanVien nv) {
         boolean result = false;
-        String sql = "INSERT INTO NhanVien(MaNV, Ho, Ten, GioiTinh, ChucVu) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO NhanVien(MaNV, Ho, Ten, GioiTinh, ChucVu, TrangThai) VALUES(?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
             pre.setInt(1, nv.getMaNV());
@@ -71,6 +71,7 @@ public class NhanVienDAO {
             pre.setString(3, nv.getTen());
             pre.setString(4, nv.getGioiTinh());
             pre.setString(5, nv.getChucVu());
+            pre.setInt(6, nv.getTrangThai());
             
             result = pre.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -104,6 +105,19 @@ public class NhanVienDAO {
         try {
             PreparedStatement pre = myConnect.conn.prepareStatement(sql);
             pre.setInt(1, maNV);
+            
+            result = pre.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            return false;
+        }
+        return result;
+    }
+    public boolean xoamemNhanVien(int manv) {
+        boolean result = false;
+        String sql = "UPDATE nhanvien SET TrangThai=0 WHERE MaNV=?";
+        try {
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
+            pre.setInt(1, manv);
             
             result = pre.executeUpdate() > 0;
         } catch (SQLException ex) {
