@@ -80,13 +80,37 @@ public class CTPhieuNhapDAO {
     }
     return result;
 }
+    
+        public ArrayList<CTPhieuNhap> getListChiTietPhieuNhapTheoMaPN(int maPN) {
+            ArrayList<CTPhieuNhap> dsCTPhieuNhap = new ArrayList<>();
+            try {
+                String sql = "SELECT * FROM ctphieunhap where MaPN = ?";
+                PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+                ps.setInt(1, maPN);
+                ResultSet rs = ps.executeQuery();
 
-    public CTPhieuNhap getChiTietPhieuNhap(int maPN) {
-    String sql = "SELECT * FROM ctphieunhap WHERE MaPN = ? ";
+                while (rs.next()){
+                    CTPhieuNhap ctpn = new CTPhieuNhap();
+                    ctpn.setMaPN(rs.getInt("MaPN"));
+                    ctpn.setMaSP(rs.getInt("MaSP"));
+                    ctpn.setSoLuong(rs.getInt("SoLuong"));
+                    ctpn.setDonGia(rs.getInt("DonGia"));
+                    ctpn.setThanhTien(rs.getInt("ThanhTien"));
+                    dsCTPhieuNhap.add(ctpn);
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            return dsCTPhieuNhap;
+        }
+
+    public CTPhieuNhap getChiTietPhieuNhap(int maPN, int maSP) {
+    String sql = "SELECT * FROM ctphieunhap WHERE MaPN = ? and MaSP = ?";
     CTPhieuNhap ctpn = new CTPhieuNhap();
     try {
         PreparedStatement pre = myConnect.conn.prepareStatement(sql);
         pre.setInt(1, maPN);
+        pre.setInt(2, maSP);
         ResultSet rs = pre.executeQuery();
         if (rs.next()) {
             ctpn.setMaPN(rs.getInt("MaPN"));

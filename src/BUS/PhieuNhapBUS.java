@@ -35,4 +35,10 @@ public class PhieuNhapBUS {
     public boolean deletePhieuNhap(int mapn) {
         return phieuNhapDAO.deletePhieuNhap(mapn);
     }
+    public ArrayList<PhieuNhap> getListHoaDonByDate(String startDate, String endDate) {
+        return phieuNhapDAO.getListHoaDonByDate(startDate, endDate);
+    }
+    public ArrayList<PhieuNhap> getListHoaDonByCost(int startCost, int endCost) {
+        return phieuNhapDAO.getListHoaDonByCost(startCost, endCost);
+    }
 }

@@ -14,11 +14,10 @@ import Model.CTPhieuNhap;
  */
 import java.util.ArrayList;
 public class CTPhieuNhapBUS {
-    
-    private CTPhieuNhapDAO ctPhieuNhapDAO;
+    private CTPhieuNhapDAO ctPhieuNhapDAO = new CTPhieuNhapDAO();
 
     public CTPhieuNhapBUS() {
-        ctPhieuNhapDAO = new CTPhieuNhapDAO();
+        
     }
     
     public ArrayList<CTPhieuNhap> getListChiTietPhieuNhap() {
@@ -27,17 +26,21 @@ public class CTPhieuNhapBUS {
     
     public boolean themChiTietPhieuNhap(CTPhieuNhap ctpn) {
         return ctPhieuNhapDAO.themChiTietPhieuNhap(ctpn);
-}
+    }
     
     public boolean xoaChiTietPhieuNhap(int MaPN) {
         return ctPhieuNhapDAO.xoaChiTietPhieuNhap(MaPN);
-}
+    }
     public boolean capNhatPhieuNhap(CTPhieuNhap pn) {
         return ctPhieuNhapDAO.capNhatPhieuNhap(pn);
-}
+    }
+    
+    public ArrayList<CTPhieuNhap> getListChiTietPhieuNhapTheoMaPN(int maPN) {
+        return ctPhieuNhapDAO.getListChiTietPhieuNhapTheoMaPN(maPN);
+    }
 
-    public CTPhieuNhap getChiTietPhieuNhap(int maPN) {
-        return ctPhieuNhapDAO.getChiTietPhieuNhap(maPN);
+    public CTPhieuNhap getChiTietPhieuNhap(int maPN, int maSP) {
+        return ctPhieuNhapDAO.getChiTietPhieuNhap(maPN, maSP);
     }
     
     

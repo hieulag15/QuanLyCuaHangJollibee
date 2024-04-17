@@ -1,5 +1,6 @@
 package DAO;
 
+import Model.CTPhieuNhap;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -120,4 +121,56 @@ public class PhieuNhapDAO {
         }
         return result;
     }
+    
+    public ArrayList<PhieuNhap> getListHoaDonByDate(String startDate, String endDate) { 
+        try {
+            
+            String sql = "SELECT * FROM PhieuNhap WHERE NgayLap BETWEEN CAST(? AS DATE) AND CAST(? AS DATE)";
+            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            pre.setString(1, startDate);
+            pre.setString(2, endDate);
+            ResultSet rs = pre.executeQuery();
+
+            ArrayList<PhieuNhap> dsPhieuNhap = new ArrayList<>();
+
+            while (rs.next()){
+                PhieuNhap pn = new PhieuNhap();
+                pn.setMaPN(rs.getInt("MaPN"));
+                pn.setMaNCC(rs.getInt("MaNCC"));
+                pn.setMaNV(rs.getInt("MaNV"));
+                pn.setNgayLap(rs.getDate("NgayLap"));
+                pn.setTongTien(rs.getInt("TongTien"));
+                dsPhieuNhap.add(pn);
+            }
+            return dsPhieuNhap;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        
+        return null;
+    }
+    
+    public ArrayList<PhieuNhap> getListHoaDonByCost(int startCost, int endCost) {
+    ArrayList<PhieuNhap> dsPhieuNhap = new ArrayList<>();
+    try {
+        String sql = "SELECT * FROM PhieuNhap WHERE TongTien >= ? AND TongTien <= ?";
+        PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+        ps.setInt(1, startCost);
+        ps.setInt(2, endCost);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()){
+            PhieuNhap pn = new PhieuNhap();
+            pn.setMaPN(rs.getInt("MaPN"));
+            pn.setMaNCC(rs.getInt("MaNCC"));
+            pn.setMaNV(rs.getInt("MaNV"));
+            pn.setNgayLap(rs.getDate("NgayLap"));
+            pn.setTongTien(rs.getInt("TongTien"));
+            dsPhieuNhap.add(pn);
+        }
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+    }
+    return dsPhieuNhap;
+}
 }

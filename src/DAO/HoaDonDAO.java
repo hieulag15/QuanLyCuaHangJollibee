@@ -131,26 +131,26 @@ public class HoaDonDAO {
     
     public ArrayList<HoaDon> getListHoaDonByCost(int startCost, int endCost) {
     ArrayList<HoaDon> result = new ArrayList<>();
-    try {
-        String sql = "SELECT * FROM hoadon WHERE TongTien >= ? AND TongTien <= ?";
-        PreparedStatement ps = myConnect.conn.prepareStatement(sql);
-        ps.setInt(1, startCost);
-        ps.setInt(2, endCost);
-        ResultSet rs = ps.executeQuery();
-        
-        while (rs.next()) {
-            HoaDon hd = new HoaDon();
-            hd.setMaHD(rs.getInt(1));
-            hd.setSdt(rs.getString(2));
-            hd.setMaNV(rs.getInt(3));
-            hd.setNgayLap(rs.getDate(4));
-            hd.setTongTien(rs.getInt(5));
-            hd.setGhiChu(rs.getString(6));
-            result.add(hd);
+        try {
+            String sql = "SELECT * FROM hoadon WHERE TongTien >= ? AND TongTien <= ?";
+            PreparedStatement ps = myConnect.conn.prepareStatement(sql);
+            ps.setInt(1, startCost);
+            ps.setInt(2, endCost);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                HoaDon hd = new HoaDon();
+                hd.setMaHD(rs.getInt(1));
+                hd.setSdt(rs.getString(2));
+                hd.setMaNV(rs.getInt(3));
+                hd.setNgayLap(rs.getDate(4));
+                hd.setTongTien(rs.getInt(5));
+                hd.setGhiChu(rs.getString(6));
+                result.add(hd);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
-    } catch (SQLException ex) {
-        ex.printStackTrace();
+        return result;
     }
-    return result;
-}
 }
