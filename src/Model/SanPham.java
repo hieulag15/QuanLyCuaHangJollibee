@@ -8,6 +8,15 @@ public class SanPham {
     private String hinhAnh;
     private int donGia;
     private int tinhTrang;
+    private int soluongdaban;
+
+    public int getSoluongdaban() {
+        return soluongdaban;
+    }
+
+    public void setSoluongdaban(int soluongdaban) {
+        this.soluongdaban = soluongdaban;
+    }
 
     public int getMaSP() {
         return maSP;
@@ -77,5 +86,11 @@ public class SanPham {
         this.donViTinh = donViTinh;
         this.hinhAnh = hinhAnh;
         this.donGia = donGia;
+    }   
+    
+    public SanPham(int maSP, String tenSP, int soluongdaban) {
+        this.maSP = maSP;
+        this.tenSP = tenSP;
+        this.soluongdaban = soluongdaban;
     }   
 }

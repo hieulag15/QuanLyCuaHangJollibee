@@ -15,10 +15,12 @@ import javax.swing.*;
 import java.awt.*;
 
 import static Main.main.changLNF;
+import Model.SanPham;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class PnQuanLyThongKeGUI extends JPanel {
@@ -300,11 +302,12 @@ public class PnQuanLyThongKeGUI extends JPanel {
     }
 
     private CategoryDataset createDataset() {
+        ThongKeBUS thongKeBUS = new ThongKeBUS();
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-//        for (int i = 1; i <= 12; i++) {
-//            double value = thongKeBUS.getDoanhThuThang(i, Calendar.getInstance().get(Calendar.YEAR));
-//            dataset.addValue(value, "Doanh thu", i + "");
-//        }
+        for (int i = 1; i <= 12; i++) {
+            double value = thongKeBUS.getDoanhThuThang(i, Calendar.getInstance().get(Calendar.YEAR));
+            dataset.addValue(value, "Doanh thu", i + "");
+        }
         return dataset;
     }
 
@@ -321,16 +324,23 @@ public class PnQuanLyThongKeGUI extends JPanel {
 //        lblDoanhThuQuy3.setText(dcf.format(thongKe.getTongThuQuy(3)));
 //        lblDoanhThuQuy4.setText(dcf.format(thongKe.getTongThuQuy(4)));
 //        lblTongDoanhThu.setText(dcf.format(thongKe.getTongDoanhThu()));
-//        lblMon1.setText(thongKe.getTopSanPhamBanChay().get(0).getTenSP());
-//        lblMon2.setText(thongKe.getTopSanPhamBanChay().get(1).getTenSP());
-//        lblMon3.setText(thongKe.getTopSanPhamBanChay().get(2).getTenSP());
-//        lblMon4.setText(thongKe.getTopSanPhamBanChay().get(3).getTenSP());
-//        lblMon5.setText(thongKe.getTopSanPhamBanChay().get(4).getTenSP());
-//        lblSoLuong1.setText("" + thongKe.getTopSanPhamBanChay().get(0).getSoLuong());
-//        lblSoLuong2.setText("" + thongKe.getTopSanPhamBanChay().get(1).getSoLuong());
-//        lblSoLuong3.setText("" + thongKe.getTopSanPhamBanChay().get(2).getSoLuong());
-//        lblSoLuong4.setText("" + thongKe.getTopSanPhamBanChay().get(3).getSoLuong());
-//        lblSoLuong5.setText("" + thongKe.getTopSanPhamBanChay().get(4).getSoLuong());
+
+        ThongKeBUS thongKeBUS = new ThongKeBUS();
+        ArrayList<SanPham> arrTop5SanBanChay = thongKeBUS.getTop5SanPhamBanChay(2024);
+        
+        if(!arrTop5SanBanChay.isEmpty()){
+            lblMon1.setText(arrTop5SanBanChay.get(0).getTenSP());
+            lblMon2.setText(arrTop5SanBanChay.get(1).getTenSP());
+            lblMon3.setText(arrTop5SanBanChay.get(2).getTenSP());
+            lblMon4.setText(arrTop5SanBanChay.get(3).getTenSP());
+            lblMon5.setText(arrTop5SanBanChay.get(4).getTenSP());
+            lblSoLuong1.setText(String.valueOf(arrTop5SanBanChay.get(0).getSoluongdaban()));
+            lblSoLuong2.setText(String.valueOf(arrTop5SanBanChay.get(1).getSoluongdaban()));
+            lblSoLuong3.setText(String.valueOf(arrTop5SanBanChay.get(2).getSoluongdaban()));
+            lblSoLuong4.setText(String.valueOf(arrTop5SanBanChay.get(3).getSoluongdaban()));
+            lblSoLuong5.setText(String.valueOf(arrTop5SanBanChay.get(4).getSoluongdaban()));
+        }
+
     }
 
 }

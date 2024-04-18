@@ -6,6 +6,7 @@ import Model.*;
 import java.util.ArrayList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class ThongKeDAO {
     MyConnect myConnect = new MyConnect();
@@ -34,6 +35,40 @@ public class ThongKeDAO {
             ex.printStackTrace();
         }
         return list;
+    }
+    
+    public ArrayList<SanPham> getTop5SanPhamBanChay(int year){
+        ArrayList<SanPham> arrTop5 = new ArrayList<>();
+        String sql = "SELECT sanpham.MaSP, sanpham.TenSP, temp.tongsoluong FROM sanpham,(SELECT cthoadon.MaSP, sum(cthoadon.SoLuong) as tongsoluong FROM cthoadon, hoadon WHERE cthoadon.MaHD = hoadon.MaHD AND YEAR(hoadon.NgayLap) = ? GROUP BY cthoadon.MaSP ORDER BY sum(cthoadon.SoLuong) DESC) AS temp WHERE sanpham.MaSP = temp.MaSP LIMIT 5;";
+        try {
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
+            ps.setInt(1, year);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                SanPham sanPham = new SanPham(rs.getInt(1), rs.getString(2), rs.getInt(3));
+                arrTop5.add(sanPham);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }    
+        return arrTop5;
+    }    
+    
+    public int getDoanhThuThang(int month, int year){
+        String sql = "SELECT SUM(hoadon.TongTien) as doanhthu FROM hoadon WHERE MONTH(hoadon.NgayLap) = ? AND YEAR(hoadon.NgayLap) = ?";
+        int doanhthu = 0;
+        try {
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
+            ps.setInt(1, month);
+            ps.setInt(2, year);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                doanhthu = rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }    
+        return doanhthu;
     }
 
 }

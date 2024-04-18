@@ -21,34 +21,31 @@ import java.util.List;
  * @author chuot
  */
 public class GiamGiaBUS {
-    
+
     private ArrayList<GiamGia> dsgg = new ArrayList<>();
     private GiamGiaDAO giamgiaDAO;
 
     public GiamGiaBUS() {
-    giamgiaDAO = new GiamGiaDAO();
+        giamgiaDAO = new GiamGiaDAO();
     }
-    
+
     public ArrayList<GiamGia> getAllGiamGia() {
         return giamgiaDAO.getAllGiamGia();
     }
-    
-    
-    
-   
+
     public boolean deleteGiamGia(int maGiam) {
         return giamgiaDAO.deleteGiamGia(maGiam);
     }
-    
-    public boolean themMaGiam(int Ma,String ten, String phanTram, String dieuKien, java.util.Date ngayBD, java.util.Date ngayKT) {
+
+    public boolean themMaGiam(int Ma, String ten, String phanTram, String dieuKien, java.util.Date ngayBD, java.util.Date ngayKT) {
         ten = ten.trim();
         phanTram = phanTram.replace("%", "");
         dieuKien = dieuKien.replace(",", "");
-        
+
         if (giamgiaDAO.kiemTraMaGiamDaTonTai(Ma)) {
-        new MyDialog("Mã giảm giá đã tồn tại!", MyDialog.ERROR_DIALOG);
-        return false;
-    }
+            new MyDialog("Mã giảm giá đã tồn tại!", MyDialog.ERROR_DIALOG);
+            return false;
+        }
         if (ten.equals("")) {
             new MyDialog("Hãy nhập tên chương trình khuyến mãi!", MyDialog.ERROR_DIALOG);
             return false;
@@ -58,20 +55,20 @@ public class GiamGiaBUS {
             return false;
         }
         boolean flag = false;
-        
-            int phanTramGiam = Integer.parseInt(phanTram);
-            int dieuKienGiam = Integer.parseInt(dieuKien);
 
-            GiamGia gg = new GiamGia();
-            gg.setMaGiam(Ma);
-            gg.setTenGiamGia(ten);
-            gg.setPhanTramGiam(phanTramGiam);
-            gg.setDieuKien(dieuKienGiam);
-            gg.setNgayBD(ngayBD);
-            gg.setNgayKT(ngayKT);
+        int phanTramGiam = Integer.parseInt(phanTram);
+        int dieuKienGiam = Integer.parseInt(dieuKien);
 
-            flag = giamgiaDAO.themMaGiam(gg);
-        
+        GiamGia gg = new GiamGia();
+        gg.setMaGiam(Ma);
+        gg.setTenGiamGia(ten);
+        gg.setPhanTramGiam(phanTramGiam);
+        gg.setDieuKien(dieuKienGiam);
+        gg.setNgayBD(ngayBD);
+        gg.setNgayKT(ngayKT);
+
+        flag = giamgiaDAO.themMaGiam(gg);
+
         return flag;
     }
 
@@ -92,21 +89,21 @@ public class GiamGiaBUS {
             return false;
         }
         boolean flag = false;
-        
-            int maGiam = Integer.parseInt(ma);
-            int phanTramGiam = Integer.parseInt(phanTram);
-            int dieuKienGiam = Integer.parseInt(dieuKien);
 
-            GiamGia gg = new GiamGia();
-            gg.setMaGiam(maGiam);
-            gg.setTenGiamGia(ten);
-            gg.setPhanTramGiam(phanTramGiam);
-            gg.setDieuKien(dieuKienGiam);
-            gg.setNgayBD(ngayBD);
-            gg.setNgayKT(ngayKT);
+        int maGiam = Integer.parseInt(ma);
+        int phanTramGiam = Integer.parseInt(phanTram);
+        int dieuKienGiam = Integer.parseInt(dieuKien);
 
-            flag = giamgiaDAO.suaMaGiam(gg);
-        
+        GiamGia gg = new GiamGia();
+        gg.setMaGiam(maGiam);
+        gg.setTenGiamGia(ten);
+        gg.setPhanTramGiam(phanTramGiam);
+        gg.setDieuKien(dieuKienGiam);
+        gg.setNgayBD(ngayBD);
+        gg.setNgayKT(ngayKT);
+
+        flag = giamgiaDAO.suaMaGiam(gg);
+
         if (flag) {
             new MyDialog("Sửa thành công!", MyDialog.SUCCESS_DIALOG);
         } else {
@@ -114,6 +111,5 @@ public class GiamGiaBUS {
         }
         return flag;
     }
-    
-    
+
 }
