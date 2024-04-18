@@ -1,7 +1,7 @@
 package GUI;
 
-import BUS.ThongKeBUS;
-import Model.ThongKe;
+import BUS.*;
+import Model.*;
 import Custom.TransparentPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -19,9 +19,12 @@ import Model.SanPham;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.ArrayList;
 
 public class PnQuanLyThongKeGUI extends JPanel {
 
@@ -29,8 +32,41 @@ public class PnQuanLyThongKeGUI extends JPanel {
         changLNF("Windows");
         addControls();
         addEvents();
+        loadData();
     }
-
+    public void loadData(){
+        SanPhamBUS spbus = new SanPhamBUS();
+        KhachHangBUS khbus = new KhachHangBUS();
+        NhanVienBUS nvbus = new NhanVienBUS();
+        HoaDonBUS hdbus = new HoaDonBUS();
+        ArrayList<SanPham> listsp = spbus.getListSanPham();
+        ArrayList<KhachHang> listkh = khbus.getListKhachHang();
+        ArrayList<NhanVien> listnv = nvbus.getDanhSachNhanVien();
+        int sosp = listsp.size();
+        int sokh = listkh.size();
+        int sonv = listnv.size();
+        int doanhthu = hdbus.getDoanhThu();
+        
+        lblThongKeThucDon.setText(sosp+"");
+        lblThongKeKhachHang.setText(sokh+"");
+        lblThongKeNhanVien.setText(sonv+"");
+        lblThongKeDoanhThu.setText(doanhthu+"");
+        
+        loaddoanhthu(2024);
+    }
+    public void loaddoanhthu(int year){
+        HoaDonBUS hdbus = new HoaDonBUS();
+        int quy1 = hdbus.getDoanhThuTheoQuy(1, year);
+        int quy2 = hdbus.getDoanhThuTheoQuy(2, year);
+        int quy3 = hdbus.getDoanhThuTheoQuy(3, year);
+        int quy4 = hdbus.getDoanhThuTheoQuy(4, year);
+        int tongdoanhthu = quy1+quy2+quy3+quy4;
+        lblDoanhThuQuy1.setText(quy1+"");
+        lblDoanhThuQuy2.setText(quy2+"");
+        lblDoanhThuQuy3.setText(quy3+"");
+        lblDoanhThuQuy4.setText(quy4+"");
+        lblTongDoanhThu.setText(tongdoanhthu+"");
+    }
     ThongKeBUS thongKeBUS = new ThongKeBUS();
     final Color colorPanel = new Color(56, 56, 56);
     JLabel lblThongKeThucDon, lblThongKeKhachHang, lblThongKeNhanVien, lblThongKeDoanhThu;
@@ -151,6 +187,27 @@ public class PnQuanLyThongKeGUI extends JPanel {
         cmbNam.setFont(new Font("Tahoma", Font.PLAIN, 18));
         cmbNam.setBounds(w / 2 - 100 / 2, 560, 120, 35);
         pnThongKeTong.add(cmbNam);
+        
+        cmbNam.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                // Thực hiện các hành động khi combobox thay đổi giá trị
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    int year = Integer.parseInt(cmbNam.getSelectedItem().toString());
+                    loaddoanhthu(year);
+                }
+            }
+        });
+
+//        cmbNam.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                String selectedValue = (String) cmbNam.getSelectedItem();
+//                int year = Integer.parseInt(selectedValue);
+//                loaddoanhthu(year);
+//            }
+//        });
+
         
         btn_filter = new JButton("Chi tiết");
         btn_filter.setFont(new Font("Tahoma", Font.PLAIN, 18));

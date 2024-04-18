@@ -153,4 +153,43 @@ public class HoaDonDAO {
         }
         return result;
     }
+    public int getDoanhThu(){
+        int doanhthu = 0;
+        try {
+            String sql = "SELECT SUM(TongTien) AS total_tongtien FROM hoadon";
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                doanhthu = rs.getInt("total_tongtien");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return doanhthu;
+    }
+    public int getDoanhThuTheoQuy(int quy, int year){
+        int doanhthu = 0;
+        String thangquy = "";
+        if (quy == 1){
+            thangquy = "1 AND 3";
+        }else if (quy == 2){
+            thangquy = "4 AND 6";
+        }else if (quy == 3){
+            thangquy = "7 AND 9";
+        }else{
+            thangquy = "10 AND 12";
+        }
+        String sql = "SELECT SUM(TongTien) AS total_tongtien FROM hoadon WHERE YEAR(NgayLap) = "+year +" AND MONTH(NgayLap) BETWEEN " + thangquy;
+        try {
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                doanhthu = rs.getInt("total_tongtien");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return doanhthu;
+    }
+
 }

@@ -31,9 +31,35 @@ public class TaiKhoanDAO {
         }
         return list;
     }
+    
+    public TaiKhoan getTaiKhoan_DatLaiMatKhau(int maNhanVien) {
+        TaiKhoan tk = null;
+        String sql = "SELECT * FROM TaiKhoan WHERE MaNV = ?";
+        try {
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
+            ps.setInt(1, maNhanVien);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) { 
+                int maNhanvien = rs.getInt("MaNV");
+                String tenDangNhap = rs.getString("TenDangNhap");
+                String matKhau = rs.getString("MatKhau");
+                String quyen = rs.getString("Quyen");
+
+                tk = new TaiKhoan(maNhanvien, tenDangNhap, matKhau, quyen);
+            } else {
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return tk;
+    }
+
+    
     public TaiKhoan getTaiKhoan(int maNhanVien){
         TaiKhoan tk = new TaiKhoan();
-        String sql = "SELECT * FROM TaiKhoan WHERE MaNV = "+ maNhanVien;
+        String sql = "SELECT * FROM `TaiKhoan` WHERE MaNV ="+ maNhanVien +";";
+//        String sql = "SELECT * FROM TaiKhoan WHERE MaNV = "+ maNhanVien;
         try {
             PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -139,7 +165,7 @@ public class TaiKhoanDAO {
     public boolean datLaiMatKhau(int maNV, String tenDangNhap) {
         try {
             String sql = "UPDATE TaiKhoan SET MatKhau=? WHERE MaNV=?";
-            PreparedStatement pre = myConnect.conn.prepareStatement(sql);
+            PreparedStatement pre = myConnect.getConn().prepareStatement(sql);
             pre.setString(1, tenDangNhap);
             pre.setInt(2, maNV);
             return pre.executeUpdate() > 0;
@@ -167,12 +193,12 @@ public class TaiKhoanDAO {
             Statement st = myConnect.conn.createStatement();
             ResultSet rs = st.executeQuery(sql);
             int maNhanVien = rs.getInt("MaNV");
-                String tenDangNhap = rs.getString("TenDangNhap");
-                String matKhau = rs.getString("MatKhau");
-                String quyen = rs.getString("Quyen");
+            String tenDangNhap = rs.getString("TenDangNhap");
+            String matKhau = rs.getString("MatKhau");
+            String quyen = rs.getString("Quyen");
 
-                tk = new TaiKhoan(maNhanVien, tenDangNhap, matKhau, quyen);
-                return tk;
+            tk = new TaiKhoan(maNhanVien, tenDangNhap, matKhau, quyen);
+            return tk;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -199,4 +225,16 @@ public class TaiKhoanDAO {
     return list;
 }
 
+    public boolean khoaTaiKhoan(int maNV){
+        boolean result = false;
+        String sql = "UPDATE TaiKhoan SET TrangThai = 0 WHERE MaNV = ?";
+        try {
+            PreparedStatement ps = myConnect.getConn().prepareStatement(sql);
+            ps.setInt(1, maNV);
+            result = ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 }

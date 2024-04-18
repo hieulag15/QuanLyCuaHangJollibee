@@ -55,6 +55,7 @@ public class NhanVienBUS {
         nv.setTen(ten);
         nv.setGioiTinh(gioiTinh);
         nv.setChucVu(chucVu);
+        nv.setTrangThai(1);
         boolean flag = nhanVienDAO.themNhanVien(nv);
         if (!flag) {
             new MyDialog("Thêm thất bại!", MyDialog.ERROR_DIALOG);
@@ -111,5 +112,14 @@ public class NhanVienBUS {
             new MyDialog("Chưa chọn nhân viên!", MyDialog.ERROR_DIALOG);
         }
         return false;
+    }
+    public boolean deleteNhanVien_xoamem(int ma) {
+        boolean flag = nhanVienDAO.xoamemNhanVien(ma);
+        if (!flag) {
+            new MyDialog("Xóa thất bại!", MyDialog.ERROR_DIALOG);
+        } else {
+            new MyDialog("Xóa thành công!", MyDialog.SUCCESS_DIALOG);
+        }
+        return flag;
     }
 }

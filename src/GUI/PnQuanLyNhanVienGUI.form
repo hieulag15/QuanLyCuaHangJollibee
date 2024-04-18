@@ -58,67 +58,52 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="141" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="169" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="469" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="335" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                                      <Component id="btnCapTaiKhoan" min="-2" pref="195" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                                      <Component id="btnMatKhauvaQuyen" min="-2" pref="219" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                                      <Component id="btnKhoaTaiKhoan" min="-2" pref="195" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnThem" min="-2" pref="115" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                                              <Component id="btnSua" min="-2" pref="115" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                                              <Component id="btnXoa" min="-2" pref="115" max="-2" attributes="0"/>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Component id="btnNhap" min="-2" pref="115" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="txtMaNhanVien" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="txtHoDem" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="txtTen" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="cbGioiTinh" alignment="0" max="32767" attributes="0"/>
-                                                  <Component id="cbChucVu" alignment="0" min="-2" pref="268" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                      <Component id="btnXuat" min="-2" pref="115" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="82" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="txtMaNhanVien" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtHoDem" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="txtTen" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cbGioiTinh" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="cbChucVu" alignment="0" min="-2" pref="268" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
+                              <Component id="btnCapTaiKhoan" min="-2" pref="195" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                              <Component id="btnDatLaiMatKhau" min="-2" pref="219" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                              <Component id="btnKhoaTaiKhoan" min="-2" pref="195" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="274" max="-2" attributes="0"/>
+                              <Component id="btnThem" min="-2" pref="115" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
+                              <Component id="btnSua" min="-2" pref="115" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
+                              <Component id="btnXoa" min="-2" pref="115" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="338" max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" min="-2" pref="960" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace pref="317" max="32767" attributes="0"/>
+                      <EmptySpace pref="271" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -157,18 +142,16 @@
                           <Component id="btnThem" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                           <Component id="btnSua" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                           <Component id="btnXoa" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                          <Component id="btnNhap" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                          <Component id="btnXuat" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnCapTaiKhoan" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                          <Component id="btnMatKhauvaQuyen" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
+                          <Component id="btnDatLaiMatKhau" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                           <Component id="btnKhoaTaiKhoan" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jScrollPane1" pref="362" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -293,7 +276,6 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtMaNhanVien">
               <Properties>
-                <Property name="editable" type="boolean" value="false"/>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="16" style="0"/>
                 </Property>
@@ -330,52 +312,6 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="btnNhap">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/image/excel.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value=" Nh&#x1ead;p  "/>
-                <Property name="toolTipText" type="java.lang.String" value=""/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
-                    <BevelBorder/>
-                  </Border>
-                </Property>
-                <Property name="horizontalTextPosition" type="int" value="4"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnNhapMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnNhapMouseExited"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JLabel" name="btnXuat">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
-                </Property>
-                <Property name="horizontalAlignment" type="int" value="4"/>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/image/excel.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value=" Xu&#x1ea5;t   "/>
-                <Property name="toolTipText" type="java.lang.String" value=""/>
-                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                  <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
-                    <BevelBorder/>
-                  </Border>
-                </Property>
-                <Property name="horizontalTextPosition" type="int" value="4"/>
-              </Properties>
-              <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXuatMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXuatMouseExited"/>
-              </Events>
-            </Component>
             <Component class="javax.swing.JLabel" name="btnCapTaiKhoan">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -399,7 +335,7 @@
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCapTaiKhoanMouseExited"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="btnMatKhauvaQuyen">
+            <Component class="javax.swing.JLabel" name="btnDatLaiMatKhau">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="18" style="1"/>
@@ -408,7 +344,8 @@
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/image/password-code.png"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="  M&#x1ead;t kh&#x1ea9;u/Quy&#x1ec1;n  "/>
+                <Property name="text" type="java.lang.String" value="&#x110;&#x1eb7;t L&#x1ea1;i M&#x1ead;t Kh&#x1ea9;u"/>
+                <Property name="toolTipText" type="java.lang.String" value=""/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.SoftBevelBorderInfo">
                     <BevelBorder/>
@@ -417,8 +354,9 @@
                 <Property name="horizontalTextPosition" type="int" value="4"/>
               </Properties>
               <Events>
-                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMatKhauvaQuyenMouseEntered"/>
-                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnMatKhauvaQuyenMouseExited"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDatLaiMatKhauMouseClicked"/>
+                <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDatLaiMatKhauMouseEntered"/>
+                <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnDatLaiMatKhauMouseExited"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="btnKhoaTaiKhoan">
@@ -439,6 +377,7 @@
                 <Property name="horizontalTextPosition" type="int" value="4"/>
               </Properties>
               <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnKhoaTaiKhoanMouseClicked"/>
                 <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnKhoaTaiKhoanMouseEntered"/>
                 <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnKhoaTaiKhoanMouseExited"/>
               </Events>
