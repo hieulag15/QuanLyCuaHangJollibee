@@ -60,4 +60,10 @@ public class HoaDonBUS {
     public ArrayList<HoaDon> getListHoaDonByCost(int startCost, int endCost) {
         return hoaDonDAO.getListHoaDonByCost(startCost, endCost);
     }
+    public int getDoanhThu(){
+        return hoaDonDAO.getDoanhThu();
+    }
+    public int getDoanhThuTheoQuy(int quy, int nam){
+        return hoaDonDAO.getDoanhThuTheoQuy(quy, nam);
+    }
 }
