@@ -4,6 +4,10 @@ import Model.ThongKe;
 import java.util.List;
 public class ThongKeBUS {
     private ThongKeDAO thongKeDAO;
+    
+    public ThongKeBUS() {
+        
+    }
 
     public ThongKeBUS(ThongKeDAO thongKeDAO) {
         this.thongKeDAO = thongKeDAO;
