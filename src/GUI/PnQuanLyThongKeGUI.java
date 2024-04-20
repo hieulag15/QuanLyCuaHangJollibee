@@ -34,7 +34,8 @@ public class PnQuanLyThongKeGUI extends JPanel {
         addEvents();
         loadData();
     }
-    public void loadData(){
+
+    public void loadData() {
         SanPhamBUS spbus = new SanPhamBUS();
         KhachHangBUS khbus = new KhachHangBUS();
         NhanVienBUS nvbus = new NhanVienBUS();
@@ -46,26 +47,27 @@ public class PnQuanLyThongKeGUI extends JPanel {
         int sokh = listkh.size();
         int sonv = listnv.size();
         int doanhthu = hdbus.getDoanhThu();
-        
-        lblThongKeThucDon.setText(sosp+"");
-        lblThongKeKhachHang.setText(sokh+"");
-        lblThongKeNhanVien.setText(sonv+"");
-        lblThongKeDoanhThu.setText(doanhthu+"");
-        
+
+        lblThongKeThucDon.setText(sosp + "");
+        lblThongKeKhachHang.setText(sokh + "");
+        lblThongKeNhanVien.setText(sonv + "");
+        lblThongKeDoanhThu.setText(doanhthu + "");
+
         loaddoanhthu(2024);
     }
-    public void loaddoanhthu(int year){
+
+    public void loaddoanhthu(int year) {
         HoaDonBUS hdbus = new HoaDonBUS();
         int quy1 = hdbus.getDoanhThuTheoQuy(1, year);
         int quy2 = hdbus.getDoanhThuTheoQuy(2, year);
         int quy3 = hdbus.getDoanhThuTheoQuy(3, year);
         int quy4 = hdbus.getDoanhThuTheoQuy(4, year);
-        int tongdoanhthu = quy1+quy2+quy3+quy4;
-        lblDoanhThuQuy1.setText(quy1+"");
-        lblDoanhThuQuy2.setText(quy2+"");
-        lblDoanhThuQuy3.setText(quy3+"");
-        lblDoanhThuQuy4.setText(quy4+"");
-        lblTongDoanhThu.setText(tongdoanhthu+"");
+        int tongdoanhthu = quy1 + quy2 + quy3 + quy4;
+        lblDoanhThuQuy1.setText(quy1 + "");
+        lblDoanhThuQuy2.setText(quy2 + "");
+        lblDoanhThuQuy3.setText(quy3 + "");
+        lblDoanhThuQuy4.setText(quy4 + "");
+        lblTongDoanhThu.setText(tongdoanhthu + "");
     }
     ThongKeBUS thongKeBUS = new ThongKeBUS();
     final Color colorPanel = new Color(56, 56, 56);
@@ -182,12 +184,13 @@ public class PnQuanLyThongKeGUI extends JPanel {
 
         cmbNam = new JComboBox<>();
         int year = Calendar.getInstance().get(Calendar.YEAR);
-        for (int i = year; i >= year - 10; i--)
+        for (int i = year; i >= year - 10; i--) {
             cmbNam.addItem(i);
+        }
         cmbNam.setFont(new Font("Tahoma", Font.PLAIN, 18));
         cmbNam.setBounds(w / 2 - 100 / 2, 560, 120, 35);
         pnThongKeTong.add(cmbNam);
-        
+
         cmbNam.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -207,8 +210,6 @@ public class PnQuanLyThongKeGUI extends JPanel {
 //                loaddoanhthu(year);
 //            }
 //        });
-
-        
         btn_filter = new JButton("Chi tiết");
         btn_filter.setFont(new Font("Tahoma", Font.PLAIN, 18));
         btn_filter.setBounds((w / 2 - 100 / 2) + 140, 560, 100, 35);
@@ -352,7 +353,7 @@ public class PnQuanLyThongKeGUI extends JPanel {
 
     private JFreeChart createChart() {
         JFreeChart barChart = ChartFactory.createBarChart(
-                "Doanh thu năm " + Calendar.getInstance().get(Calendar.YEAR),
+                "Doanh thu năm " + cmbNam.getSelectedItem().toString(),
                 "Tháng", "Doanh thu",
                 createDataset(), PlotOrientation.VERTICAL, false, false, false);
         return barChart;
@@ -360,9 +361,10 @@ public class PnQuanLyThongKeGUI extends JPanel {
 
     private CategoryDataset createDataset() {
         ThongKeBUS thongKeBUS = new ThongKeBUS();
+        int year = Integer.parseInt(cmbNam.getSelectedItem().toString());
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (int i = 1; i <= 12; i++) {
-            double value = thongKeBUS.getDoanhThuThang(i, Calendar.getInstance().get(Calendar.YEAR));
+            double value = thongKeBUS.getDoanhThuThang(i, year);
             dataset.addValue(value, "Doanh thu", i + "");
         }
         return dataset;
@@ -371,21 +373,11 @@ public class PnQuanLyThongKeGUI extends JPanel {
     private DecimalFormat dcf = new DecimalFormat("###,###");
 
     private void hienThiThongKe() {
-//        ThongKe thongKe = thongKeBUS.thongKe(Integer.parseInt(cmbNam.getSelectedItem() + ""));
-//        lblThongKeThucDon.setText(dcf.format(thongKe.getSoLuongSP()));
-//        lblThongKeKhachHang.setText(dcf.format(thongKe.getSoLuongKH()));
-//        lblThongKeNhanVien.setText(dcf.format(thongKe.getSoLuongNV()));
-//        lblThongKeDoanhThu.setText(dcf.format(thongKe.getTongDoanhThu()));
-//        lblDoanhThuQuy1.setText(dcf.format(thongKe.getTongThuQuy(1)));
-//        lblDoanhThuQuy2.setText(dcf.format(thongKe.getTongThuQuy(2)));
-//        lblDoanhThuQuy3.setText(dcf.format(thongKe.getTongThuQuy(3)));
-//        lblDoanhThuQuy4.setText(dcf.format(thongKe.getTongThuQuy(4)));
-//        lblTongDoanhThu.setText(dcf.format(thongKe.getTongDoanhThu()));
-
         ThongKeBUS thongKeBUS = new ThongKeBUS();
-        ArrayList<SanPham> arrTop5SanBanChay = thongKeBUS.getTop5SanPhamBanChay(2024);
-        
-        if(!arrTop5SanBanChay.isEmpty()){
+        int year = Integer.parseInt(cmbNam.getSelectedItem().toString());
+        ArrayList<SanPham> arrTop5SanBanChay = thongKeBUS.getTop5SanPhamBanChay(year);
+
+        if (!arrTop5SanBanChay.isEmpty()) {
             lblMon1.setText(arrTop5SanBanChay.get(0).getTenSP());
             lblMon2.setText(arrTop5SanBanChay.get(1).getTenSP());
             lblMon3.setText(arrTop5SanBanChay.get(2).getTenSP());
@@ -396,6 +388,18 @@ public class PnQuanLyThongKeGUI extends JPanel {
             lblSoLuong3.setText(String.valueOf(arrTop5SanBanChay.get(2).getSoluongdaban()));
             lblSoLuong4.setText(String.valueOf(arrTop5SanBanChay.get(3).getSoluongdaban()));
             lblSoLuong5.setText(String.valueOf(arrTop5SanBanChay.get(4).getSoluongdaban()));
+        } else 
+        {
+            lblMon1.setText("");
+            lblMon2.setText("");
+            lblMon3.setText("");
+            lblMon4.setText("");
+            lblMon5.setText("");
+            lblSoLuong1.setText("");
+            lblSoLuong2.setText("");
+            lblSoLuong3.setText("");
+            lblSoLuong4.setText("");
+            lblSoLuong5.setText("");
         }
 
     }

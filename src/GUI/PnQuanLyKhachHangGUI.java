@@ -7,11 +7,13 @@ package GUI;
 import BUS.*;
 import Custom.MyDialog;
 import Custom.Utils;
+import Custom.XuLyFileExcel;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.DefaultTableModel;
 import Model.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 /**
  *
@@ -76,6 +78,7 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         btnTimKiem = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblKhachHang = new javax.swing.JTable();
+        btnXuatKH = new javax.swing.JLabel();
 
         txtTen.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
@@ -213,6 +216,25 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(tblKhachHang);
 
+        btnXuatKH.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnXuatKH.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnXuatKH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/excel.png"))); // NOI18N
+        btnXuatKH.setText(" Xuất   ");
+        btnXuatKH.setToolTipText("");
+        btnXuatKH.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnXuatKH.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        btnXuatKH.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXuatKHMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnXuatKHMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnXuatKHMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -259,19 +281,18 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
                                                 .addComponent(jLabel10)
                                                 .addGap(97, 97, 97))))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(23, 23, 23)
                                         .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(43, 43, 43)
+                                        .addGap(18, 18, 18)
                                         .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(39, 39, 39)
-                                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(btnXuatKH, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(166, 166, 166)
                                 .addComponent(jLabel1)))
                         .addGap(0, 94, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1)))
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -311,10 +332,11 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-                .addContainerGap())
+                    .addComponent(btnTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnXuatKH, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                .addGap(131, 131, 131))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -408,6 +430,23 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_btnTimKiemMouseClicked
+    
+    private void xuLyXuatFileExcel(JTable tbl) {
+        XuLyFileExcel xuatFile = new XuLyFileExcel();
+        xuatFile.xuatExcel(tbl);
+    }
+    
+    private void btnXuatKHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatKHMouseClicked
+        xuLyXuatFileExcel(tblKhachHang);
+    }//GEN-LAST:event_btnXuatKHMouseClicked
+
+    private void btnXuatKHMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatKHMouseEntered
+        btnXuatKH.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+    }//GEN-LAST:event_btnXuatKHMouseEntered
+
+    private void btnXuatKHMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatKHMouseExited
+        btnXuatKH.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+    }//GEN-LAST:event_btnXuatKHMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -415,6 +454,7 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
     private javax.swing.JLabel btnThem;
     private javax.swing.JLabel btnTimKiem;
     private javax.swing.JLabel btnXoa;
+    private javax.swing.JLabel btnXuatKH;
     private javax.swing.JComboBox<String> cbGioiTinh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
