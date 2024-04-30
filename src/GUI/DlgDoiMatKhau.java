@@ -1,10 +1,21 @@
 package GUI;
 
 import BUS.TaiKhoanBUS;
+import java.awt.Window;
+import javax.swing.SwingUtilities;
 
 public class DlgDoiMatKhau extends javax.swing.JDialog {
 
     public DlgDoiMatKhau() {
+        initComponents();
+        this.setTitle("Đổi mật khẩu");
+        this.setLocationRelativeTo(null);
+        this.setModal(true);
+    }
+    private MainQuanLyGUI mainQuanLyGUI;
+
+    public DlgDoiMatKhau(MainQuanLyGUI mainQuanLyGUI) {
+        this.mainQuanLyGUI = mainQuanLyGUI;
         initComponents();
         this.setTitle("Đổi mật khẩu");
         this.setLocationRelativeTo(null);
@@ -142,14 +153,24 @@ public class DlgDoiMatKhau extends javax.swing.JDialog {
 
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         TaiKhoanBUS tkBUS = new TaiKhoanBUS();
-        boolean flag = tkBUS.doiMatKhau(txtMatKhauCu.getText(), txtMatKhauMoi.getText(), txtNhapLaiMatKhau.getText());
-        if (flag) {
-            btnHuy.doClick();
-        }
+    boolean flag = tkBUS.doiMatKhau(txtMatKhauCu.getText(), txtMatKhauMoi.getText(), txtNhapLaiMatKhau.getText());
+    if (flag) {
+         DangNhapGUI login = new DangNhapGUI();
+         // Đóng cửa sổ cha khi xác nhận thành công
+        this.dispose(); // Đóng form con
+        mainQuanLyGUI.dispose();
+        login.show();
+        
+    }
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
+        
         this.dispose();
+        
+    
+    // Hiển thị form main
+    
     }//GEN-LAST:event_btnHuyActionPerformed
 
     private void txtMatKhauCuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauCuActionPerformed

@@ -30,11 +30,22 @@ public class MyConnect {
             com.mysql.jdbc.Driver driver = new Driver();
             conn = driver.connect(strConnect, pro);
         } catch (SQLException ex) {
+            System.out.print(ex);
             new MyDialog("Không kết nối được tới CSDL!", MyDialog.ERROR_DIALOG);
             System.exit(0);
         }
     }
 
+    public void CloseConnect()  {
+        if (conn != null) {
+            try {
+                conn.close();
+                System.out.println("Đã đóng kết nối đến CSDL.");
+            } catch (SQLException ex) {
+                System.out.println("Lỗi khi đóng kết nối đến CSDL: " + ex.getMessage());
+            }
+        }
+    }
     public Connection getConn() {
         return conn;
     }

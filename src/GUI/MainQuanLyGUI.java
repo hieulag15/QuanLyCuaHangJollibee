@@ -1,6 +1,7 @@
 package GUI;
 
 import BUS.PhanQuyenBUS;
+import DAO.MyConnect;
 import Model.PhanQuyen;
 import Model.TaiKhoan;
 
@@ -230,7 +231,10 @@ public class MainQuanLyGUI extends JFrame {
         btnDoiMatKhau.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new DlgDoiMatKhau().setVisible(true);
+                DlgDoiMatKhau doiMatKhauDlg = new DlgDoiMatKhau(MainQuanLyGUI.this); // Truyền đúng tham chiếu của MainQuanLyGUI vào
+        doiMatKhauDlg.setVisible(true);
+                
+                
             }
 
             @Override
@@ -373,4 +377,8 @@ public class MainQuanLyGUI extends JFrame {
         System.exit(0);
     }
 
+    public void dongMainQuanLyGUI() {
+    this.dispose();
+    System.exit(0);
+}
 }
