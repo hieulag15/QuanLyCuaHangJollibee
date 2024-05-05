@@ -149,6 +149,7 @@ public class DlgTimMaGiam extends JDialog {
                 String dieuKienst = tblMaGiam.getValueAt(row, 3) + "";
                 dieuKienst = dieuKienst.replace(">", "");
                 dieuKienst = dieuKienst.replace(",", "");
+                dieuKienst = dieuKienst.replace("Đ", "");
                 int dieuKien = Integer.parseInt(dieuKienst);
 
                 if(dieuKien > tongTien) {
@@ -184,7 +185,7 @@ public class DlgTimMaGiam extends JDialog {
 //        giamGiaBUS.docDanhSach();
         ArrayList<GiamGia> dsg = giamGiaBUS.getAllGiamGia();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        DecimalFormat dcf = new DecimalFormat(">###,###");
+        DecimalFormat dcf = new DecimalFormat(">###,###Đ");
         for (GiamGia gg : dsg) {
             Vector vec = new Vector();
             vec.add(gg.getMaGiam());

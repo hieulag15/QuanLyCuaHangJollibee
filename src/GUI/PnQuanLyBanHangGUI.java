@@ -85,9 +85,9 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         //chỉnh sửa chiều rộng của các cột
         TableColumnModel columnModelSP = tblSanPham.getColumnModel();
         columnModelSP.getColumn(0).setPreferredWidth(50);
-        columnModelSP.getColumn(1).setPreferredWidth(282);
+        columnModelSP.getColumn(1).setPreferredWidth(250);
         columnModelSP.getColumn(2).setPreferredWidth(190);
-        columnModelSP.getColumn(3).setPreferredWidth(100);
+        columnModelSP.getColumn(3).setPreferredWidth(120);
         //set chiều cao dòng
         tblSanPham.setRowHeight(180); 
         //chỉnh nội dung nằm giữa
@@ -158,7 +158,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
     }
     
     //định dạng tiền
-    DecimalFormat dcf = new DecimalFormat("###,###");
+    DecimalFormat dcf = new DecimalFormat("###,###Đ");
     //định dạng ngày
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
     String pathSP = "image/SanPham/";
@@ -572,7 +572,7 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
             ob[2] = tblGioHang.getValueAt(i, 2);
             ob[3] = tblGioHang.getValueAt(i, 4);
             ob[4] = tblGioHang.getValueAt(i, 5);
-            tongTien += Integer.parseInt((tblGioHang.getValueAt(i, 5) + "").replace(",", ""));
+            tongTien += Integer.parseInt((tblGioHang.getValueAt(i, 5) + "").replace(",", "").replace("Đ", ""));
             dsGioHang.add(ob);
         }
               

@@ -14,6 +14,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -132,6 +133,8 @@ public class DlgTimKhach extends JDialog {
             loadDataLenTable();
         }
     }
+    
+    DecimalFormat dcf = new DecimalFormat("###,### VNĐ");
 
     private void loadDataLenTable() {
         dtmKhachHang.setRowCount(0);
@@ -143,7 +146,7 @@ public class DlgTimKhach extends JDialog {
                 row[1] = kh.getHo();
                 row[2] = kh.getTen();
                 row[3] = kh.getGioiTinh();
-                row[4] = kh.getTongChiTieu();
+                row[4] = dcf.format(kh.getTongChiTieu());
                 dtmKhachHang.addRow(row);
             }
         }
@@ -158,7 +161,7 @@ public class DlgTimKhach extends JDialog {
                 row[1] = kh.getHo();
                 row[2] = kh.getTen();
                 row[3] = kh.getGioiTinh();
-                row[4] = kh.getTongChiTieu();
+                row[4] = dcf.format(kh.getTongChiTieu());
                 dtmKhachHang.addRow(row);
             }
     }

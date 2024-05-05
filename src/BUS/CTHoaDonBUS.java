@@ -51,8 +51,8 @@ public class CTHoaDonBUS {
     public void addCTHoaDon(String maSP, String soLuong, String donGia, String thanhTien) {
         int ma = hdBUS.getMaHoaDonMoiNhat();
 
-        donGia = donGia.replace(",","");
-        thanhTien = thanhTien.replace(",", "");
+        donGia = donGia.replace(",","").replace("Đ", "");
+        thanhTien = thanhTien.replace(",", "").replace("Đ", "");
 
         CTHoaDon cthd = new CTHoaDon();
 

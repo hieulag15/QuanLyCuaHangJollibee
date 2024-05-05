@@ -48,7 +48,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         columnModel.getColumn(0).setPreferredWidth(10);
         columnModel.getColumn(1).setPreferredWidth(150);
         columnModel.getColumn(2).setPreferredWidth(20);
-        columnModel.getColumn(3).setPreferredWidth(50);
+        columnModel.getColumn(3).setPreferredWidth(60);
         //set chiều cao dòng
         tblKhuyenMai.setRowHeight(50); 
         //chỉnh nội dung nằm giữa
@@ -73,6 +73,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
 
             dieuKien = dieuKien.replace(">", "");
             dieuKien = dieuKien.replace(",", "");
+            dieuKien = dieuKien.replace("Đ", "");
             java.util.Date ngayBD = new Date();
             java.util.Date ngayKT = new Date();
             try {
@@ -188,7 +189,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
         giamgiabus.getAllGiamGia();
         ArrayList<GiamGia> dsg = giamgiabus.getAllGiamGia();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        DecimalFormat dcf = new DecimalFormat(">###,###");
+        DecimalFormat dcf = new DecimalFormat(">###,###Đ");
         for (GiamGia gg : dsg) {
             Vector vec = new Vector();
             vec.add(gg.getMaGiam());
