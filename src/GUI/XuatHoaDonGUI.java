@@ -343,7 +343,7 @@ public class XuatHoaDonGUI extends JDialog {
         
         String sdt;
         if (DlgTimKhach.khachHangTimDuoc == null){
-            sdt = "0";
+            sdt = null;
         }
         else{
             sdt = DlgTimKhach.khachHangTimDuoc.getSdt();

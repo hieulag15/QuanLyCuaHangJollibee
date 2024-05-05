@@ -1591,11 +1591,11 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
 
     private void lblXemTenKhachMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblXemTenKhachMouseEntered
         lblXemTenKhach.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
-        if (txtSDT.getText().equals("0")){
+        if (txtSDT.getText().isEmpty()){
             txtSDT.setText("Khách vãng lai");
             return;
         }
-        if (!txtSDT.getText().isEmpty()){
+        else {
             KhachHang kh = khBUS.getKhachHang(txtSDT.getText()+"");
             txtSDT.setText(kh.getHo() + " " + kh.getTen());
         }
@@ -1605,11 +1605,9 @@ public class PnQuanLyBanHangGUI extends javax.swing.JPanel {
         lblXemTenKhach.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
         if (!txtMaHD.getText().isEmpty()){
             HoaDon hd = hoaDonBUS.getHoaDon(Integer.parseInt(txtMaHD.getText()+""));
-            if (hd.getSdt().equals("0")){
-                txtSDT.setText("0");
-            } else{
-                txtSDT.setText(hd.getSdt());
-            }      
+            txtSDT.setText(hd.getSdt());      
+        } else{
+            txtSDT.setText("");
         }
     }//GEN-LAST:event_lblXemTenKhachMouseExited
 
