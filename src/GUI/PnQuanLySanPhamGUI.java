@@ -110,7 +110,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     }
     
      //định dạng tiền
-    DecimalFormat dcf = new DecimalFormat("###,###");
+    DecimalFormat dcf = new DecimalFormat("###,###VNĐ");
     String pathSP = "image/SanPham/";
     String pathNL = "image/NguyenLieu/";
     
@@ -224,7 +224,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             txtMaSP.setText(strMa);
             txtTenSP.setText(sp.getTenSP());
             cbLoaiSP.setSelectedIndex(sp.getMaLoai());
-            txtDonGiaSP.setText(dcf.format(sp.getDonGia()));
+            txtDonGiaSP.setText(dcf.format(sp.getDonGia()).replace("VNĐ", ""));
             txtDonViTinhSP.setText(sp.getDonViTinh());
             cbTinhTrangSP.setSelectedIndex(sp.getTinhTrang());
             loadAnhSP(sp.getHinhAnh());
@@ -240,7 +240,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             txtMaNL.setText(strMa);
             txtTenNL.setText(nl.getTenNL());
             spnSoLuongSL.setValue(nl.getSoLuong());
-            txtDonGiaNL.setText(dcf.format(nl.getDonGia()));
+            txtDonGiaNL.setText(dcf.format(nl.getDonGia()).replace("VNĐ", ""));
             txtDonViTinhNL.setText(nl.getDonViTinh());
             cbTinhTrangNL.setSelectedIndex(nl.getTinhTrang());
             loadAnhNL(nl.getHinhAnh());
@@ -281,7 +281,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         String tenSP = txtTenSP.getText() + "";
         int maLoai = cbLoaiSP.getSelectedIndex();
         String donViTinh = txtDonViTinhSP.getText() + "";
-        int donGia = Integer.parseInt((txtDonGiaSP.getText() + "").replace(",", ""));
+        int donGia = Integer.parseInt((txtDonGiaSP.getText() + "").replace(",", "").replace("VNĐ", ""));
         
         sp.setMaSP(maSP);
         sp.setTenSP(tenSP);
@@ -313,7 +313,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         String tenNL = txtTenNL.getText() + "";
         int soLuong = (Integer)spnSoLuongSL.getValue();
         String donViTinh = txtDonViTinhNL.getText() + "";
-        int donGia = Integer.parseInt((txtDonGiaNL.getText() + "").replace(",", ""));
+        int donGia = Integer.parseInt((txtDonGiaNL.getText() + "").replace(",", "").replace("VNĐ", ""));
         
         nl.setMaNL(maNL);
         nl.setTenNL(tenNL);
@@ -387,7 +387,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         String tenSP = txtTenSP.getText() + "";
         int maLoai = cbLoaiSP.getSelectedIndex();
         String donViTinh = txtDonViTinhSP.getText() + "";
-        int donGia = Integer.parseInt((txtDonGiaSP.getText() + "").replace(",", ""));
+        int donGia = Integer.parseInt((txtDonGiaSP.getText() + "").replace(",", "").replace("VNĐ", ""));
         
         sp.setMaSP(maSP);
         sp.setTenSP(tenSP);
@@ -419,7 +419,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         String tenNL = txtTenNL.getText() + "";
         int soLuong = (Integer)spnSoLuongSL.getValue();
         String donViTinh = txtDonViTinhNL.getText() + "";
-        int donGia = Integer.parseInt((txtDonGiaNL.getText() + "").replace(",", ""));
+        int donGia = Integer.parseInt((txtDonGiaNL.getText() + "").replace(",", "").replace("VNĐ", ""));
         
         nl.setMaNL(maNL);
         nl.setTenNL(tenNL);
@@ -594,13 +594,13 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                
         if (txtDonGiaSP.getText().isEmpty()){
             new MyDialog("Vui lòng nhập đơn giá cho sản phẩm.", MyDialog.ERROR_DIALOG); 
-            txtDonGiaSP.setText(dcf.format(sp.getDonGia()));
+            txtDonGiaSP.setText(dcf.format(sp.getDonGia()).replace("VNĐ", ""));
             return false;
         }       
         
         if(!Utils.checkTien(txtDonGiaSP.getText()+"")){
             new MyDialog("Vui lòng nhập đúng định dạng tiền.", MyDialog.ERROR_DIALOG);
-            txtDonGiaSP.setText(dcf.format(sp.getDonGia()));
+            txtDonGiaSP.setText(dcf.format(sp.getDonGia()).replace("VNĐ", ""));
             return false;
         }
         
@@ -649,14 +649,14 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
               
         if (txtDonGiaNL.getText().isEmpty()){
             new MyDialog("Vui lòng nhập đơn giá cho sản phẩm.", MyDialog.ERROR_DIALOG);   
-            txtDonGiaNL.setText(dcf.format(nl.getDonGia()));
+            txtDonGiaNL.setText(dcf.format(nl.getDonGia()).replace("VNĐ", ""));
             return false;
         }       
         
         
         if(!Utils.checkTien(txtDonGiaNL.getText()+"")){
             new MyDialog("Vui lòng nhập đúng định dạng tiền.", MyDialog.ERROR_DIALOG);
-            txtDonGiaNL.setText(dcf.format(nl.getDonGia()));
+            txtDonGiaNL.setText(dcf.format(nl.getDonGia()).replace("VNĐ", ""));
             return false;
         }
         
@@ -744,7 +744,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         btnThemSP = new javax.swing.JLabel();
         btnSuaSP = new javax.swing.JLabel();
         btnXuatSP = new javax.swing.JLabel();
-        btnNhapSP = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSanPham = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -753,12 +752,12 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         cbTinhTrangSP = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         cbSPHienThi = new javax.swing.JComboBox<>();
+        jLabel18 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         btnThemNL = new javax.swing.JLabel();
         btnSuaNL = new javax.swing.JLabel();
         btnXuatNL = new javax.swing.JLabel();
-        btnNhapNL = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblNguyenLieu = new javax.swing.JTable();
         spnSoLuongSL = new javax.swing.JSpinner();
@@ -780,6 +779,7 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         cbTinhTrangNL = new javax.swing.JComboBox<>();
         jLabel15 = new javax.swing.JLabel();
         cbNLHienThi = new javax.swing.JComboBox<>();
+        jLabel17 = new javax.swing.JLabel();
 
         jTabbedPane1.setBackground(new java.awt.Color(255, 255, 255));
         jTabbedPane1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -889,22 +889,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             }
         });
 
-        btnNhapSP.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnNhapSP.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnNhapSP.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/excel.png"))); // NOI18N
-        btnNhapSP.setText(" Nhập  ");
-        btnNhapSP.setToolTipText("");
-        btnNhapSP.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnNhapSP.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnNhapSP.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnNhapSPMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnNhapSPMouseExited(evt);
-            }
-        });
-
         tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -968,6 +952,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             }
         });
 
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel18.setText("VNĐ");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -983,7 +970,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                             .addGap(36, 36, 36)
                             .addComponent(jLabel7)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtDonGiaSP))
+                            .addComponent(txtDonGiaSP, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jLabel18))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1003,10 +992,8 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnSuaSP, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnNhapSP, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(btnXuatSP, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(66, 66, 66)
+                .addGap(93, 93, 93)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4)
                     .addComponent(cbTinhTrangSP, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1064,8 +1051,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                                                 .addComponent(jLabel6))
                                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(txtDonGiaSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel7)))
-                                        .addGap(41, 55, Short.MAX_VALUE)
+                                                .addComponent(jLabel7)
+                                                .addComponent(jLabel18)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(txtTuKhoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel9)))))))
@@ -1077,7 +1065,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                 .addGap(48, 48, 48)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnNhapSP, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSuaSP, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnThemSP, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnXuatSP, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1146,22 +1133,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnXuatNLMouseExited(evt);
-            }
-        });
-
-        btnNhapNL.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnNhapNL.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnNhapNL.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/excel.png"))); // NOI18N
-        btnNhapNL.setText(" Nhập  ");
-        btnNhapNL.setToolTipText("");
-        btnNhapNL.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnNhapNL.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        btnNhapNL.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnNhapNLMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                btnNhapNLMouseExited(evt);
             }
         });
 
@@ -1274,6 +1245,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
             }
         });
 
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel17.setText("VNĐ");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -1305,7 +1279,10 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                                             .addComponent(spnSoLuongSL, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jLabel12)
                                         .addComponent(jLabel8)
-                                        .addComponent(txtDonGiaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                            .addComponent(txtDonGiaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(jLabel17))))))
                         .addGap(100, 100, 100)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblAnhNL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1316,10 +1293,8 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(btnSuaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnNhapNL, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(btnXuatNL, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
+                        .addGap(184, 184, 184)
                         .addComponent(cbNLHienThi, 0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addComponent(btnChonAnhNL, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1357,7 +1332,9 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                                 .addGap(23, 23, 23)
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtDonGiaNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txtDonGiaNL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel17)))
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 35, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1381,7 +1358,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnSuaNL, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNhapNL, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnXuatNL, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnThemNL, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(cbNLHienThi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1451,14 +1427,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     private void btnXuatNLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatNLMouseExited
         btnXuatNL.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
     }//GEN-LAST:event_btnXuatNLMouseExited
-
-    private void btnNhapNLMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNhapNLMouseEntered
-        btnNhapNL.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
-    }//GEN-LAST:event_btnNhapNLMouseEntered
-
-    private void btnNhapNLMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNhapNLMouseExited
-        btnNhapNL.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
-    }//GEN-LAST:event_btnNhapNLMouseExited
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
         xuLyClickTblSanPham();
@@ -1544,14 +1512,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbTinhTrangNLActionPerformed
 
-    private void btnNhapSPMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNhapSPMouseExited
-        btnNhapSP.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
-    }//GEN-LAST:event_btnNhapSPMouseExited
-
-    private void btnNhapSPMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNhapSPMouseEntered
-        btnNhapSP.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
-    }//GEN-LAST:event_btnNhapSPMouseEntered
-
     private void cbSPHienThiItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbSPHienThiItemStateChanged
         xuLyCbHienThiSP();
         lamMoiSP();
@@ -1566,8 +1526,6 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnChonAnhNL;
     private javax.swing.JButton btnChonAnhSP;
-    private javax.swing.JLabel btnNhapNL;
-    private javax.swing.JLabel btnNhapSP;
     private javax.swing.JButton btnResetNguyenLieu;
     private javax.swing.JButton btnResetSanPham;
     private javax.swing.JLabel btnSuaNL;
@@ -1589,6 +1547,8 @@ public class PnQuanLySanPhamGUI extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

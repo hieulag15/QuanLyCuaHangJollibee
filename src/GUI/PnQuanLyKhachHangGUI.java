@@ -56,7 +56,7 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
     }
     
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    DecimalFormat dcf = new DecimalFormat("###,###");
+    DecimalFormat dcf = new DecimalFormat("###,###VNĐ");
     private void loadData() {
         DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
         model.setRowCount(0);
@@ -100,6 +100,8 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblKhachHang = new javax.swing.JTable();
         btnXuatKH = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        btnReset = new javax.swing.JButton();
 
         txtTen.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
@@ -192,7 +194,7 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         txtStart.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setText("Chi tiêu từ");
+        jLabel6.setText("Chi tiêu từ (VNĐ)");
 
         txtTuKhoa.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
@@ -256,6 +258,29 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
             }
         });
 
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel17.setText("VNĐ");
+
+        btnReset.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/refresh.png"))); // NOI18N
+        btnReset.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnReset.setPreferredSize(new java.awt.Dimension(40, 40));
+        btnReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnResetMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnResetMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnResetMouseExited(evt);
+            }
+        });
+        btnReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResetActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -275,12 +300,16 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
                                             .addComponent(jLabel8)
                                             .addComponent(jLabel9))
                                         .addGap(82, 82, 82)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(txtSoDienThoai, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtHoDem, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtTen, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(cbGioiTinh, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtTongChiTieu, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                .addComponent(txtSoDienThoai, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtHoDem, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(txtTen, javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(cbGioiTinh, javax.swing.GroupLayout.Alignment.LEADING, 0, 268, Short.MAX_VALUE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(txtTongChiTieu, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel17)))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                 .addGap(119, 119, 119)
@@ -311,7 +340,9 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
                                         .addComponent(btnXuatKH, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(166, 166, 166)
-                                .addComponent(jLabel1)))
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 94, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -321,8 +352,10 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(jLabel1)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -349,7 +382,8 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
                     .addComponent(txtTongChiTieu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtStart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel17))
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -423,7 +457,7 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
             txtHoDem.setText(model.getValueAt(index, 1).toString());
             txtTen.setText(model.getValueAt(index, 2).toString());
             cbGioiTinh.setSelectedItem(model.getValueAt(index, 3).toString());
-            txtTongChiTieu.setText(model.getValueAt(index, 4).toString());
+            txtTongChiTieu.setText(model.getValueAt(index, 4).toString().replace("VNĐ", ""));
 
         }
     }//GEN-LAST:event_tblKhachHangMouseClicked
@@ -471,8 +505,32 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
         btnXuatKH.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
     }//GEN-LAST:event_btnXuatKHMouseExited
 
+    private void btnResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseClicked
+        loadData();
+        txtSoDienThoai.setText("");
+        txtHoDem.setText("");
+        txtTen.setText("");
+        txtTongChiTieu.setText("");
+        txtTuKhoa.setText("");
+        txtStart.setText("");
+        txtEnd.setText("");
+    }//GEN-LAST:event_btnResetMouseClicked
+
+    private void btnResetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseEntered
+        btnReset.setBorder(new SoftBevelBorder(SoftBevelBorder.LOWERED));
+    }//GEN-LAST:event_btnResetMouseEntered
+
+    private void btnResetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnResetMouseExited
+        btnReset.setBorder(new SoftBevelBorder(SoftBevelBorder.RAISED));
+    }//GEN-LAST:event_btnResetMouseExited
+
+    private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
+
+    }//GEN-LAST:event_btnResetActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnReset;
     private javax.swing.JLabel btnSua;
     private javax.swing.JLabel btnThem;
     private javax.swing.JLabel btnTimKiem;
@@ -481,6 +539,7 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbGioiTinh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

@@ -58,7 +58,7 @@ public class XuatPhieuNhapGUI extends javax.swing.JDialog {
         txtChiTiet.setContentType("text/html");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         LocalDateTime now = LocalDateTime.now();
-        DecimalFormat dcf = new DecimalFormat("###,### VND");
+        DecimalFormat dcf = new DecimalFormat("###,### VNĐ");
         
         NhaCungCap nhaCC = nccBUS.getNhaCungCap(maNhaCungCap);
         NhanVien nv = nvBUS.getNhanVien(maNhanVien);
@@ -205,8 +205,8 @@ public class XuatPhieuNhapGUI extends javax.swing.JDialog {
                 ctpn.setMaPN(maPN);
                 ctpn.setMaSP(maNL);
                 ctpn.setSoLuong(soLuong);
-                ctpn.setDonGia(Integer.parseInt((array[2]+"").replace(",", "")));
-                ctpn.setThanhTien(Integer.parseInt((array[3]+"").replace(",", "")));
+                ctpn.setDonGia(Integer.parseInt((array[2]+"").replace(",", "").replace("Đ", "")));
+                ctpn.setThanhTien(Integer.parseInt((array[3]+"").replace(",", "").replace("Đ", "")));
                 ctPhieuNhapBUS.themChiTietPhieuNhap(ctpn);
                 
                 //cập nhật số lượng nguyên liệu trong database

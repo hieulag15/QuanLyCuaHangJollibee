@@ -44,7 +44,7 @@ public class XuatHoaDonGUI extends JDialog {
         this.tongTien = tongTien;
         this.dsGioHang = dsGioHang;
         this.nhanVien = nhanVien;
-        DecimalFormat dcf = new DecimalFormat("###,### VNĐ");
+        DecimalFormat dcf = new DecimalFormat("###,###VNĐ");
         txtTongTien.setText(dcf.format(tongTien)); 
     }
 

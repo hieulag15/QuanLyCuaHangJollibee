@@ -134,7 +134,7 @@ public class DlgTimKhach extends JDialog {
         }
     }
     
-    DecimalFormat dcf = new DecimalFormat("###,### VNĐ");
+    DecimalFormat dcf = new DecimalFormat("###,###VNĐ");
 
     private void loadDataLenTable() {
         dtmKhachHang.setRowCount(0);
