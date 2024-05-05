@@ -18,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -37,6 +39,27 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
     
     private void addControl(){
         Utils.customTable(tblKhuyenMai);
+        
+        //
+        //Chỉnh bảng khuyến mãi
+        //
+        //chỉnh sửa chiều rộng của các cột
+        TableColumnModel columnModel = tblKhuyenMai.getColumnModel();
+        columnModel.getColumn(0).setPreferredWidth(10);
+        columnModel.getColumn(1).setPreferredWidth(150);
+        columnModel.getColumn(2).setPreferredWidth(20);
+        columnModel.getColumn(3).setPreferredWidth(50);
+        //set chiều cao dòng
+        tblKhuyenMai.setRowHeight(50); 
+        //chỉnh nội dung nằm giữa
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+        columnModel.getColumn(0).setCellRenderer(centerRenderer);
+        columnModel.getColumn(2).setCellRenderer(centerRenderer);
+        columnModel.getColumn(3).setCellRenderer(centerRenderer);
+        columnModel.getColumn(4).setCellRenderer(centerRenderer);
+        columnModel.getColumn(5).setCellRenderer(centerRenderer);
+        columnModel.getColumn(6).setCellRenderer(centerRenderer);
     }
     private void xuLyClickTblKhuyenMai() {
         int row = tblKhuyenMai.getSelectedRow();
@@ -250,7 +273,7 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Mã khuyến mãi", "Tên chương trình", "Phần trăm giảm", "Điều kiện", "Ngày bắt đầu", "Ngày kết thúc", "Tình trạng"
+                "Mã KM", "Tên chương trình", "% giảm", "Điều kiện", "Ngày bắt đầu", "Ngày kết thúc", "Tình trạng"
             }
         ));
         tblKhuyenMai.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -313,6 +336,12 @@ public class PnQuanLyKhuyenMaiGUI extends javax.swing.JPanel {
                 btnXoaMouseExited(evt);
             }
         });
+
+        dateBD.setDateFormatString("dd/MM/yyyy");
+        dateBD.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+
+        dateKT.setDateFormatString("dd/MM/yyyy");
+        dateKT.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

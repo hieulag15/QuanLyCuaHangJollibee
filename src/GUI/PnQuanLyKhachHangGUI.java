@@ -11,9 +11,13 @@ import Custom.XuLyFileExcel;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.table.DefaultTableModel;
 import Model.*;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -34,14 +38,31 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
 
     private void addControls() {
         Utils.customTable(tblKhachHang);
+        
+        //
+        //Chỉnh bảng khuyến mãi
+        //
+        TableColumnModel columnModel = tblKhachHang.getColumnModel();
+        //set chiều cao dòng
+        tblKhachHang.setRowHeight(50); 
+        //chỉnh nội dung nằm giữa
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+        columnModel.getColumn(0).setCellRenderer(centerRenderer);
+        columnModel.getColumn(1).setCellRenderer(centerRenderer);
+        columnModel.getColumn(2).setCellRenderer(centerRenderer);
+        columnModel.getColumn(3).setCellRenderer(centerRenderer);
+        columnModel.getColumn(4).setCellRenderer(centerRenderer);
     }
-
+    
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    DecimalFormat dcf = new DecimalFormat("###,###");
     private void loadData() {
         DefaultTableModel model = (DefaultTableModel) tblKhachHang.getModel();
         model.setRowCount(0);
         ArrayList<KhachHang> lsKhachHang = khachHangBUS.getListKhachHang();
         for (KhachHang khachHang : lsKhachHang) {
-            model.addRow(new Object[]{khachHang.getSdt(), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), khachHang.getTongChiTieu()});
+            model.addRow(new Object[]{khachHang.getSdt(), khachHang.getHo(), khachHang.getTen(), khachHang.getGioiTinh(), dcf.format(khachHang.getTongChiTieu())});
         }
     }
 

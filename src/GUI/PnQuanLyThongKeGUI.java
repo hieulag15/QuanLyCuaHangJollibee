@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class PnQuanLyThongKeGUI extends JPanel {
         loadData();
     }
 
+    DecimalFormat dcf = new DecimalFormat("###,###Đ");
     public void loadData() {
         SanPhamBUS spbus = new SanPhamBUS();
         KhachHangBUS khbus = new KhachHangBUS();
@@ -51,7 +53,7 @@ public class PnQuanLyThongKeGUI extends JPanel {
         lblThongKeThucDon.setText(sosp + "");
         lblThongKeKhachHang.setText(sokh + "");
         lblThongKeNhanVien.setText(sonv + "");
-        lblThongKeDoanhThu.setText(doanhthu + "");
+        lblThongKeDoanhThu.setText(dcf.format(doanhthu));
 
         loaddoanhthu(2024);
     }
@@ -63,11 +65,11 @@ public class PnQuanLyThongKeGUI extends JPanel {
         int quy3 = hdbus.getDoanhThuTheoQuy(3, year);
         int quy4 = hdbus.getDoanhThuTheoQuy(4, year);
         int tongdoanhthu = quy1 + quy2 + quy3 + quy4;
-        lblDoanhThuQuy1.setText(quy1 + "");
-        lblDoanhThuQuy2.setText(quy2 + "");
-        lblDoanhThuQuy3.setText(quy3 + "");
-        lblDoanhThuQuy4.setText(quy4 + "");
-        lblTongDoanhThu.setText(tongdoanhthu + "");
+        lblDoanhThuQuy1.setText(dcf.format(quy1));
+        lblDoanhThuQuy2.setText(dcf.format(quy2));
+        lblDoanhThuQuy3.setText(dcf.format(quy3));
+        lblDoanhThuQuy4.setText(dcf.format(quy4));
+        lblTongDoanhThu.setText(dcf.format(tongdoanhthu));
     }
     ThongKeBUS thongKeBUS = new ThongKeBUS();
     final Color colorPanel = new Color(56, 56, 56);
@@ -115,10 +117,10 @@ public class PnQuanLyThongKeGUI extends JPanel {
         btnView.setToolTipText("Xem chi tiết");
         btnView.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
-        lblThongKeThucDon = new JLabel("55", JLabel.CENTER);
-        lblThongKeKhachHang = new JLabel("46", JLabel.CENTER);
-        lblThongKeNhanVien = new JLabel("23", JLabel.CENTER);
-        lblThongKeDoanhThu = new JLabel("1.286.379.000", JLabel.CENTER);
+        lblThongKeThucDon = new JLabel("", JLabel.CENTER);
+        lblThongKeKhachHang = new JLabel("", JLabel.CENTER);
+        lblThongKeNhanVien = new JLabel("", JLabel.CENTER);
+        lblThongKeDoanhThu = new JLabel("", JLabel.CENTER);
 
         Font font = new Font("Tahoma", Font.BOLD, 48);
         lblThongKeThucDon.setFont(font);
@@ -369,8 +371,6 @@ public class PnQuanLyThongKeGUI extends JPanel {
         }
         return dataset;
     }
-
-    private DecimalFormat dcf = new DecimalFormat("###,###");
 
     private void hienThiThongKe() {
         ThongKeBUS thongKeBUS = new ThongKeBUS();
