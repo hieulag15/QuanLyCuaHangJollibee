@@ -82,6 +82,9 @@ public class TaiKhoanBUS {
     public boolean khoaTaiKhoan(int maNV){
         return taiKhoanDAO.khoaTaiKhoan(maNV);
     }
+    public boolean moTaiKhoan(int maNV){
+        return taiKhoanDAO.moTaiKhoan(maNV);
+    }
     public TaiKhoan getTaiKhoan_DatLaiMatKhau(int manv){
         return taiKhoanDAO.getTaiKhoan_DatLaiMatKhau(manv);
     }

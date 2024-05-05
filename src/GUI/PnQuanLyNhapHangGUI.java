@@ -191,6 +191,12 @@ public class PnQuanLyNhapHangGUI extends javax.swing.JPanel {
             txtMaNV.setText(pn.getMaNV()+"");
             txtNgayLap.setText(sdf.format(pn.getNgayLap()));
             txtTongTienPN.setText(dcf.format(pn.getTongTien()));
+            
+            dtmCTPhieuNhap = (DefaultTableModel) tblCTPhieuNhap.getModel();
+            dtmCTPhieuNhap.setRowCount(0);
+            ArrayList<CTPhieuNhap> dsctpn = null;
+            dsctpn = ctpnBUS.getListChiTietPhieuNhapTheoMaPN(ma);
+            addDataTableCTPhieuNhap(dsctpn);
         }
     }
     
