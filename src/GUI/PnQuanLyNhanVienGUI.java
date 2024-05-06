@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -72,6 +74,22 @@ public class PnQuanLyNhanVienGUI extends javax.swing.JPanel {
     private void addControls(){
         Utils.customTable(tblNhanVien);
 //        Utils.customTable(tblQuyen);
+
+        //
+        //Chỉnh bảng nhân viên
+        //
+        TableColumnModel columnModel = tblNhanVien.getColumnModel();
+        //set chiều cao dòng
+        tblNhanVien.setRowHeight(50); 
+        //chỉnh nội dung nằm giữa
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+        columnModel.getColumn(0).setCellRenderer(centerRenderer);
+        columnModel.getColumn(1).setCellRenderer(centerRenderer);
+        columnModel.getColumn(2).setCellRenderer(centerRenderer);
+        columnModel.getColumn(3).setCellRenderer(centerRenderer);
+        columnModel.getColumn(4).setCellRenderer(centerRenderer);
+        columnModel.getColumn(5).setCellRenderer(centerRenderer);
     }
 
     /**

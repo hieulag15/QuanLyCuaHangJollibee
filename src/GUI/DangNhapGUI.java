@@ -24,6 +24,7 @@ public class DangNhapGUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         Image icon = Toolkit.getDefaultToolkit().getImage("image/ManagerUI/logo-app.jpg");
         this.setIconImage(icon);
+        xuLyTaiKhoanDaGhiNho();
     }
     
     private void xuLyTaiKhoanDaGhiNho() {

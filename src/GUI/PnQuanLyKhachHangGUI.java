@@ -339,7 +339,7 @@ public class PnQuanLyKhachHangGUI extends javax.swing.JPanel {
                                         .addGap(18, 18, 18)
                                         .addComponent(btnXuatKH, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(166, 166, 166)
+                                .addGap(134, 134, 134)
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
